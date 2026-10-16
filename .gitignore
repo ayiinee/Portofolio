@@ -7,3 +7,7 @@ out/
 !.env.example
 artifacts/
 next-env.d.ts
+test-results/
+playwright-report/
+**/.next/
+**/next-env.d.ts

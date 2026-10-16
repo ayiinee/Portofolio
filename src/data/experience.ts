@@ -1,21 +1,29 @@
-export type Experience = {
-  period: string;
-  role: string;
-  organization: string;
-  description: string;
-  current?: boolean;
-};
-
-// Add verified work, education, or community experience here.
-// Example shape: { period: "2025 — 2026", role: "Your role",
-// organization: "Your organization", description: "Your contribution" }
-export const experience: Experience[] = [
+export const experience = [
   {
-    period: "Present",
-    role: "Informatics Student",
-    organization: "A chapter of learning & exploration",
-    description:
-      "Studying informatics and building this personal portfolio as a space to document projects, experiments, and the learning journey ahead.",
-    current: true,
+    period: "February 2026 – May 2026",
+    role: "Teaching Assistant — Database Course",
+    organization: "Universitas Negeri Malang",
+    contributions: [
+      "Assisted practical lessons on relational databases and database management.",
+      "Guided students through SQL, normalization, and structured problem-solving.",
+    ],
+  },
+  {
+    period: "August 2025 – December 2025",
+    role: "Teaching Assistant — Web Programming Course",
+    organization: "Universitas Negeri Malang",
+    contributions: [
+      "Supported web programming laboratory sessions.",
+      "Guided students in HTML, CSS, JavaScript, and web development fundamentals.",
+    ],
+  },
+  {
+    period: "December 2022 – February 2023",
+    role: "IT Support Intern",
+    organization: "PT Kawasan Berikat Nusantara",
+    contributions: [
+      "Supported hardware, software, and network troubleshooting.",
+      "Assisted LAN connectivity and device configuration.",
+    ],
   },
 ];

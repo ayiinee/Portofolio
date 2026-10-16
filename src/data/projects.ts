@@ -1,56 +1,508 @@
-export type ProjectCategory = "Web development" | "Explorations";
+import type { Project } from "@/types/project";
 
-export type Project = {
-  id: string;
-  title: string;
-  subtitle: string;
-  category: ProjectCategory;
-  kind: string;
-  image: string;
-  imageAlt: string;
-  tags: string[];
-  description: string;
-  approach: string;
-  href: string | null;
-};
-
+// Content authority: the supplied master brief.
+// TODO: Add approved real media to each gallery and coverImage.
+// TODO: Confirm detailed SiDika and Anabool feature ownership before expanding contributions.
 export const projects: Project[] = [
   {
-    id: "personal-portfolio",
-    title: "A space of my own",
-    subtitle: "Personal portfolio · Design & development",
-    category: "Web development",
-    kind: "This website",
-    image: "/images/portfolio-preview.svg",
-    imageAlt:
-      "Blue editorial portfolio interface with serif typography and a portrait card",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
-    description:
-      "Turning a single HTML design concept into a responsive, component-based portfolio with a soft blue palette and a little personality.",
-    approach:
-      "Built with the Next.js App Router, reusable sections, and typed content files. Motion handles entrances and scroll reveals; CSS keeps the portrait interaction subtle. Reduced-motion preferences are respected throughout.",
-    href: "#top",
+    slug: "aws-serverless-ticketing",
+    title: "AWS Serverless Ticketing Architecture",
+    year: 2024,
+    category: "Cloud & DevOps",
+    tags: [],
+    type: "Provincial Cloud Computing Competition Challenge",
+    role: "Cloud Computing Competitor",
+    featured: true,
+    shortDescription:
+      "Deploying an event-driven concert ticketing application using AWS serverless services, secure networking, asynchronous messaging, and managed databases.",
+    overview: [
+      "A cloud infrastructure challenge from the 2024 provincial Student Skills Competition (LKS), focused on deploying a pre-developed concert ticketing application using AWS serverless architecture.",
+      "The challenge required configuring AWS services and connecting application components within a secure, reliable environment.",
+    ],
+    technologies: [
+      "AWS",
+      "Lambda",
+      "API Gateway",
+      "SQS",
+      "RDS PostgreSQL",
+      "DynamoDB",
+      "S3",
+      "VPC",
+      "IAM",
+      "SSM Parameter Store",
+      "CloudWatch",
+      "AWS Amplify",
+    ],
+    gallery: [],
+    limitations: [
+      "The competition supplied the application source code and architecture reference. My work focused on AWS configuration and service integration.",
+      "This was a controlled provincial LKS competition environment, rather than a long-running production deployment.",
+    ],
+    featuredOrder: 1,
+    challenge:
+      "Configure and connect the supplied ticketing application components within a secure AWS environment, including asynchronous processing and managed databases.",
+    personalContributions: [
+      "Configured AWS networking and security groups for the application architecture.",
+      "Worked with AWS Lambda functions and API Gateway REST/WebSocket endpoints.",
+      "Integrated relational and NoSQL databases using Amazon RDS and DynamoDB.",
+      "Configured SQS for decoupled order and payment processing.",
+      "Worked with Amazon S3 for transaction evidence and AWS Systems Manager Parameter Store for application configuration.",
+      "Configured application access controls and monitoring with IAM and CloudWatch.",
+    ],
+    status: "Competition exercise",
+    nextProject: "aws-infrastructure-recovery",
   },
   {
-    id: "notes-studio",
-    title: "A quieter kind of workspace",
-    subtitle: "Notes Studio · Interface exploration",
-    category: "Explorations",
-    kind: "Illustrative concept",
-    image: "/images/notes-preview.svg",
-    imageAlt:
-      "Illustrative lavender notes workspace with a sidebar and an open daily note",
-    tags: ["UI exploration", "Visual design", "Concept"],
-    description:
-      "An illustrative interface study imagining a calmer place to collect thoughts. This is sample portfolio content, ready to be replaced with a real project.",
-    approach:
-      "The concept explores generous spacing, a restrained lavender palette, and a clear reading hierarchy. The preview is a static illustration; a working notes application has not been built.",
-    href: null,
+    slug: "aws-infrastructure-recovery",
+    title: "AWS Infrastructure Automation & Recovery",
+    year: 2024,
+    category: "Cloud & DevOps",
+    tags: [],
+    type: "Provincial Cloud Computing Competition Challenge",
+    role: "Cloud Computing Competitor",
+    featured: true,
+    shortDescription:
+      "Configuring a multi-stage AWS deployment environment with load balancing, auto scaling, private networking, shared storage, and backup recovery.",
+    overview: [
+      "An AWS infrastructure challenge focused on deploying a pre-developed file storage application in development and production environments.",
+      "The task emphasized deployment automation, infrastructure reliability, secure networking, and recovery procedures.",
+    ],
+    technologies: [
+      "AWS",
+      "Elastic Beanstalk",
+      "EC2",
+      "VPC",
+      "ALB",
+      "Auto Scaling",
+      "Aurora MySQL",
+      "EFS",
+      "EBS",
+      "AWS Backup",
+      "SNS",
+      "CloudWatch",
+    ],
+    gallery: [],
+    limitations: [
+      "The application source code and architecture reference were supplied for the competition. My work focused on infrastructure implementation.",
+      "This case study describes a competition exercise; production uptime, traffic, and recovery metrics were not established.",
+    ],
+    featuredOrder: 2,
+    challenge:
+      "Deploy the supplied file-storage application across development and production environments, with private networking, scaling, shared storage, and recovery procedures.",
+    personalContributions: [
+      "Configured VPC networking with public and private subnets, route tables, and NAT Gateway.",
+      "Worked with Elastic Beanstalk to deploy a Node.js application across multiple environments.",
+      "Configured Application Load Balancer and Auto Scaling.",
+      "Integrated Aurora MySQL and Amazon EFS.",
+      "Configured access restrictions for application instances and databases.",
+      "Worked with AWS Backup, SNS notifications, CloudWatch, and backup/restore workflows.",
+    ],
+    status: "Competition exercise",
+    previousProject: "aws-serverless-ticketing",
+    nextProject: "waspadai",
+  },
+  {
+    slug: "waspadai",
+    title: "WaspadAI",
+    year: 2026,
+    category: "AI & Security",
+    tags: [],
+    type: "Android & AI Hackathon Application",
+    role: "Backend & Android Developer",
+    featured: true,
+    shortDescription:
+      "An AI-assisted digital safety platform that helps users evaluate suspicious information and social engineering risks before taking action.",
+    overview: [
+      "WaspadAI is an Android-based digital safety platform designed to help users identify suspicious digital interactions.",
+      "The application combines AI-assisted verification, risk assessment, supporting evidence, safety recommendations, educational features, and community participation.",
+    ],
+    technologies: [
+      "Kotlin",
+      "Android",
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "Supabase",
+      "REST API",
+      "WebSockets",
+      "Docker",
+      "AI API Integration",
+    ],
+    gallery: [],
+    limitations: [
+      "Developed collaboratively as a hackathon MVP. AI verification integrates a remote service; it does not represent personal development or training of the underlying model.",
+      "Proposed integrations should be considered separately from the implemented modules described here.",
+    ],
+    featuredOrder: 3,
+    challenge:
+      "Connect Android verification workflows to backend services and remote AI analysis, with authentication, media handling, and real-time community functionality.",
+    personalContributions: [
+      "Contributed to the initial Android and FastAPI project setup, Supabase database configuration, migrations, and access policies.",
+      "Implemented backend authentication and developed API functionality for application modules.",
+      "Integrated text and image verification with a remote AI service, including validation, media storage, error handling, and verification history.",
+      "Developed Android features supporting verification, conversation management, screen capture, overlay functionality, and quick-access verification.",
+      "Contributed to community features including publishing, moderation, user interactions, and real-time communication through WebSockets.",
+      "Implemented supporting application modules, tests, API documentation, CI configuration, and staging smoke-test workflows.",
+    ],
+    engineeringHighlights: [
+      "Multi-component architecture.",
+      "Backend and Android communication.",
+      "Security and access management.",
+      "Remote AI service integration.",
+      "Media handling and storage.",
+      "Real-time application functionality.",
+      "Testing and CI workflows.",
+    ],
+    status: "Hackathon MVP",
+    repositoryUrl: "https://github.com/ayiinee/WaspadAI",
+    previousProject: "aws-infrastructure-recovery",
+    nextProject: "panenin",
+  },
+  {
+    slug: "panenin",
+    title: "Panenin",
+    year: 2026,
+    category: "Backend & Web",
+    tags: ["AI Integration", "Mobile", "WhatsApp"],
+    type: "Agricultural Supply-Chain Platform",
+    role: "Backend & AI Integration Developer",
+    featured: true,
+    shortDescription:
+      "Connecting farmers and culinary businesses through a mobile platform and AI-assisted WhatsApp workflows.",
+    overview: [
+      "Panenin is an agricultural supply-chain platform designed to connect farmers directly with culinary SMEs.",
+      "The platform explores easier access to agricultural products, supplier discovery, account management, and AI-assisted interactions through WhatsApp.",
+    ],
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Python",
+      "FastAPI",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Fonnte",
+      "OpenClaw",
+      "RAG",
+      "REST APIs",
+    ],
+    gallery: [],
+    limitations: [
+      "Application modules and AI/WhatsApp integration are at different stages. The AI and WhatsApp work remains an ongoing integration effort.",
+      "The project is a collaborative platform; it is not presented as a production-ready agricultural marketplace.",
+    ],
+    featuredOrder: 4,
+    challenge:
+      "Connect farmer and buyer application workflows with account management, role onboarding, and an evolving AI-assisted WhatsApp integration.",
+    personalContributions: [
+      "Initialized the Flutter and FastAPI project foundations and prepared development configurations.",
+      "Designed and configured Supabase database structures, migrations, seed data, and access policies.",
+      "Implemented email and Google authentication, backend token verification, password recovery, and user role onboarding.",
+      "Developed farmer navigation, profile functionality, application validation, and frontend/backend integrations.",
+      "Contributed to a TypeScript-based WhatsApp service with Fonnte webhook handling, AI provider integrations, OpenClaw, and RAG retrieval/ingestion components.",
+      "Developed WhatsApp account-linking workflows and Panenin Core integration, including account status and summary commands, error handling, and smoke tests.",
+    ],
+    engineeringHighlights: [
+      "Multi-service application integration.",
+      "Authentication and user roles.",
+      "Relational database design.",
+      "WhatsApp webhook processing.",
+      "AI retrieval and integration.",
+      "API validation and testing.",
+    ],
+    status: "Application development & ongoing AI integration",
+    repositoryUrl: "https://github.com/ayiinee/panenin",
+    previousProject: "waspadai",
+    nextProject: "smartbin-ai",
+  },
+  {
+    slug: "smartbin-ai",
+    title: "SmartBin AI",
+    year: 2026,
+    category: "AI & Security",
+    tags: ["IoT", "Computer Vision", "Backend"],
+    type: "Hackathon Software Prototype",
+    role: "Backend & AI Integration Developer",
+    featured: true,
+    shortDescription:
+      "A multimodal waste-management prototype combining visual and audio classification with environmental monitoring.",
+    overview: [
+      "SmartBin AI explores intelligent waste classification using visual detection, audio analysis, backend APIs, and estimated environmental impact reporting.",
+      "The system was developed within a hackathon context.",
+    ],
+    technologies: [
+      "Python",
+      "Flask",
+      "SQLAlchemy",
+      "React",
+      "Roboflow",
+      "Computer Vision",
+      "Audio Processing",
+      "Gemini API",
+    ],
+    gallery: [],
+    limitations: [
+      "Developed as a hackathon software prototype. The integration work does not imply personal training of every underlying AI model.",
+      "Environmental impact outputs are estimates, not validated physical measurements.",
+    ],
+    featuredOrder: 5,
+    challenge:
+      "Connect visual and audio classification workflows to monitoring APIs, with anomaly handling and human validation in a hackathon prototype.",
+    personalContributions: [
+      "Developed the Flask backend foundation, database models, migrations, and API structure.",
+      "Implemented dashboard and SmartBin endpoints for monitoring data, locations, and classification records.",
+      "Integrated backend APIs with frontend dashboards and data-fetching components.",
+      "Enhanced visual/audio detection workflows, including automatic detection and annotated inference outputs.",
+      "Implemented visual–audio fusion logic, anomaly handling, and human validation endpoints.",
+      "Developed environmental impact estimation functions and an initial Gemini-powered reporting service. Prepared supporting technical documentation, seed data, and development configuration.",
+    ],
+    engineeringHighlights: [
+      "Backend service architecture.",
+      "Multimodal inference integration.",
+      "API development.",
+      "Data validation.",
+      "Human-in-the-loop anomaly review.",
+      "Environmental impact estimation.",
+    ],
+    status: "Hackathon prototype",
+    repositoryUrl: "https://github.com/ayiinee/smartbin",
+    previousProject: "panenin",
+    nextProject: "desa-sukomulyo",
+  },
+  {
+    slug: "desa-sukomulyo",
+    title: "Website Profil Desa Sukomulyo",
+    year: 2026,
+    category: "Backend & Web",
+    tags: [],
+    type: "Village CMS & Administration System",
+    role: "Full-Stack Developer",
+    featured: true,
+    shortDescription:
+      "A digital village information and administration platform combining content management, public services, and structured administrative data.",
+    overview: [
+      "A village information platform supporting public information delivery, administrative content management, population records, document services, and internal village operations.",
+    ],
+    technologies: [
+      "Laravel",
+      "PHP",
+      "Blade",
+      "JavaScript",
+      "SQL",
+      "TinyMCE",
+      "REST-style Application Endpoints",
+    ],
+    gallery: [],
+    limitations: [
+      "A collaborative application: some public-facing UI features were developed with other team members.",
+      "Administrative screenshots will use sanitized or mock records to protect citizen information.",
+    ],
+    featuredOrder: 6,
+    challenge:
+      "Bring public village content and administrative data workflows into a structured platform with access controls, validation, and maintainable application services.",
+    personalContributions: [
+      "Developed the CMS and administrative dashboard foundation, including user management, authentication, content management, and activity tracking.",
+      "Implemented population records, family administration, village officials, organizational structures, and inventory management.",
+      "Developed administrative letter-service workflows, including submissions, document uploads, review, status tracking, and supporting notifications.",
+      "Built statistical dataset management with Excel import, CSV export, validation, and public data integration.",
+      "Implemented news publishing, rich-text editing, media processing, galleries, and moderation functionality.",
+      "Improved code organization through modular controllers, services, actions, authorization policies, security headers, and automated tests.",
+    ],
+    engineeringHighlights: [
+      "Complex administrative data management.",
+      "CMS architecture.",
+      "Access control and security.",
+      "Document workflow management.",
+      "Database-backed services.",
+      "Application modularization.",
+      "Testing and maintainability.",
+    ],
+    repositoryUrl:
+      "https://github.com/alvinputra2005/Website-Profil-Desa-Sukomulyo",
+    previousProject: "smartbin-ai",
+    nextProject: "bedengan-gis",
+  },
+  {
+    slug: "bedengan-gis",
+    title: "Bedengan GIS",
+    year: 2026,
+    category: "GIS & IoT",
+    tags: [],
+    type: "Geographic Information System",
+    role: "Backend & Admin Dashboard Developer",
+    featured: false,
+    shortDescription:
+      "A geographic information system integrating environmental monitoring, camping management, and mitigation reporting.",
+    overview: [
+      "A geographic information system designed for the Bedengan tourism area, combining tourism information, environmental monitoring, and administrative management.",
+    ],
+    technologies: [
+      "Laravel",
+      "React",
+      "PostgreSQL",
+      "Supabase Storage",
+      "Docker",
+    ],
+    gallery: [],
+    limitations: [
+      "Public mapping, geolocation, routing, and initial real-time monitoring also involve other team members. My contribution focuses on backend, database, dashboards, integration, and administration.",
+    ],
+    challenge:
+      "Integrate environmental monitoring services with database-backed camping administration, access controls, and mitigation reporting.",
+    personalContributions: [
+      "Developed database models and access-control structures.",
+      "Implemented registration and role-based authorization for guests, users, and administrators.",
+      "Built administrative monitoring dashboards with sensor summaries, charts, and integration with existing monitoring services.",
+      "Developed database-backed camping management and administrator CRUD operations.",
+      "Implemented mitigation reporting, report review, status management, and photo storage integration.",
+      "Improved application loading through caching, lazy loading, and frontend/backend optimizations. Added supporting tests and Docker configuration.",
+    ],
+    repositoryUrl:
+      "https://github.com/alvinputra2005/Bedengan-Geography-Information-System",
+    previousProject: "desa-sukomulyo",
+    nextProject: "everbloom-batu",
+  },
+  {
+    slug: "everbloom-batu",
+    title: "Everbloom Batu GIS",
+    year: 2026,
+    category: "GIS & IoT",
+    tags: [],
+    type: "Agrotourism Web Application",
+    role: "Full-Stack Developer",
+    featured: false,
+    shortDescription:
+      "An agrotourism destination discovery platform featuring seasonal information, filtering, and location-based exploration.",
+    overview: [
+      "Everbloom helps visitors explore agrotourism destinations in Batu through destination browsing, seasonal calendars, and recommendation filters.",
+    ],
+    technologies: [
+      "Laravel",
+      "React",
+      "Inertia.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Docker",
+    ],
+    gallery: [],
+    limitations: [
+      "Recommendations use filtering, sorting, and seasonal destination data rather than a machine-learning recommendation engine.",
+      "Leaflet and routing implementation were collaborative team work.",
+    ],
+    challenge:
+      "Make destination discovery navigable through seasonal information, structured destination data, and practical recommendation filters.",
+    personalContributions: [
+      "Developed recommendation pages with filtering by price, category, landmarks, and visit dates.",
+      "Implemented destination detail pages with dynamic slug-based routing.",
+      "Developed backend controllers and centralized destination data management.",
+      "Designed destination database structures, migrations, models, and seeders.",
+      "Integrated calendar information and homepage selections with destination recommendations.",
+      "Improved query efficiency, component loading, asset handling, and frontend responsiveness. Added feature tests and Docker configuration.",
+    ],
+    repositoryUrl:
+      "https://github.com/alvinputra2005/Everbloom-Batu-Geographic-Information-System",
+    previousProject: "bedengan-gis",
+    nextProject: "assyifa-laundry",
+  },
+  {
+    slug: "assyifa-laundry",
+    title: "Assyifa Laundry",
+    year: 2025,
+    category: "Backend & Web",
+    tags: [],
+    type: "Business Service Website",
+    role: "Full-Stack Web Developer",
+    featured: false,
+    shortDescription:
+      "A laundry business website featuring service discovery, online reservations, customer assistance, and administrative management.",
+    overview: [
+      "Assyifa Laundry is a web platform designed to help customers explore services, submit reservations, and contact a laundry business.",
+    ],
+    technologies: ["Laravel", "PHP", "Blade", "JavaScript", "CSS", "SQL"],
+    gallery: [],
+    limitations: [
+      "WhatsApp assistance uses prefilled message links, rather than automated WhatsApp API messaging.",
+      "Authentication scaffolding and database components also involved teammates.",
+    ],
+    challenge:
+      "Connect public service information and reservation forms with database-backed administrative workflows.",
+    personalContributions: [
+      "Developed initial public pages for Home, About, Services, Contact, and Reservation.",
+      "Implemented reservation and helpdesk workflows with validation and database storage.",
+      "Integrated dynamic service selection, pricing, and prepared WhatsApp message links.",
+      "Developed administrative dashboards and service CRUD operations.",
+      "Implemented reservation listings and improved admin navigation and access behavior.",
+      "Refined frontend forms, routing, styling, and asset loading.",
+    ],
+    repositoryUrl: "https://github.com/ayiinee/laundry-web",
+    previousProject: "everbloom-batu",
+    nextProject: "sidika-admin",
+  },
+  {
+    slug: "sidika-admin",
+    title: "SiDika / Dinoyo Kamera Admin",
+    year: 2025,
+    category: "Backend & Web",
+    tags: [],
+    type: "Business Administration System",
+    role: "Admin-Side Developer",
+    featured: false,
+    shortDescription:
+      "An administrative web application supporting digital operations and data management for Dinoyo Kamera.",
+    overview: [
+      "A business administration and data-management project developed in the context of Dinoyo Kamera's digital operations.",
+    ],
+    technologies: ["Laravel", "PHP", "MySQL"],
+    gallery: [],
+    limitations: [
+      "The linked public storefront provides business context. It does not establish authorship of the storefront frontend.",
+    ],
+    liveUrl: "https://dinoyokamera.com/",
+    contributionStatement:
+      "Contributed to the administrative web application for a Laravel-based Mini-ERP with an integrated MySQL database.",
+    previousProject: "assyifa-laundry",
+    nextProject: "anabool",
+  },
+  {
+    slug: "anabool",
+    title: "Anabool",
+    year: 2026,
+    category: "AI & Security",
+    tags: ["Mobile", "Computer Vision", "RAG"],
+    type: "Hackathon Mobile Application",
+    role: "Team Contributor",
+    featured: false,
+    shortDescription:
+      "A mobile application concept combining pet-care guidance, preliminary visual screening, and responsible cat-litter waste management.",
+    overview: [
+      "Anabool explores how computer vision, an educational AI assistant, and organized waste-collection workflows can support pet owners and encourage safer waste management practices.",
+    ],
+    technologies: [
+      "Flutter",
+      "Dart",
+      "FastAPI",
+      "Python",
+      "Supabase",
+      "Firebase",
+      "Computer Vision",
+      "RAG",
+      "OSRM",
+    ],
+    gallery: [],
+    limitations: [
+      "The described screening, RAG assistant, pickup, and reward workflows are product concepts or documented plans; implementation status is not established here.",
+      "Visual screening is preliminary guidance, not a medical diagnosis or reliable detection of Toxoplasma gondii.",
+    ],
+    status: "Hackathon concept",
+    repositoryUrl: "https://github.com/ayiinee/anabool",
+    contributionStatement:
+      "Participated in the Anabool hackathon team. This overview describes the team concept; individual feature ownership is not attributed here.",
+    previousProject: "sidika-admin",
   },
 ];
 
-export const projectFilters = [
-  "All work",
-  "Web development",
-  "Explorations",
-] as const;
+export const featuredProjects = projects
+  .filter((project) => project.featured)
+  .sort((a, b) => (a.featuredOrder ?? 0) - (b.featuredOrder ?? 0));
+export const getProject = (slug: string) =>
+  projects.find((project) => project.slug === slug);

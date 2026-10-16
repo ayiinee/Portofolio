@@ -1,13 +1,14 @@
 import { ArrowUp } from "lucide-react";
+import Link from "next/link";
 import { profile } from "@/data/profile";
 
 export function Footer() {
   return (
     <footer className="footer">
-      <a href="/#top" className="brand" aria-label="Back to home">
+      <Link href="/#top" className="brand" aria-label="Back to home">
         {profile.shortName}
         <span>.</span>
-      </a>
+      </Link>
       <p>
         © {new Date().getUTCFullYear()} {profile.name}. Made with curiosity &
         intention.

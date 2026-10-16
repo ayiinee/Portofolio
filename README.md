@@ -1,76 +1,96 @@
-# Qurrotul A'ini — Personal Portfolio
+# Qurrotul A’ini — Personal Portfolio
 
-Portfolio berbasis **Next.js App Router, TypeScript, Tailwind CSS, Motion, dan Lucide React**. Desain mengadaptasi HTML `portfolio_misela_paul_v2.html`: gradasi biru lembut, navbar kaca, portrait inline, dan tipografi editorial. Font: **Plus Jakarta Sans + Instrument Serif**, di-host melalui `next/font`.
+An English-language engineering portfolio built with Next.js App Router, TypeScript, Tailwind CSS, Motion, and Lucide. The editorial styling uses Plus Jakarta Sans and Instrument Serif via `next/font`, a powder-blue gradient, and a small inline portrait. Content is local typed data; no backend, database, or CMS is required.
 
-## Menjalankan project
+## Run locally
 
-Gunakan Node.js **20.9 atau lebih baru** (direkomendasikan Node.js 24 LTS).
+Use Node.js 24 LTS (Next.js minimum: 20.9).
+
+Type checking retains TypeScript 7 through the `@typescript/native` alias. The `typescript` package name points to the official TypeScript 6 compatibility API, as required by the current ESLint parser.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Buka alamat Local yang ditampilkan terminal, biasanya <http://localhost:3000>.
+Visit the Local URL printed by Next.js, normally http://localhost:3000. The first build needs internet access to download the Google Fonts; the application then serves them locally.
 
 ```sh
+npm run lint
 npm run typecheck
 npm run build
 npm start
 ```
 
-Build pertama membutuhkan koneksi internet untuk mengunduh Google Fonts. Setelah build, font dilayani dari aplikasi sendiri.
+The homepage includes About, Experience, six selected projects, Skills, Education & Achievements, and Contact. `/projects` contains all 11 projects with category filters and Load More. Every project has a statically generated `/projects/[slug]` case study.
 
-## Struktur
+## Edit content
 
-```text
-src/
-  app/                  # Root layout, metadata, halaman, dan CSS global
-  components/
-    layout/             # Navbar responsive + Footer
-    sections/           # Hero, About, Experience, Projects, Skills, Contact
-    ui/                 # PortraitCard + SectionHeading
-    animations/         # Reveal
-  data/
-    profile.ts          # Nama, profesi, email, foto, dan tautan opsional
-    projects.ts         # Daftar proyek + isi detail
-    experience.ts       # Timeline pendidikan / pengalaman
-    skills.ts           # Kelompok teknologi
-  lib/utils.ts          # Helper penggabungan class Tailwind
-public/
-  images/               # Portrait placeholder + ilustrasi preview proyek
-  icon.svg
+- `src/data/profile.ts`: identity, hero copy, confirmed email, social links, portrait configuration, and optional résumé path.
+- `src/data/projects.ts`: ordered project records. The `Project` and `ProjectMedia` interfaces live in `src/types/project.ts`. Set `featured` and `featuredOrder` to choose homepage projects. Maintain neighboring slugs when changing the collection order.
+- `src/data/experience.ts`, `skills.ts`, and `achievements.ts`: employment, skills, education, awards, and training. Homepage biography copy lives in the About component.
+- `src/app/globals.css`: shared colors, typography, spacing, responsive layouts, focus indicators, and reduced-motion styles.
+
+Project records distinguish personal contributions from team scope, competition exercises, prototypes, concepts, and ongoing integrations. Keep missing details optional. Source TODOs are editorial notes and are not rendered publicly. SiDika and Anabool intentionally use concise role statements until individual feature ownership is confirmed.
+
+## Add approved media
+
+The portrait and project media currently use clearly labeled placeholders. No placeholder represents an actual photograph, project screenshot, or architecture result.
+
+1. Put the owner's photograph under `public/images/portrait/`, set its path and alt text in `profile.ts`, and set `portraitIsPlaceholder: false`.
+2. Put project images under `public/images/projects/[slug]/`. Prefer optimized WebP or AVIF for screenshots and photographs. Use sufficient resolution for diagrams.
+3. Add `coverImage`, `gallery`, or `architecture.media` to the corresponding project record:
+
+```ts
+{
+  src: "/images/projects/waspadai/verification-01.webp",
+  width: 1200,
+  height: 800,
+  alt: "Describe the actual verification screen shown",
+  caption: "Describe the documented workflow and context",
+  type: "screenshot",
+  provenance: "original",
+}
 ```
 
-## Personalisasi konten
+Media types: `screenshot`, `mobile`, `diagram`, `photo`, `presentation`, `workflow`. Provenance can be `original`, `competition-provided`, or `reconstructed`. The latter two automatically add visible attribution. Set `type: "diagram"` for architecture covers so they are contained rather than cropped. A dedicated architecture section takes `{ description, media }` and supports enlargement.
 
-- Edit `src/data/profile.ts` untuk identitas, email, GitHub, LinkedIn, URL website, dan résumé. `shortName` digunakan di navbar dan hero; `name` untuk nama lengkap.
-- Ganti portrait ilustrasi dengan foto sendiri, misalnya `public/images/portrait.jpg`, lalu ubah `portrait` dan `portraitAlt`. Foto raster menggunakan optimasi `next/image`.
-- Tambahkan CV asli sebagai `public/resume.pdf`, lalu set `resume: "/resume.pdf"`. Tombol unduh hanya muncul ketika path diisi. File PDF contoh tidak dibuat.
-- Isi `siteUrl` dengan domain produksi untuk metadata URL. Ubah `public/icon.svg` jika ingin mengganti monogram.
-- Isi proyek asli di `src/data/projects.ts`. **Notes Studio adalah contoh konsep visual**, bukan aplikasi yang sudah dibangun. Tautan proyek hanya muncul jika `href` tersedia.
-- Tambahkan universitas, tahun, dan pengalaman yang benar di `src/data/experience.ts`. Konten awal hanya menyatakan profesi yang diberikan: Informatics Student.
-- `skills.ts` menjelaskan teknologi website ini; sesuaikan menjadi keahlian pribadi setelah dikonfirmasi.
-- Teks narasi ada di masing-masing komponen section; warna, spacing, dan interaksi visual ada di `globals.css`.
+The Embla gallery has arrows, keyboard navigation, touch swiping, and captions, without autoplay. A single image can be enlarged without carousel controls; missing media shows an abstract placeholder. The dynamically imported lightbox supports keyboard navigation, Escape, captions, and focus restoration.
 
-## Interaksi & aksesibilitas
+Sanitize citizen, customer, and internal administration records before adding screenshots. Do not publish unapproved internal media. The Dinoyo Kamera storefront link provides business context, rather than evidence of frontend authorship.
 
-- Portrait miring **6° → −5°** saat hover dengan CSS, tanpa zoom atau animasi berulang.
-- Navbar menggunakan CSS `backdrop-filter`; menu mobile mendukung Escape dan menutup setelah memilih tautan.
-- Motion digunakan untuk text entrance dan scroll reveal `whileInView`, sekali per elemen.
-- CSS menangani hover tombol, gradasi, dan smooth scroll.
-- `prefers-reduced-motion` menonaktifkan transisi dan reveal; konten server tetap terbaca saat JavaScript dimatikan.
-- Filter proyek bekerja berdasarkan kategori; detail proyek memakai disclosure HTML native yang dapat dioperasikan dengan keyboard.
-- Contact mengarah ke email melalui `mailto:`. Belum ada backend, database, atau form pengiriman email.
-- Kontrol editor pada HTML referensi adalah fitur preview dan tidak disertakan dalam halaman portfolio publik. Personalisasi dilakukan melalui file data.
+Only set `resume` after adding the real approved PDF. No placeholder CV is included.
 
-## Deploy ke Vercel
+## Validation
 
-1. Push repository ke GitHub.
-2. Import repository melalui **Vercel → Add New → Project**.
-3. Gunakan framework preset **Next.js**, root directory repository ini, dan pengaturan build default (`npm run build`).
-4. Deploy. Vercel dapat membuat preview deployment untuk pull request berikutnya.
+See [VALIDATION.md](VALIDATION.md) for the completed phase summaries, executed checks, and remaining editorial follow-ups.
 
-Tidak memerlukan environment variable untuk versi ini. Project disiapkan untuk Vercel; deployment belum dilakukan dari workspace ini.
+After a production build, run the HTTP checks against a running production server:
 
-Referensi implementasi: [Next.js App Router](https://nextjs.org/docs/app/getting-started/installation), [Tailwind CSS dengan PostCSS](https://tailwindcss.com/docs/installation/using-postcss), [Motion for React](https://motion.dev/docs/react).
+```sh
+npm start
+# In another terminal:
+npm run test:smoke
+```
+
+Browser tests start a production server when port 3000 is free and an isolated gallery fixture server on port 3101:
+
+```sh
+npx playwright install chromium
+npm run test:e2e
+```
+
+To use an installed Chrome instead, set `PLAYWRIGHT_CHANNEL=chrome` in your shell before running the tests. This is the browser used for the local verification of this implementation.
+
+The gallery fixture app is under `tests/gallery-app`; its explicitly labeled test media is outside the portfolio's public directory and is never shipped as project evidence. Tests cover filtering, Load More, all case-study routes, responsive overflow at seven widths, navigation, portrait hover, reduced motion, JavaScript-disabled content, WCAG checks, empty/single/multiple galleries, focus restoration, keyboard controls, and touch swiping. Failure artifacts are ignored by Git.
+
+## Deploy to Vercel
+
+1. Push the repository to GitHub and import it as a Vercel Next.js project with this repository as the root.
+2. Use the default `npm run build` command. Do not enable static export; Vercel provides Next.js image optimization and metadata image generation.
+3. For a custom canonical domain, set `NEXT_PUBLIC_SITE_URL` to the full origin, such as `https://your-domain.example`, before rebuilding. Otherwise Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, then `VERCEL_URL`, supplies the origin.
+4. Deploy and verify canonical URLs, `/sitemap.xml`, `/robots.txt`, and `/opengraph-image` against the actual domain.
+
+An unconfigured local production build omits canonical URLs and sitemap entries instead of inventing a production domain. Development uses localhost. Vercel previews disallow crawler indexing. The sitemap includes the homepage, collection, and all case studies, without fabricated modification dates.
+
+Deployment is not performed by this implementation. Real media, résumé, the optional GPA/research details, and further SiDika/Anabool attribution remain editorial follow-ups.

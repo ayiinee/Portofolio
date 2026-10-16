@@ -1,0 +1,5 @@
+{
+  "name": "portfolio-gallery-qa",
+  "private": true,
+  "description": "Isolated gallery fixtures, never part of the portfolio deployment"
+}

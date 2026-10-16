@@ -12,7 +12,9 @@ export function PortraitCard() {
         priority
         unoptimized={profile.portrait.endsWith(".svg")}
       />
-      {profile.portraitIsPlaceholder && <span className="portrait-label">Photo coming soon</span>}
+      {profile.portraitIsPlaceholder && (
+        <span className="portrait-label">Photo coming soon</span>
+      )}
       <span className="portrait-sparkle" aria-hidden="true">
         ✳
       </span>

@@ -1,9 +1,9 @@
-import { Braces, Layers, Send } from "lucide-react";
+import { Braces, Cloud, GitBranch, Layers, ShieldCheck } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { skills } from "@/data/skills";
 
-const icons = [Braces, Layers, Send];
+const icons = [Cloud, GitBranch, Braces, Layers, ShieldCheck];
 
 export function Skills() {
   return (
@@ -16,13 +16,14 @@ export function Skills() {
         <Reveal>
           <SectionHeading
             number="04"
-            label="THE TOOLBOX"
-            title="Good ideas."
-            accent="The right tools."
+            label="SKILLS & TOOLS"
+            title="The tools behind"
+            accent="my work."
             id="skills-heading"
           />
           <p className="section-description">
-            The technologies bringing this little corner of the web to life.
+            Technologies I’ve worked with across projects, practical learning,
+            and competition challenges.
           </p>
         </Reveal>
         <div className="skills-grid">
@@ -35,7 +36,7 @@ export function Skills() {
                 className="skill-group"
               >
                 <div className="skill-heading">
-                  <Icon size={22} strokeWidth={1.4} />
+                  <Icon size={22} strokeWidth={1.4} aria-hidden="true" />
                   <span>0{index + 1}</span>
                 </div>
                 <h3>{group.category}</h3>
@@ -45,6 +46,16 @@ export function Skills() {
                     <span key={item}>{item}</span>
                   ))}
                 </div>
+                {group.services && (
+                  <div className="skill-detail">
+                    <p>{group.detail}</p>
+                    <div className="skill-chips">
+                      {group.services.map((service) => (
+                        <span key={service}>{service}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </Reveal>
             );
           })}

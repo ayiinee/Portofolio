@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import { profile } from "@/data/profile";
+import { getSiteOrigin } from "@/lib/site";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -16,13 +19,16 @@ const serif = Instrument_Serif({
   display: "swap",
 });
 
+const siteOrigin = getSiteOrigin();
+
 export const metadata: Metadata = {
-  ...(profile.siteUrl ? { metadataBase: new URL(profile.siteUrl) } : {}),
+  ...(siteOrigin ? { metadataBase: new URL(siteOrigin) } : {}),
   title: {
-    default: `${profile.name} — A little curiosity, a lot of possibility`,
+    default: `${profile.name} — Software Engineer | DevOps & Cloud`,
     template: `%s | ${profile.name}`,
   },
   description: profile.description,
+  ...(siteOrigin ? { alternates: { canonical: "/" } } : {}),
   openGraph: {
     title: `${profile.name} — Personal Portfolio`,
     description: profile.description,
@@ -48,7 +54,9 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

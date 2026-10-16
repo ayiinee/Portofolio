@@ -1,74 +1,54 @@
-import { ArrowDownRight, Heart, Lightbulb, Sparkles } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { profile } from "@/data/profile";
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="section about-section"
-      aria-labelledby="about-heading"
-    >
+    <section id="about" className="section" aria-labelledby="about-heading">
       <Reveal>
         <SectionHeading
           number="01"
-          label="A LITTLE INTRODUCTION"
-          title="More than"
-          accent="a name on a screen."
+          label="ABOUT ME"
+          title="A little more"
+          accent="about me."
           id="about-heading"
         />
       </Reveal>
       <div className="about-grid">
+        <Reveal className="about-statement">
+          <p>
+            Curious about the code.
+            <br />
+            Just as curious about what keeps it running.
+          </p>
+          <span>A’ini — learning by building.</span>
+        </Reveal>
         <Reveal className="about-copy">
           <p className="intro-text">
-            I’m {profile.name},<br />
-            an informatics student with a curious mind
-            <span className="text-blue">.</span>
+            I’m Qurrotul A’ini, an Informatics Engineering student at
+            Universitas Negeri Malang with a growing focus on DevOps, Cloud
+            Infrastructure, and Backend Engineering.
           </p>
           <p>
-            This is a growing collection of things I’m making, questions I’m
-            exploring, and ideas I’m bringing to life. A space to document my
-            learning and connect the dots between design and technology.
+            My interest in cloud computing started during vocational high
+            school, where I explored computer networking, Linux server
+            administration, and AWS infrastructure.
           </p>
           <p>
-            There’s a lot more of my story to come. For now, have a look
-            around—and follow along as this space grows.
+            In 2024, I won first place in the city-level Cloud Computing Student
+            Skills Competition (LKS) and continued to compete at the provincial
+            level, working through AWS infrastructure challenges involving
+            serverless applications, networking, deployment, and backup
+            recovery.
           </p>
-          <span className="signature">a little curiosity goes a long way.</span>
-          <ArrowDownRight
-            className="about-arrow"
-            size={43}
-            strokeWidth={1}
-            aria-hidden="true"
-          />
-        </Reveal>
-        <Reveal delay={0.12} className="about-note">
-          <span className="note-pin" aria-hidden="true" />
-          <span className="eyebrow">A FEW THINGS I COME BACK TO</span>
-          <ul>
-            <li>
-              <Lightbulb size={20} strokeWidth={1.4} />
-              <span>
-                Stay curious.<small>Good things start with a question.</small>
-              </span>
-            </li>
-            <li>
-              <Heart size={20} strokeWidth={1.4} />
-              <span>
-                Make it thoughtful.
-                <small>The small details make the difference.</small>
-              </span>
-            </li>
-            <li>
-              <Sparkles size={20} strokeWidth={1.4} />
-              <span>
-                Keep creating.
-                <small>There’s always something new to learn.</small>
-              </span>
-            </li>
-          </ul>
-          <span className="note-signature">a note to myself ↗</span>
+          <p>
+            Since then, I’ve expanded into backend development, AI integration,
+            and collaborative software engineering projects.
+          </p>
+          <p>
+            I enjoy understanding how different parts of a system fit together —
+            from the code and database to the infrastructure that supports the
+            application.
+          </p>
         </Reveal>
       </div>
     </section>
