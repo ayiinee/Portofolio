@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="580" viewBox="0 0 800 580">
+  <defs>
+    <linearGradient id="page" x2="0.2" y2="1"><stop stop-color="#fbfcfe"/><stop offset=".48" stop-color="#f1f6fb"/><stop offset="1" stop-color="#bad5ee"/></linearGradient>
+    <linearGradient id="photo" x2="1" y2="1"><stop stop-color="#abc5dd"/><stop offset="1" stop-color="#e0eaf3"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="17" stdDeviation="17" flood-color="#365775" flood-opacity=".16"/></filter>
+    <clipPath id="round"><rect x="80" y="105" width="640" height="395" rx="9"/></clipPath>
+  </defs>
+  <g transform="rotate(-5 400 300)">
+    <rect x="80" y="105" width="640" height="395" rx="9" fill="url(#page)" filter="url(#shadow)"/>
+    <g clip-path="url(#round)">
+      <rect x="80" y="105" width="640" height="23" fill="#ffffffc9"/>
+      <circle cx="94" cy="117" r="2.5" fill="#d7a9a9"/><circle cx="103" cy="117" r="2.5" fill="#dacaa5"/><circle cx="112" cy="117" r="2.5" fill="#acc6b9"/>
+      <rect x="303" y="111" width="194" height="12" rx="3" fill="#e8eef4"/>
+      <text x="400" y="120" text-anchor="middle" fill="#8a9aac" font-family="Arial,sans-serif" font-size="5">a little corner of the internet</text>
+      <text x="109" y="166" fill="#243a52" font-family="Georgia,serif" font-style="italic" font-size="22">A’ini.</text>
+      <rect x="287" y="145" width="226" height="25" rx="13" fill="#ffffffaa" stroke="#cad7e5" stroke-width=".5"/>
+      <rect x="290" y="148" width="39" height="19" rx="10" fill="#20334a"/>
+      <g font-family="Arial,sans-serif" font-size="6.5" text-anchor="middle"><text x="310" y="160" fill="white">Home</text><text x="353" y="160" fill="#7b8a9e">About</text><text x="400" y="160" fill="#7b8a9e">Experience</text><text x="449" y="160" fill="#7b8a9e">Projects</text><text x="490" y="160" fill="#7b8a9e">Contact</text></g>
+      <rect x="623" y="147" width="66" height="22" rx="11" fill="none" stroke="#3e526a" stroke-width=".7"/><text x="656" y="161" text-anchor="middle" fill="#344c66" font-family="Arial,sans-serif" font-size="7">Let’s talk ↗</text>
+      <circle cx="325" cy="224" r="2" fill="#7f9f95"/><text x="335" y="227" fill="#6a839a" font-family="Arial,sans-serif" font-size="6" letter-spacing="1.5">INFORMATICS STUDENT / ALWAYS EXPLORING</text>
+      <text x="225" y="306" fill="#182b43" font-family="Arial,sans-serif" font-size="61" font-weight="600" letter-spacing="-4">Hi,</text>
+      <g transform="rotate(6 350 276)"><rect x="312" y="237" width="64" height="80" rx="5" fill="white"/><rect x="315" y="240" width="58" height="74" rx="3" fill="url(#photo)"/><path d="M317 314q0-25 27-25t27 25" fill="#425b78"/><ellipse cx="344" cy="272" rx="14" ry="19" fill="#d9ad98"/><path d="M330 276q-7-33 14-32 22 0 14 32l-5-17-12-4-10 9z" fill="#354158"/></g>
+      <text x="393" y="306" fill="#182b43" font-family="Arial,sans-serif" font-size="61" font-weight="600" letter-spacing="-4">I’m A’ini!</text>
+      <text x="400" y="362" text-anchor="middle" fill="#263b54" font-family="Georgia,serif" font-style="italic" font-size="41" letter-spacing="-1.6">Always curious, always creating.</text>
+      <g fill="#657d95" font-family="Arial,sans-serif" font-size="7.5" text-anchor="middle"><text x="400" y="391">An informatics student exploring the space between ideas and technology.</text><text x="400" y="405">Learning, experimenting, and making something meaningful.</text></g>
+      <rect x="300" y="425" width="104" height="29" rx="15" fill="#1e334b"/><text x="352" y="443" fill="white" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5">Explore my work ↗</text>
+      <rect x="413" y="425" width="105" height="29" rx="15" fill="#ffffff88" stroke="#829ab2" stroke-width=".7"/><text x="465" y="443" fill="#344e68" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5">A little about me ↓</text>
+      <text x="400" y="481" text-anchor="middle" fill="#6e8aa4" font-family="Arial,sans-serif" font-size="5.5" letter-spacing="1">SCROLL TO EXPLORE ↓</text>
+    </g>
+  </g>
+</svg>

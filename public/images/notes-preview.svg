@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="580" viewBox="0 0 800 580">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="150%" height="160%"><feDropShadow dx="0" dy="17" stdDeviation="17" flood-color="#504563" flood-opacity=".13"/></filter>
+    <clipPath id="round"><rect x="83" y="105" width="634" height="395" rx="9"/></clipPath>
+  </defs>
+  <g transform="rotate(4 400 300)">
+    <rect x="83" y="105" width="634" height="395" rx="9" fill="#fdfcfb" filter="url(#shadow)"/>
+    <g clip-path="url(#round)">
+      <rect x="83" y="105" width="151" height="395" fill="#f0edf4"/>
+      <rect x="83" y="105" width="634" height="23" fill="#fbfafde6"/>
+      <circle cx="97" cy="117" r="2.5" fill="#d7b0b8"/><circle cx="106" cy="117" r="2.5" fill="#ddd0b5"/><circle cx="115" cy="117" r="2.5" fill="#b8c9bc"/>
+      <rect x="308" y="111" width="185" height="12" rx="3" fill="#eeebf2"/>
+      <text x="400" y="120" text-anchor="middle" fill="#9b91ab" font-family="Arial,sans-serif" font-size="5">notes studio / an interface exploration</text>
+      <text x="103" y="166" fill="#6b5b7e" font-family="Georgia,serif" font-size="22" font-style="italic">notes studio.</text>
+      <rect x="99" y="187" width="117" height="25" rx="5" fill="#e6e0ed"/>
+      <text x="113" y="203" fill="#8f829f" font-family="Arial,sans-serif" font-size="7">⌕  Find a thought...</text>
+      <text x="102" y="241" fill="#a194b0" font-family="Arial,sans-serif" font-size="6" letter-spacing="1.5">YOUR SPACE</text>
+      <g font-family="Arial,sans-serif" font-size="8" fill="#8a7c9b"><text x="114" y="267">☀  My day</text><text x="114" y="297">▤  All notes</text><text x="114" y="327">☆  Favorites</text></g>
+      <rect x="99" y="343" width="117" height="27" rx="5" fill="#dfd7e9"/><text x="114" y="360" fill="#6a567d" font-family="Arial,sans-serif" font-size="8">◌  Little reflections</text>
+      <line x1="102" y1="398" x2="212" y2="398" stroke="#dfd8e8"/>
+      <text x="114" y="425" fill="#9a8ca9" font-family="Arial,sans-serif" font-size="8">+  A new thought</text>
+      <text x="106" y="480" fill="#a296b0" font-family="Georgia,serif" font-style="italic" font-size="10">room for your mind.</text>
+      <text x="266" y="157" fill="#a397af" font-family="Arial,sans-serif" font-size="7">Little reflections  /  A fresh page</text>
+      <text x="666" y="157" fill="#a397af" font-family="Arial,sans-serif" font-size="12">···</text>
+      <text x="286" y="222" fill="#b7a3ca" font-family="Georgia,serif" font-size="31">✳</text>
+      <text x="286" y="255" fill="#a095ae" font-family="Arial,sans-serif" font-size="6.5" letter-spacing="1.6">A MOMENT TO YOURSELF</text>
+      <text x="284" y="299" fill="#4f405f" font-family="Georgia,serif" font-size="34" letter-spacing="-1">Start small. Stay curious.</text>
+      <g fill="#9b8fa7" font-family="Arial,sans-serif" font-size="8.5"><text x="286" y="332">Not every thought needs to become something.</text><text x="286" y="350">Some just need a quiet place to land.</text></g>
+      <line x1="286" y1="373" x2="655" y2="373" stroke="#eee8f2"/>
+      <g font-family="Arial,sans-serif" font-size="8" fill="#8b7c9a"><rect x="287" y="394" width="8" height="8" rx="2" fill="#d9cde4"/><text x="306" y="401">Make space for a new idea</text><rect x="287" y="419" width="8" height="8" rx="2" fill="none" stroke="#d4c8df"/><text x="306" y="426">Notice the little things</text><rect x="287" y="444" width="8" height="8" rx="2" fill="none" stroke="#d4c8df"/><text x="306" y="451">Keep a little room for possibility</text></g>
+      <text x="650" y="480" text-anchor="end" fill="#c0b5ca" font-family="Arial,sans-serif" font-size="6">A STATIC INTERFACE CONCEPT</text>
+    </g>
+  </g>
+</svg>

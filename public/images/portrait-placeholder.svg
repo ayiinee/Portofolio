@@ -1,0 +1,11 @@
+<svg viewBox="0 0 200 245" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <defs><linearGradient id="portraitBg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a5bfdc"/><stop offset=".55" stop-color="#e1e9f3"/><stop offset="1" stop-color="#b7cce1"/></linearGradient><linearGradient id="portraitShirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#384f71"/><stop offset="1" stop-color="#1b2944"/></linearGradient></defs>
+              <rect width="200" height="245" fill="url(#portraitBg)"/>
+              <circle cx="166" cy="30" r="63" fill="#f2f7fc" opacity=".38"/><circle cx="26" cy="205" r="83" fill="#8eafce" opacity=".24"/>
+              <path d="M10 245c0-55 25-82 77-83h25c55 2 78 30 78 83" fill="url(#portraitShirt)"/>
+              <rect x="85" y="145" width="30" height="42" rx="12" fill="#c99782"/>
+              <ellipse cx="100" cy="104" rx="44" ry="56" fill="#e3b7a1"/>
+              <path d="M56 111c-8-37 0-79 36-83 38-6 65 28 51 83-2-25-7-27-16-38-15 2-23-2-30-12-10 17-22 23-40 24z" fill="#354158"/>
+              <circle cx="84" cy="110" r="2.5" fill="#373044"/><circle cx="117" cy="110" r="2.5" fill="#373044"/>
+              <path d="M90 135q10 8 20 0" fill="none" stroke="#a46d6a" stroke-width="3" stroke-linecap="round"/>
+            </svg>
