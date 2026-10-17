@@ -1,6 +1,6 @@
 # Qurrotul A’ini — Personal Portfolio
 
-An English-language engineering portfolio built with Next.js App Router, TypeScript, Tailwind CSS, Motion, and Lucide. The editorial styling uses Plus Jakarta Sans and Instrument Serif via `next/font`, a powder-blue gradient, and a small inline portrait. Content is local typed data; no backend, database, or CMS is required.
+An English-language engineering portfolio built with Next.js App Router, TypeScript, Tailwind CSS, Motion, and Lucide. The desk-inspired design pairs cream paper, cobalt folders, subtle glass panels, a square portrait, and an illustrated lanyard with Plus Jakarta Sans and Instrument Serif. Content is local typed data; no backend, database, or CMS is required.
 
 ## Run locally
 
@@ -30,6 +30,11 @@ The homepage includes About, Experience, six selected projects, Skills, Educatio
 - `src/data/projects.ts`: ordered project records. The `Project` and `ProjectMedia` interfaces live in `src/types/project.ts`. Set `featured` and `featuredOrder` to choose homepage projects. Maintain neighboring slugs when changing the collection order.
 - `src/data/experience.ts`, `skills.ts`, and `achievements.ts`: employment, skills, education, awards, and training. Homepage biography copy lives in the About component.
 - `src/app/globals.css`: shared colors, typography, spacing, responsive layouts, focus indicators, and reduced-motion styles.
+- `src/app/redesign.css`: the moodboard redesign, hero folder composition, square photo, lanyard placement, and coordinated colors across existing sections. Navbar dimensions remain independent of the compact content scale.
+
+The hero greeting uses `TypingGreeting`: the complete accessible greeting is server-rendered, with a one-time visual typing animation after hydration. The scroll cue animates gently and links to About. Both animations respect reduced motion. Hero text is intentionally short; personal background lives in About.
+
+`LanyardCard` combines the decorative generated `public/images/design/blue-lanyard.webp` with editable identity text and the same profile photograph. It is an illustration, not a real credential, certificate, or project image. To replace the photo in both locations, edit `profile.ts`; the hero and badge crop it to 1:1. See [design-qa.md](design-qa.md) for references, asset provenance, and redesign verification.
 
 Project records distinguish personal contributions from team scope, competition exercises, prototypes, concepts, and ongoing integrations. Keep missing details optional. Source TODOs are editorial notes and are not rendered publicly. SiDika and Anabool intentionally use concise role statements until individual feature ownership is confirmed.
 
@@ -61,6 +66,8 @@ Sanitize citizen, customer, and internal administration records before adding sc
 
 Only set `resume` after adding the real approved PDF. No placeholder CV is included.
 
+The open hero folder uses the supplied Figma paths in `public/images/design/folder-back-mask.svg`, `folder-front-mask.svg`, and `folder-glass-edges.svg`. Its front is a live frosted surface with CSS backdrop blur, so photographs remain editable behind the glass. The main photograph still comes from `profile.portrait`; the two extra square photo placeholders live in `Hero.tsx`. Replace those slots with approved photographs when available. `ScrollCue.tsx` uses the existing Motion library and respects reduced motion. The navigation label “Achievement” keeps the existing `#education` destination, which contains education and achievements.
+
 ## Validation
 
 See [VALIDATION.md](VALIDATION.md) for the completed phase summaries, executed checks, and remaining editorial follow-ups.
@@ -82,7 +89,7 @@ npm run test:e2e
 
 To use an installed Chrome instead, set `PLAYWRIGHT_CHANNEL=chrome` in your shell before running the tests. This is the browser used for the local verification of this implementation.
 
-The gallery fixture app is under `tests/gallery-app`; its explicitly labeled test media is outside the portfolio's public directory and is never shipped as project evidence. Tests cover filtering, Load More, all case-study routes, responsive overflow at seven widths, navigation, portrait hover, reduced motion, JavaScript-disabled content, WCAG checks, empty/single/multiple galleries, focus restoration, keyboard controls, and touch swiping. Failure artifacts are ignored by Git.
+The gallery fixture app is under `tests/gallery-app`; its explicitly labeled test media is outside the portfolio's public directory and is never shipped as project evidence. Tests cover filtering, Load More, all case-study routes, responsive overflow at seven widths, navigation, typing completion, square portrait, reduced motion, JavaScript-disabled content, WCAG checks, empty/single/multiple galleries, focus restoration, keyboard controls, and touch swiping. Failure artifacts are ignored by Git.
 
 ## Deploy to Vercel
 

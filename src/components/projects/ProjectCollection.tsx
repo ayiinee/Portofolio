@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { ArrowDown } from "lucide-react";
 import { projectCategories, type ProjectCategory } from "@/types/project";
 
 type Filter = ProjectCategory | "All";
@@ -62,7 +61,7 @@ export function ProjectCollection({ items }: { items: CollectionItem[] }) {
             aria-controls="project-results"
             onClick={() => setLimit((count) => count + 6)}
           >
-            Load More <ArrowDown size={16} />
+            Load More
           </button>
         </div>
       )}

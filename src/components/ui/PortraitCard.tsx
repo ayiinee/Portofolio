@@ -8,16 +8,13 @@ export function PortraitCard() {
         src={profile.portrait}
         alt={profile.portraitAlt}
         width={152}
-        height={190}
+        height={152}
         priority
         unoptimized={profile.portrait.endsWith(".svg")}
       />
       {profile.portraitIsPlaceholder && (
         <span className="portrait-label">Photo coming soon</span>
       )}
-      <span className="portrait-sparkle" aria-hidden="true">
-        ✳
-      </span>
     </span>
   );
 }

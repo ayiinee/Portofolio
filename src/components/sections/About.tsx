@@ -1,55 +1,48 @@
+import { FolderOpen, GraduationCap, X } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { LanyardCard } from "@/components/ui/LanyardCard";
 
 export function About() {
   return (
-    <section id="about" className="section" aria-labelledby="about-heading">
-      <Reveal>
-        <SectionHeading
-          number="01"
-          label="ABOUT ME"
-          title="A little more"
-          accent="about me."
-          id="about-heading"
-        />
-      </Reveal>
-      <div className="about-grid">
-        <Reveal className="about-statement">
-          <p>
-            Curious about the code.
-            <br />
-            Just as curious about what keeps it running.
-          </p>
-          <span>A’ini — learning by building.</span>
+    <section id="about" className="about-desk" aria-labelledby="about-heading">
+      <div className="section about-layout">
+        <Reveal className="about-lanyard">
+          <LanyardCard />
         </Reveal>
-        <Reveal className="about-copy">
-          <p className="intro-text">
-            I’m Qurrotul A’ini, an Informatics Engineering student at
-            Universitas Negeri Malang with a growing focus on DevOps, Cloud
-            Infrastructure, and Backend Engineering.
-          </p>
-          <p>
-            My interest in cloud computing started during vocational high
-            school, where I explored computer networking, Linux server
-            administration, and AWS infrastructure.
-          </p>
-          <p>
-            In 2024, I won first place in the city-level Cloud Computing Student
-            Skills Competition (LKS) and continued to compete at the provincial
-            level, working through AWS infrastructure challenges involving
-            serverless applications, networking, deployment, and backup
-            recovery.
-          </p>
-          <p>
-            Since then, I’ve expanded into backend development, AI integration,
-            and collaborative software engineering projects.
-          </p>
-          <p>
-            I enjoy understanding how different parts of a system fit together —
-            from the code and database to the infrastructure that supports the
-            application.
-          </p>
-        </Reveal>
+        <div className="about-sheet">
+          <div className="sheet-tab">
+            <FolderOpen size={17} aria-hidden="true" />
+            <span>01 / ABOUT ME</span>
+            <X className="sheet-tab-close" size={15} aria-hidden="true" />
+          </div>
+          <div className="about-folder-content">
+            <Reveal className="about-profile-copy">
+              <p className="eyebrow">QURROTUL A’INI</p>
+              <h2 id="about-heading">About me.</h2>
+              <p className="about-lead">
+                I’m an Informatics Engineering student at Universitas Negeri
+                Malang. My projects focus on cloud infrastructure, backend
+                development, DevOps, and AI integrations.
+              </p>
+              <p>
+                I started learning networking, Linux, and AWS in vocational
+                school. In 2024, I won the city-level LKS Cloud Computing
+                competition, then competed at the provincial level.
+              </p>
+              <div className="about-inline-details">
+                <GraduationCap size={21} aria-hidden="true" />
+                <div>
+                  <strong>Universitas Negeri Malang</strong>
+                  <span>Informatics Engineering · 2024–Present</span>
+                </div>
+              </div>
+            </Reveal>
+            <div className="about-sheet-footer">
+              <span>PROFILE / 01</span>
+              <a href="#experience">Experience</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

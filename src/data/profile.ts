@@ -2,9 +2,8 @@ export const profile = {
   name: "Qurrotul A'ini",
   shortName: "A'ini",
   role: "Software Engineer · DevOps & Cloud",
-  tagline: "From code to cloud.",
-  heroDescription:
-    "I'm passionate about what happens behind the scenes of technology — from writing software and designing infrastructure to deploying applications and exploring the cloud.",
+  // tagline: "From code to cloud.",
+  
   description:
     "Explore the portfolio of Qurrotul A'ini, a software engineer focusing on DevOps, cloud infrastructure, backend development, and engineering projects.",
   email: "qurrotulaini0325@gmail.com" as string | null,
@@ -24,6 +23,6 @@ export const navigation = [
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
-  { id: "education", label: "Education" },
+  { id: "education", label: "Achievement" },
   { id: "contact", label: "Contact" },
 ] as const;

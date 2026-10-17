@@ -5,6 +5,7 @@ import { getSiteOrigin } from "@/lib/site";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
+import "./redesign.css";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],

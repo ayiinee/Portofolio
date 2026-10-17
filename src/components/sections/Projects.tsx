@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/projects/ProjectCard";
@@ -34,7 +33,7 @@ export function Projects() {
       </div>
       <div className="section-action">
         <Link className="button button-secondary" href="/projects">
-          Explore All Projects <ArrowUpRight size={16} />
+          Explore All Projects
         </Link>
       </div>
     </section>

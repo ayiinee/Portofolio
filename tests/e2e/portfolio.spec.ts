@@ -13,7 +13,34 @@ test("homepage content, section links, and portrait interaction", async ({
   });
   await page.goto("/");
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator(".tagline")).toHaveText("From code to cloud.");
+  await expect(page.locator(".hero-one-liner")).toHaveCount(0);
+  await expect(page.locator(".hero-greeting")).toHaveAccessibleName(
+    "Hi, I’m A'ini.",
+  );
+  await expect(page.locator(".typing-line")).toHaveClass(/typing-complete/);
+  await expect(page.locator(".scroll-link")).toHaveAttribute(
+    "data-motion",
+    "active",
+  );
+  await expect(page.locator(".hero-edition")).toHaveCount(0);
+  await expect(page.locator(".photo-memory")).toHaveCount(2);
+  await expect(page.locator(".folder-glass-panel")).toBeVisible();
+  // Verify the production CSS retains the actual frosting, not only its tint.
+  await expect(page.locator(".folder-glass-panel")).toHaveCSS(
+    "backdrop-filter",
+    /blur\(16px\)/,
+  );
+  await expect(page.locator(".folder-open")).toHaveCount(0);
+  const glass = await page.locator(".folder-glass-panel").boundingBox();
+  const edge = await page.locator(".folder-glass-edges").boundingBox();
+  expect(Math.abs(glass!.width - edge!.width)).toBeLessThanOrEqual(1);
+  await expect(page.locator(".about-sheet .lanyard-stage")).toHaveCount(0);
+  const lanyard = await page
+    .locator(".about-layout > .about-lanyard")
+    .boundingBox();
+  const aboutSheet = await page.locator(".about-sheet").boundingBox();
+  expect(lanyard!.x + lanyard!.width).toBeLessThanOrEqual(aboutSheet!.x);
+  await expect(page.locator("#about .text-link")).toHaveCount(0);
   await expect(page.locator(".hero-kicker")).toHaveCount(0);
   expect(
     await page
@@ -29,21 +56,23 @@ test("homepage content, section links, and portrait interaction", async ({
     page.getByRole("link", { name: "Let’s Connect" }),
   ).toHaveAttribute("href", "#contact");
   const portrait = page.locator(".portrait-card");
-  await expect(portrait).toHaveCSS(
-    "transform",
-    "matrix(0.994522, 0.104528, -0.104528, 0.994522, 0, 0)",
-  );
+  const dimensions = await portrait.evaluate((element) => ({
+    width: element.clientWidth,
+    height: element.clientHeight,
+  }));
+  expect(Math.abs(dimensions.width - dimensions.height)).toBeLessThanOrEqual(1);
+  await expect(portrait).toHaveCSS("transform", "none");
   await portrait.hover();
-  await expect(portrait).toHaveCSS(
-    "transform",
-    "matrix(0.996195, -0.0871557, 0.0871557, 0.996195, -0.174311, -1.99239)",
-  );
+  await expect(portrait).toHaveCSS("transform", "none");
   await page.mouse.move(0, 0);
-  await expect(portrait).toHaveCSS(
-    "transform",
-    "matrix(0.994522, 0.104528, -0.104528, 0.994522, 0, 0)",
+  await expect(portrait).toHaveCSS("transform", "none");
+  await expect(page.locator(".lanyard-art img")).toHaveAttribute(
+    "src",
+    /blue-lanyard/,
   );
   await page.locator('.nav-pill a[href="#education"]').click();
+  await expect(page.locator(".nav-shell")).toHaveClass(/is-scrolled/);
+  await expect(page.locator(".nav-glass")).toHaveCSS("opacity", "1");
   await expect(page.locator('.nav-pill a[href="#education"]')).toHaveAttribute(
     "aria-current",
     "location",
@@ -168,7 +197,7 @@ test("responsive layouts and mobile navigation", async ({ page }) => {
   await toggle.click();
   await page
     .getByRole("navigation", { name: "Mobile navigation" })
-    .getByRole("link", { name: "Education" })
+    .getByRole("link", { name: "Achievement" })
     .click();
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
   await expect(page.locator("#education")).toBeInViewport();
@@ -182,10 +211,12 @@ test("keyboard, contrast, and reduced motion", async ({ page }) => {
     page.getByRole("link", { name: "Skip to content" }),
   ).toBeFocused();
   await page.locator(".portrait-card").hover();
-  await expect(page.locator(".portrait-card")).toHaveCSS(
-    "transform",
-    "matrix(0.994522, 0.104528, -0.104528, 0.994522, 0, 0)",
+  await expect(page.locator(".portrait-card")).toHaveCSS("transform", "none");
+  await expect(page.locator(".scroll-link")).toHaveAttribute(
+    "data-motion",
+    "static",
   );
+  await expect(page.locator(".scroll-chevron")).toHaveCSS("transform", "none");
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   for (const route of ["/", "/projects", "/projects/waspadai"]) {
     await page.goto(route);
@@ -198,13 +229,17 @@ test("keyboard, contrast, and reduced motion", async ({ page }) => {
 
 test("content and all project links remain readable without JavaScript", async ({
   browser,
+  baseURL,
 }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL,
+  });
   const page = await context.newPage();
-  await page.goto("http://localhost:3000/");
+  await page.goto("/");
   await expect(page.locator("h1")).toBeVisible();
   await expect(page.locator("#about")).not.toHaveCSS("opacity", "0");
-  await page.goto("http://localhost:3000/projects");
+  await page.goto("/projects");
   for (const project of projects)
     await expect(
       page.locator(`noscript a[href="/projects/${project.slug}"]`),

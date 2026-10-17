@@ -1,5 +1,7 @@
 # Implementation and verification
 
+The 18 October 2026 moodboard redesign and its latest verification are documented in [design-qa.md](design-qa.md). The original implementation results below remain historical; the redesign replaces the inline-portrait hero with a square-photo folder composition and adds the lanyard About section.
+
 Verified locally on 15 October 2026 with Node.js 24.19.0, npm 11.17.0, and installed Google Chrome through Playwright.
 
 ## Development phases

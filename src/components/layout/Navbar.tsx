@@ -2,18 +2,26 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { navigation, profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [active, setActive] = useState("top");
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
   const activeId = isHome ? active : "projects";
   const sectionHref = (id: string) => `${isHome ? "" : "/"}#${id}`;
+
+  useEffect(() => {
+    const updateScroll = () => setScrolled(window.scrollY > 24);
+    updateScroll();
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    return () => window.removeEventListener("scroll", updateScroll);
+  }, []);
 
   useEffect(() => {
     if (!isHome) return;
@@ -59,7 +67,8 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="nav-shell">
+    <header className={cn("nav-shell", scrolled && "is-scrolled")}>
+      <div className="nav-glass" aria-hidden="true" />
       <div className="nav-inner">
         <a
           href={sectionHref("top")}
@@ -88,7 +97,7 @@ export function Navbar() {
             className="nav-talk"
             onClick={() => setOpen(false)}
           >
-            Let’s talk <ArrowUpRight size={15} />
+            Let’s talk
           </a>
           <button
             ref={menuRef}
@@ -115,7 +124,6 @@ export function Navbar() {
             onClick={() => setOpen(false)}
           >
             {label}
-            <ArrowUpRight size={16} />
           </a>
         ))}
       </nav>

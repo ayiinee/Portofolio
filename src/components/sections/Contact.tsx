@@ -32,7 +32,7 @@ export function Contact() {
               }
             >
               <Mail size={17} />
-              Let’s Talk <ArrowUpRight size={16} />
+              Let’s Talk
             </a>
           </div>
           <div className="social-links">
@@ -46,11 +46,7 @@ export function Contact() {
             >
               LinkedIn <ArrowUpRight size={14} />
             </a>
-            {profile.email && (
-              <a href={`mailto:${profile.email}`}>
-                Email <ArrowUpRight size={14} />
-              </a>
-            )}
+            {profile.email && <a href={`mailto:${profile.email}`}>Email</a>}
           </div>
           <p className="contact-signoff">thanks for stopping by.</p>
         </Reveal>
