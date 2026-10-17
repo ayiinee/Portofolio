@@ -68,6 +68,8 @@ Only set `resume` after adding the real approved PDF. No placeholder CV is inclu
 
 The open hero folder uses the supplied Figma paths in `public/images/design/folder-back-mask.svg`, `folder-front-mask.svg`, and `folder-glass-edges.svg`. Its front is a live frosted surface with CSS backdrop blur, so photographs remain editable behind the glass. The main photograph still comes from `profile.portrait`; the two extra square photo placeholders live in `Hero.tsx`. Replace those slots with approved photographs when available. `ScrollCue.tsx` uses the existing Motion library and respects reduced motion. The navigation label “Achievement” keeps the existing `#education` destination, which contains education and achievements.
 
+The About layout places the standalone lanyard to the left of its text-only frosted tab panel; on phones they stack in that order. The hero's glass outline uses the same full dimensions as the glass surface, including its intentional overhang. Decorative arrows are kept out of the folder, badge, and navigation; directional controls and useful link indicators remain.
+
 ## Validation
 
 See [VALIDATION.md](VALIDATION.md) for the completed phase summaries, executed checks, and remaining editorial follow-ups.
