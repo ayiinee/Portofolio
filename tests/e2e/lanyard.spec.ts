@@ -5,8 +5,9 @@ for (const width of [1440, 1024, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto("/");
-    await page.locator(".lanyard-motion").waitFor();
     await page.evaluate(() => document.fonts.ready);
+    // Wait for hydration to set up ScrollTrigger before crossing its start.
+    await expect(page.locator(".lanyard-motion")).not.toHaveCSS("transform", "none");
 
     const samples = await page.evaluate(async () => {
       const motion = document.querySelector<HTMLElement>(".lanyard-motion")!;

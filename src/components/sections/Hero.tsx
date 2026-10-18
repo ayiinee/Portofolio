@@ -24,17 +24,7 @@ export function Hero() {
         .to(cards, {
           yPercent: 0, xPercent: 0, rotation: 0, duration: 0.65,
           stagger: 0.1, ease: "power2.inOut", clearProps: "transform,opacity",
-        }, 0.98)
-        .addLabel("cardsSettled")
-        // Unit pathLength keeps this stroke draw independent of viewport size.
-        // fromTo initializes the stroke as hidden; no-JS/reduced-motion uses offset 0.
-        .fromTo(".archive-orbit-back .archive-orbit-path",
-          { attr: { "stroke-dashoffset": 1 } },
-          { attr: { "stroke-dashoffset": 0 }, duration: 0.34, ease: "none" },
-          "cardsSettled+=0.04")
-        .fromTo(".archive-orbit-front .archive-orbit-path",
-          { attr: { "stroke-dashoffset": 1 } },
-          { attr: { "stroke-dashoffset": 0 }, duration: 0.18, ease: "power2.out" });
+        }, 0.98);
     });
     return () => media.revert();
   }, { scope });

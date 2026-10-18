@@ -129,7 +129,7 @@ html.lenis body {
 .archive-visual {
   position: relative;
   /* Scale the whole archive with available screen height, not only its width. */
-  /* Reserve space for the tilted pocket and orbit outside the stage itself. */
+  /* Reserve space for the tilted pocket outside the stage itself. */
   width: min(95%, calc((100svh - 164px) * 1.2));
   margin-right: 5%;
   aspect-ratio: 1.2;
@@ -160,18 +160,6 @@ html.lenis body {
   transform: translateY(var(--letter-rise)) rotate(var(--letter-angle));
   transform-origin: 50% 100%;
 }
-.archive-orbit {
-  position: absolute;
-  z-index: 1;
-  inset: -1% -5% 0;
-  width: 110%;
-  height: 101%;
-  overflow: visible;
-  color: var(--terracotta);
-  opacity: 0.85;
-  pointer-events: none;
-}
-.archive-orbit-front { z-index: 3; }
 .archive-object {
   position: absolute;
   left: 1%;
@@ -292,7 +280,6 @@ html.lenis body {
   .archive-card-2 { left: 30%; top: -36%; width: 40%; }
   .archive-card-3 { left: 58%; top: -14%; transform: rotate(8deg); }
   .archive-wordmark { top: 6%; left: 0; font-size: 24cqw; }
-  .archive-orbit { inset: 0 -2% 0; width: 104%; height: 100%; }
   .archive-front-panel { transform: perspective(1200px) rotateX(-10deg) rotate(-1deg); }
   .archive-folder-label > span { font-size: 1.7cqw; }
   .archive-folder-note { font-size: 1.3cqw; right: 6%; bottom: 8%; }

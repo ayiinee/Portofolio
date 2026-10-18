@@ -25,31 +25,6 @@ function EditorialBackgroundText() {
   );
 }
 
-// Two joined halves form ONE orbit. The lower return crosses in front of the
-// photos and folder; the outward arc passes behind them. Endpoints must match.
-const orbitSegments = {
-  back: "M70 408C0 376 36 254 154 159C304 37 590 15 723 96C836 165 805 250 760 300",
-  front: "M760 300C640 535 330 597 70 408",
-};
-
-function TerracottaOrbitLine({ layer }: { layer: "back" | "front" }) {
-  return (
-    <svg className={`archive-orbit archive-orbit-${layer}`} viewBox="0 0 800 680" fill="none" aria-hidden="true" focusable="false">
-      <path
-        className="archive-orbit-path"
-        d={orbitSegments[layer]}
-        pathLength="1"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeDasharray="1"
-        strokeDashoffset="0"
-        vectorEffect="non-scaling-stroke"
-      />
-    </svg>
-  );
-}
-
 function FolderFront() {
   return (
     <div className="archive-front-panel">
@@ -69,7 +44,6 @@ export function PersonalArchive() {
   return (
     <div className="archive-visual" role="group" aria-label="Personal Archive: a folder of selected work and interface studies">
       <EditorialBackgroundText />
-      <TerracottaOrbitLine layer="back" />
       <div className="archive-object">
         <div className="archive-back" aria-hidden="true" />
         <div className="archive-cards">
@@ -90,7 +64,6 @@ export function PersonalArchive() {
         </div>
         <FolderFront />
       </div>
-      <TerracottaOrbitLine layer="front" />
     </div>
   );
 }

@@ -33,28 +33,6 @@ test("cards insert once, lift on hover, and respect live motion preferences", as
   const card = page.locator(".archive-card-motion").first();
   await expect(page.locator("html")).toHaveClass(/lenis/);
   await expect(card).not.toHaveCSS("transform", "none");
-  const sequence = await page.evaluate(() => new Promise<{
-    sawCardMotion: boolean;
-    orbitDrewBeforeSettled: boolean;
-    completed: boolean;
-  }>((resolve) => {
-    const cards = Array.from(document.querySelectorAll(".archive-card-motion"));
-    const orbit = Array.from(document.querySelectorAll(".archive-orbit-path"));
-    const started = performance.now();
-    let sawCardMotion = false;
-    let orbitDrewBeforeSettled = false;
-    const sample = () => {
-      const moving = cards.some(node => getComputedStyle(node).transform !== "none");
-      const offsets = orbit.map(node => Number(node.getAttribute("stroke-dashoffset")));
-      sawCardMotion ||= moving;
-      if (offsets.some(offset => offset < 0.999) && moving) orbitDrewBeforeSettled = true;
-      if (offsets.every(offset => offset === 0) || performance.now() - started > 5000) {
-        resolve({ sawCardMotion, orbitDrewBeforeSettled, completed: offsets.every(offset => offset === 0) });
-      } else requestAnimationFrame(sample);
-    };
-    sample();
-  }));
-  expect(sequence).toEqual({ sawCardMotion: true, orbitDrewBeforeSettled: false, completed: true });
   await expect.poll(async () => card.evaluate(node => getComputedStyle(node).transform)).toBe("none");
   const fan = await page.locator(".archive-card-position").evaluateAll(nodes => nodes.map(node => {
     const box = node.getBoundingClientRect();
@@ -76,8 +54,6 @@ test("cards insert once, lift on hover, and respect live motion preferences", as
   await expect(page.locator("html")).not.toHaveClass(/lenis/);
   await expect(card).toHaveCSS("transform", "none");
   await expect(page.locator(".archive-copy")).not.toHaveCSS("opacity", "0");
-  for (const path of await page.locator(".archive-orbit-path").all())
-    await expect(path).toHaveAttribute("stroke-dashoffset", "0");
 });
 
 test("collection filtering and Load More remain independent", async ({

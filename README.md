@@ -35,7 +35,7 @@ The homepage includes About, Experience, six selected projects, Skills, Educatio
 
 The hero uses Plus Jakarta Sans semibold with an Instrument Serif italic name. Its second line is 13% larger than the first. `PersonalArchive` keeps the supplied folder masks and edges as separate back/card/front layers. Two existing interface concepts are explicitly labeled as concepts; the center retains the personal monogram. Edit `src/data/archive.ts` to replace them with approved project media and actual case-study links.
 
-`src/lib/gsap.ts` registers GSAP, ScrollTrigger, and `useGSAP`. The hero timeline lasts 2.39 seconds: staggered card arrival, insertion into the overlapping fan, then a single terracotta orbit stroke draw after all three cards settle. The shared `Reveal` animates existing section groups once in view. Context and match-media cleanup support Strict Mode and live motion preference changes.
+`src/lib/gsap.ts` registers GSAP, ScrollTrigger, and `useGSAP`. The hero timeline lasts 1.83 seconds, with staggered card arrival and insertion into the overlapping fan. The shared `Reveal` animates existing section groups once in view. Context and match-media cleanup support Strict Mode and live motion preference changes.
 
 `SmoothScrollProvider` uses the official `lenis/react` adapter. GSAP's ticker is the only animation driver (`autoRaf: false`). Lenis reads CSS scroll-padding for anchor navigation. Coarse-pointer/touch devices and reduced-motion users retain native scrolling. Content is server-rendered in its final visible state, so the page remains readable without JavaScript. Normal anchor links work without the scrolling provider.
 
