@@ -10,7 +10,6 @@ import {
 import Image from "next/image";
 import { PortraitCard } from "@/components/ui/PortraitCard";
 import { TypingGreeting } from "@/components/ui/TypingGreeting";
-import { ScrollCue } from "@/components/ui/ScrollCue";
 import { profile } from "@/data/profile";
 
 export function Hero() {
@@ -33,13 +32,6 @@ export function Hero() {
             className="hero-workspace"
             aria-label="A glimpse inside my portfolio"
           >
-            <div className="workspace-note">
-              <span className="note-dot" />
-              <span>
-                A little curiosity.
-                <br />A lot of possibilities.
-              </span>
-            </div>
             <div className="portfolio-folder">
               <div className="folder-stage">
                 <div className="folder-back-panel" aria-hidden="true" />
@@ -120,11 +112,6 @@ export function Hero() {
               </span>
             </a>
           </div>
-        </div>
-        <div className="hero-footline">
-          <span>THOUGHTFUL CODE. CONNECTED SYSTEMS.</span>
-          <ScrollCue />
-          <span>MADE WITH CURIOSITY</span>
         </div>
       </div>
     </section>

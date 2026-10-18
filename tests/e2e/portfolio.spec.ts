@@ -18,9 +18,11 @@ test("homepage content, section links, and portrait interaction", async ({
     "Hi, I’m A'ini.",
   );
   await expect(page.locator(".typing-line")).toHaveClass(/typing-complete/);
-  await expect(page.locator(".scroll-link")).toHaveAttribute(
-    "data-motion",
-    "active",
+  await expect(page.locator(".hero-footline, .workspace-note")).toHaveCount(0);
+  await expect(page.locator("#about h2")).toHaveText("About me");
+  await expect(page.locator(".profile-panel-glass")).toHaveCSS(
+    "backdrop-filter",
+    /blur\(24px\)/,
   );
   await expect(page.locator(".hero-edition")).toHaveCount(0);
   await expect(page.locator(".photo-memory")).toHaveCount(2);
@@ -170,11 +172,28 @@ test("responsive layouts and mobile navigation", async ({ page }) => {
         ),
         `${route} at ${width}px`,
       ).toBe(true);
-      if (route === "/")
+      if (route === "/") {
+        const heading = await page
+          .locator(".about-section-heading")
+          .boundingBox();
+        const lanyard = await page.locator(".about-lanyard").boundingBox();
+        const panel = await page.locator(".about-sheet").boundingBox();
+        if (width <= 900) {
+          expect(heading!.y + heading!.height).toBeLessThanOrEqual(
+            lanyard!.y + 1,
+          );
+          expect(lanyard!.y + lanyard!.height).toBeLessThanOrEqual(
+            panel!.y + 1,
+          );
+        } else {
+          expect(Math.abs(heading!.x - panel!.x)).toBeLessThanOrEqual(1);
+          expect(lanyard!.x + lanyard!.width).toBeLessThanOrEqual(panel!.x);
+        }
         await page.screenshot({
           path: `artifacts/review/home-${width}.png`,
           fullPage: true,
         });
+      }
       if (width === 1440 && route !== "/")
         await page.screenshot({
           path: `artifacts/review/${route === "/projects" ? "projects" : "case-study"}.png`,
@@ -212,11 +231,10 @@ test("keyboard, contrast, and reduced motion", async ({ page }) => {
   ).toBeFocused();
   await page.locator(".portrait-card").hover();
   await expect(page.locator(".portrait-card")).toHaveCSS("transform", "none");
-  await expect(page.locator(".scroll-link")).toHaveAttribute(
-    "data-motion",
-    "static",
+  await expect(page.locator(".lanyard-stage")).toHaveCSS(
+    "animation-name",
+    "none",
   );
-  await expect(page.locator(".scroll-chevron")).toHaveCSS("transform", "none");
   await expect(page.locator("html")).toHaveCSS("scroll-behavior", "auto");
   for (const route of ["/", "/projects", "/projects/waspadai"]) {
     await page.goto(route);

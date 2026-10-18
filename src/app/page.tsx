@@ -10,8 +10,10 @@ export default function Home() {
   return (
     <>
       <main id="main-content">
-        <Hero />
-        <About />
+        <div className="intro-flow">
+          <Hero />
+          <About />
+        </div>
         <Experience />
         <Projects />
         <Skills />
