@@ -28,8 +28,8 @@ function EditorialBackgroundText() {
 // Two joined halves form ONE orbit. The lower return crosses in front of the
 // photos and folder; the outward arc passes behind them. Endpoints must match.
 const orbitSegments = {
-  back: "M100 408C10 376 36 254 154 159C304 37 590 15 723 96C836 165 785 330 640 398",
-  front: "M640 398C465 575 216 505 100 408",
+  back: "M70 408C0 376 36 254 154 159C304 37 590 15 723 96C836 165 805 250 760 300",
+  front: "M760 300C640 535 330 597 70 408",
 };
 
 function TerracottaOrbitLine({ layer }: { layer: "back" | "front" }) {
