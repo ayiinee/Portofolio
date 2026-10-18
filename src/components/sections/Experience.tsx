@@ -20,8 +20,8 @@ export function Experience() {
           />
         </Reveal>
         <div className="timeline">
-          {experience.map((item) => (
-            <Reveal key={item.role} className="timeline-row">
+          {experience.map((item, index) => (
+            <Reveal key={item.role} className="timeline-row" delay={index * 0.06}>
               <p className="timeline-period">{item.period}</p>
               <div>
                 <h3>{item.role}</h3>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="440" viewBox="0 0 800 440" preserveAspectRatio="none">
+  <!-- Same geometry as archive-front-mask.svg; keep both paths in sync. -->
+  <path d="M38 194C104 189 174 188 234 194C275 198 284 235 326 241C450 250 618 238 762 242C784 243 798 259 798 282V400C798 422 784 438 762 438H38C16 438 2 422 2 400V232C2 210 16 196 38 194Z" fill="none" stroke="white" stroke-opacity=".48" stroke-width="2"/>
+  <path d="M38 194C104 189 174 188 234 194C275 198 284 235 326 241C450 250 618 238 762 242" fill="none" stroke="white" stroke-opacity=".9" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

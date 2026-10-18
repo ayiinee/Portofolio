@@ -1,6 +1,6 @@
 # Qurrotul A’ini — Personal Portfolio
 
-An English-language engineering portfolio built with Next.js App Router, TypeScript, Tailwind CSS, Motion, and Lucide. The desk-inspired design pairs cream paper, cobalt folders, subtle glass panels, a square portrait, and an illustrated lanyard with Plus Jakarta Sans and Instrument Serif. Content is local typed data; no backend, database, or CMS is required.
+An English-language engineering portfolio built with Next.js App Router, TypeScript, Tailwind CSS, GSAP, Lenis, and Lucide. The editorial design pairs warm white, cobalt folders, selective glass, and an illustrated lanyard with Plus Jakarta Sans and Instrument Serif. Content is local typed data; no backend, database, or CMS is required.
 
 ## Run locally
 
@@ -30,11 +30,18 @@ The homepage includes About, Experience, six selected projects, Skills, Educatio
 - `src/data/projects.ts`: ordered project records. The `Project` and `ProjectMedia` interfaces live in `src/types/project.ts`. Set `featured` and `featuredOrder` to choose homepage projects. Maintain neighboring slugs when changing the collection order.
 - `src/data/experience.ts`, `skills.ts`, and `achievements.ts`: employment, skills, education, awards, and training. Homepage biography copy lives in the About component.
 - `src/app/globals.css`: shared colors, typography, spacing, responsive layouts, focus indicators, and reduced-motion styles.
-- `src/app/redesign.css`: the moodboard redesign, hero folder composition, square photo, lanyard placement, and coordinated colors across existing sections. Navbar dimensions remain independent of the compact content scale.
+- `src/app/redesign.css`: existing section styling and lanyard placement. Navbar dimensions remain independent of the compact content scale.
+- `src/app/archive.css`: current hero layout, palette, typography, folder layers, social icons, and responsive adjustments.
 
-The hero greeting uses `TypingGreeting`: the complete accessible greeting is server-rendered, with a one-time visual typing animation after hydration. The scroll cue animates gently and links to About. Both animations respect reduced motion. Hero text is intentionally short; personal background lives in About.
+The hero uses Plus Jakarta Sans semibold with an Instrument Serif italic name. Its second line is 13% larger than the first. `PersonalArchive` keeps the supplied folder masks and edges as separate back/card/front layers. Two existing interface concepts are explicitly labeled as concepts; the center retains the personal monogram. Edit `src/data/archive.ts` to replace them with approved project media and actual case-study links.
 
-`LanyardCard` combines the decorative generated `public/images/design/blue-lanyard.webp` with editable identity text and the same profile photograph. It is an illustration, not a real credential, certificate, or project image. To replace the photo in both locations, edit `profile.ts`; the hero and badge crop it to 1:1. See [design-qa.md](design-qa.md) for references, asset provenance, and redesign verification.
+`src/lib/gsap.ts` registers GSAP, ScrollTrigger, and `useGSAP`. The hero timeline lasts 2.39 seconds: staggered card arrival, insertion into the overlapping fan, then a single terracotta orbit stroke draw after all three cards settle. The shared `Reveal` animates existing section groups once in view. Context and match-media cleanup support Strict Mode and live motion preference changes.
+
+`SmoothScrollProvider` uses the official `lenis/react` adapter. GSAP's ticker is the only animation driver (`autoRaf: false`). Lenis reads CSS scroll-padding for anchor navigation. Coarse-pointer/touch devices and reduced-motion users retain native scrolling. Content is server-rendered in its final visible state, so the page remains readable without JavaScript. Normal anchor links work without the scrolling provider.
+
+`LanyardCard` retains the existing owner image and decorative frame. The About panel uses a paper material; the navbar and folder front are the primary glass surfaces. See [design-qa.md](design-qa.md) for redesign verification.
+
+Social brand icons are official Bootstrap Icons SVG assets in `public/icons/`, with the upstream MIT license included. Lucide continues to supply the existing UI icons.
 
 Project records distinguish personal contributions from team scope, competition exercises, prototypes, concepts, and ongoing integrations. Keep missing details optional. Source TODOs are editorial notes and are not rendered publicly. SiDika and Anabool intentionally use concise role statements until individual feature ownership is confirmed.
 
@@ -66,9 +73,9 @@ Sanitize citizen, customer, and internal administration records before adding sc
 
 Only set `resume` after adding the real approved PDF. No placeholder CV is included.
 
-The open hero folder uses the supplied Figma paths in `public/images/design/folder-back-mask.svg`, `folder-front-mask.svg`, and `folder-glass-edges.svg`. Its front is a live frosted surface with CSS backdrop blur, so photographs remain editable behind the glass. The main hero photograph still comes from `profile.portrait`; the two extra square photo placeholders live in `Hero.tsx`. Replace those slots with approved photographs when available. The note and hero footline have been removed. The navigation label “Achievement” keeps the existing `#education` destination, which contains education and achievements.
+The open hero folder retains `public/images/design/folder-back-mask.svg` for its rear body. Its curved front lip uses `archive-front-mask.svg` and the matching `archive-front-edge.svg` in the same directory; keep their path geometry in sync when editing the shape. The front is a live frosted surface. Cards remain editable DOM links behind it. The navigation label ?Achievement? keeps the existing `#education` anchor and its original content.
 
-Hero and About share the `.intro-flow` gradient canvas. About has an outline heading above its single frosted panel and a dusty-blue lanyard entering from the lower hero. Phones show heading, lanyard, then panel. The supplied PNG, `aini-lanyard-source.png`, supplies the real portrait; an edited transparent `dusty-blue-lanyard-frame.webp` sits in front of the editable identity content. `LanyardCard.tsx` and its CSS set the photo crop and frame insets. `profile-panel-mask.svg` and `profile-panel-edge.svg` keep the panel and tab in one silhouette. No swinging animation is applied. The hero's glass outline uses the same full dimensions as the glass surface, including its intentional overhang. Decorative arrows are kept out of the folder, badge, and navigation; directional controls and useful link indicators remain.
+Hero and About share the off-white `.intro-flow` canvas. A background-only gradient in `src/app/intro-transition.css` starts above About and gradually adds pale blue below it. This scoped stylesheet loads after the general redesign styles so hero decoration changes do not replace the transition. The desktop lanyard starts at the About boundary and reserves its own layout height; it does not depend on hero height. Only the top 120px of the strap image is masked, leaving the clasp, card, identity, and section text fully opaque. About has an outline heading above its single frosted panel. Phones show heading, lanyard, then panel. The supplied PNG, `aini-lanyard-source.png`, supplies the real portrait; an edited transparent `dusty-blue-lanyard-frame.webp` sits in front of the editable identity content. `LanyardCard.tsx` and its CSS set the photo crop and frame insets. `profile-panel-mask.svg` and `profile-panel-edge.svg` keep the panel and tab in one silhouette. No swinging animation is applied. The hero's glass outline uses the same full dimensions as the glass surface, including its intentional overhang. Decorative arrows are kept out of the folder, badge, and navigation; directional controls and useful link indicators remain.
 
 ## Validation
 
@@ -91,7 +98,7 @@ npm run test:e2e
 
 To use an installed Chrome instead, set `PLAYWRIGHT_CHANNEL=chrome` in your shell before running the tests. This is the browser used for the local verification of this implementation.
 
-The gallery fixture app is under `tests/gallery-app`; its explicitly labeled test media is outside the portfolio's public directory and is never shipped as project evidence. Tests cover filtering, Load More, all case-study routes, responsive overflow at seven widths, navigation, typing completion, square portrait, reduced motion, JavaScript-disabled content, WCAG checks, empty/single/multiple galleries, focus restoration, keyboard controls, and touch swiping. Failure artifacts are ignored by Git.
+The gallery fixture app is under `tests/gallery-app`; its explicitly labeled test media is outside the portfolio's public directory and is never shipped as project evidence. Tests cover filtering, Load More, all case-study routes, responsive overflow at seven widths, navigation, card entrance/hover, live reduced-motion changes, reduced motion, JavaScript-disabled content, WCAG checks, empty/single/multiple galleries, focus restoration, keyboard controls, and touch swiping. Failure artifacts are ignored by Git.
 
 ## Deploy to Vercel
 

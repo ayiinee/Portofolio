@@ -4,8 +4,12 @@ import { profile } from "@/data/profile";
 import { getSiteOrigin } from "@/lib/site";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SmoothScrollProvider } from "@/components/animations/SmoothScrollProvider";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import "./redesign.css";
+import "./intro-transition.css";
+import "./archive.css";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -55,9 +59,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <Navbar />
-        {children}
-        <Footer />
+        <SmoothScrollProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   );

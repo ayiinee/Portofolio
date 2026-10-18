@@ -3,83 +3,81 @@ import AxeBuilder from "@axe-core/playwright";
 import { projects, featuredProjects } from "../../src/data/projects";
 import fs from "node:fs/promises";
 
-test("homepage content, section links, and portrait interaction", async ({
-  page,
-}) => {
+test("homepage archive, original content, and anchor navigation", async ({ page }) => {
   const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  page.on("console", (message) => {
-    if (message.type() === "error") errors.push(message.text());
-  });
+  page.on("pageerror", error => errors.push(error.message));
+  page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
   await page.goto("/");
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator(".hero-one-liner")).toHaveCount(0);
-  await expect(page.locator(".hero-greeting")).toHaveAccessibleName(
-    "Hi, I’m A'ini.",
-  );
-  await expect(page.locator(".typing-line")).toHaveClass(/typing-complete/);
-  await expect(page.locator(".hero-footline, .workspace-note")).toHaveCount(0);
+  await expect(page.locator("h1")).toHaveText("Hi there,I'm A'ini.");
+  await expect(page.locator(".archive-photo")).toHaveCount(3);
+  await expect(page.locator(".archive-socials a")).toHaveCount(3);
+  await expect(page.locator(".hero-prop, .workspace-stack, .typing-caret")).toHaveCount(0);
+  await expect(page.locator(".archive-pocket")).toHaveCSS("backdrop-filter", /blur\(18px\)/);
+  await expect(page.locator(".profile-panel-glass")).toHaveCSS("backdrop-filter", "none");
   await expect(page.locator("#about h2")).toHaveText("About me");
-  await expect(page.locator(".profile-panel-glass")).toHaveCSS(
-    "backdrop-filter",
-    /blur\(24px\)/,
-  );
-  await expect(page.locator(".hero-edition")).toHaveCount(0);
-  await expect(page.locator(".photo-memory")).toHaveCount(2);
-  await expect(page.locator(".folder-glass-panel")).toBeVisible();
-  // Verify the production CSS retains the actual frosting, not only its tint.
-  await expect(page.locator(".folder-glass-panel")).toHaveCSS(
-    "backdrop-filter",
-    /blur\(16px\)/,
-  );
-  await expect(page.locator(".folder-open")).toHaveCount(0);
-  const glass = await page.locator(".folder-glass-panel").boundingBox();
-  const edge = await page.locator(".folder-glass-edges").boundingBox();
-  expect(Math.abs(glass!.width - edge!.width)).toBeLessThanOrEqual(1);
-  await expect(page.locator(".about-sheet .lanyard-stage")).toHaveCount(0);
-  const lanyard = await page
-    .locator(".about-layout > .about-lanyard")
-    .boundingBox();
-  const aboutSheet = await page.locator(".about-sheet").boundingBox();
-  expect(lanyard!.x + lanyard!.width).toBeLessThanOrEqual(aboutSheet!.x);
-  await expect(page.locator("#about .text-link")).toHaveCount(0);
-  await expect(page.locator(".hero-kicker")).toHaveCount(0);
-  expect(
-    await page
-      .locator("[data-project]")
-      .evaluateAll((nodes) =>
-        nodes.map((node) => node.getAttribute("data-project")),
-      ),
-  ).toEqual(featuredProjects.map((project) => project.slug));
-  await expect(
-    page.getByRole("link", { name: "View My Work" }),
-  ).toHaveAttribute("href", "#projects");
-  await expect(
-    page.getByRole("link", { name: "Let’s Connect" }),
-  ).toHaveAttribute("href", "#contact");
-  const portrait = page.locator(".portrait-card");
-  const dimensions = await portrait.evaluate((element) => ({
-    width: element.clientWidth,
-    height: element.clientHeight,
-  }));
-  expect(Math.abs(dimensions.width - dimensions.height)).toBeLessThanOrEqual(1);
-  await expect(portrait).toHaveCSS("transform", "none");
-  await portrait.hover();
-  await expect(portrait).toHaveCSS("transform", "none");
-  await page.mouse.move(0, 0);
-  await expect(portrait).toHaveCSS("transform", "none");
-  await expect(page.locator(".lanyard-art img")).toHaveAttribute(
-    "src",
-    /blue-lanyard/,
-  );
+  expect(await page.locator("[data-project]").evaluateAll(nodes => nodes.map(node => node.getAttribute("data-project"))))
+    .toEqual(featuredProjects.map(project => project.slug));
+  await expect(page.getByRole("link", { name: "View My Work" })).toHaveAttribute("href", "#projects");
+  await expect(page.getByRole("link", { name: "Let's Connect", exact: true })).toHaveAttribute("href", "#contact");
+  await page.getByRole("link", { name: "View My Work" }).click();
+  await expect(page.locator("#projects")).toBeInViewport();
   await page.locator('.nav-pill a[href="#education"]').click();
-  await expect(page.locator(".nav-shell")).toHaveClass(/is-scrolled/);
+  await expect(page.locator('.nav-pill a[href="#education"]')).toHaveAttribute("aria-current", "location");
   await expect(page.locator(".nav-glass")).toHaveCSS("opacity", "1");
-  await expect(page.locator('.nav-pill a[href="#education"]')).toHaveAttribute(
-    "aria-current",
-    "location",
-  );
   expect(errors).toEqual([]);
+});
+
+test("cards insert once, lift on hover, and respect live motion preferences", async ({ page }) => {
+  await page.goto("/");
+  const card = page.locator(".archive-card-motion").first();
+  await expect(page.locator("html")).toHaveClass(/lenis/);
+  await expect(card).not.toHaveCSS("transform", "none");
+  const sequence = await page.evaluate(() => new Promise<{
+    sawCardMotion: boolean;
+    orbitDrewBeforeSettled: boolean;
+    completed: boolean;
+  }>((resolve) => {
+    const cards = Array.from(document.querySelectorAll(".archive-card-motion"));
+    const orbit = Array.from(document.querySelectorAll(".archive-orbit-path"));
+    const started = performance.now();
+    let sawCardMotion = false;
+    let orbitDrewBeforeSettled = false;
+    const sample = () => {
+      const moving = cards.some(node => getComputedStyle(node).transform !== "none");
+      const offsets = orbit.map(node => Number(node.getAttribute("stroke-dashoffset")));
+      sawCardMotion ||= moving;
+      if (offsets.some(offset => offset < 0.999) && moving) orbitDrewBeforeSettled = true;
+      if (offsets.every(offset => offset === 0) || performance.now() - started > 5000) {
+        resolve({ sawCardMotion, orbitDrewBeforeSettled, completed: offsets.every(offset => offset === 0) });
+      } else requestAnimationFrame(sample);
+    };
+    sample();
+  }));
+  expect(sequence).toEqual({ sawCardMotion: true, orbitDrewBeforeSettled: false, completed: true });
+  await expect.poll(async () => card.evaluate(node => getComputedStyle(node).transform)).toBe("none");
+  const fan = await page.locator(".archive-card-position").evaluateAll(nodes => nodes.map(node => {
+    const box = node.getBoundingClientRect();
+    // Rotated side cards have wider bounding boxes; compare their paper widths.
+    return { left: box.left, right: box.right, top: box.top, width: parseFloat(getComputedStyle(node).width) };
+  }));
+  expect(fan[0].right).toBeGreaterThan(fan[1].left);
+  expect(fan[1].right).toBeGreaterThan(fan[2].left);
+  expect(fan[1].top).toBeLessThan(Math.min(fan[0].top, fan[2].top));
+  expect(fan[1].width).toBeGreaterThan(fan[0].width);
+  const resting = await page.locator(".archive-photo").first().boundingBox();
+  await page.locator(".archive-photo").first().hover();
+  await expect.poll(async () => (await page.locator(".archive-photo").first().boundingBox())!.y).toBeLessThan(resting!.y - 7);
+  await page.mouse.move(0, 0);
+  await page.locator('.nav-pill a[href="#about"]').click();
+  await page.locator('.nav-pill a[href="#top"]').click();
+  await expect(card).toHaveCSS("transform", "none");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(page.locator("html")).not.toHaveClass(/lenis/);
+  await expect(card).toHaveCSS("transform", "none");
+  await expect(page.locator(".archive-copy")).not.toHaveCSS("opacity", "0");
+  for (const path of await page.locator(".archive-orbit-path").all())
+    await expect(path).toHaveAttribute("stroke-dashoffset", "0");
 });
 
 test("collection filtering and Load More remain independent", async ({
@@ -151,6 +149,25 @@ test("every case study has unique metadata, context, and valid navigation", asyn
     page.off("console", onConsole);
   }
   expect((await page.goto("/projects/missing-project"))?.status()).toBe(404);
+});
+
+test("desktop hero fits a single screen at laptop widths", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  for (const [width, height] of [[1444, 810], [1440, 900], [1440, 768], [1366, 768]]) {
+    await page.setViewportSize({ width, height });
+    const hero = await page.locator(".archive-hero").boundingBox();
+    expect(hero!.height).toBeLessThanOrEqual(height + 1);
+    for (const selector of [".archive-heading", ".archive-actions", ".archive-front-panel", ".archive-card-position"]) {
+      for (const element of await page.locator(selector).all()) {
+        const box = (await element.boundingBox())!;
+        expect(box.y).toBeGreaterThanOrEqual(100);
+        expect(box.y + box.height).toBeLessThanOrEqual(height);
+        expect(box.x).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width).toBeLessThanOrEqual(width);
+      }
+    }
+  }
 });
 
 test("responsive layouts and mobile navigation", async ({ page }) => {
@@ -229,8 +246,8 @@ test("keyboard, contrast, and reduced motion", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Skip to content" }),
   ).toBeFocused();
-  await page.locator(".portrait-card").hover();
-  await expect(page.locator(".portrait-card")).toHaveCSS("transform", "none");
+  await page.locator(".archive-photo").first().hover();
+  await expect(page.locator(".archive-photo").first()).toHaveCSS("transform", "none");
   await expect(page.locator(".lanyard-stage")).toHaveCSS(
     "animation-name",
     "none",

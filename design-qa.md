@@ -1,3 +1,58 @@
+# Personal Archive revision ? 18 October 2026
+
+## Current implementation verification
+
+The supplied 1672 ? 941 mockup is the visual direction. The written brief takes precedence where it explicitly differs: Plus Jakarta Sans semibold for the greeting, Instrument Serif italic only for the name, 76/86px desktop sizing, original project content, and existing assets instead of invented project imagery.
+
+Source visual: the user's attached mockup in this conversation. It is available inline, but no standalone source file is available in the workspace. The rendered implementation was visually inspected in Chrome at 1672 ? 941, 390 ? 844, and 320 ? 844, at device scale factor 1. No pixel-diff or combined source/implementation comparison artifact is claimed.
+
+- Final production captures: `artifacts/archive/final-desktop.png`, `final-mobile.png`, and `final-small.png`.
+- Initial captures: `artifacts/archive/iteration-1-desktop.png` and `iteration-1-mobile.png`.
+- Material/spacing refinement: `artifacts/archive/iteration-2-desktop.png`, `iteration-2-mobile.png`, and `iteration-2-small.png`.
+- Runtime evidence: `artifacts/archive/browser-evidence.json` (no browser errors, measured type sizes, and native touch scrolling).
+- Runtime preview: `http://localhost:3200/` (production); the existing development server remains on port 3000.
+
+## Findings and fixes
+
+1. Initial front material was too opaque. Reduced the tint opacity while retaining backdrop blur, the supplied mask geometry, edge highlights, and substantial blue depth. Recaptured at desktop and both phone sizes.
+2. Heading tracking was slightly tight. Relaxed it while keeping the second line at 1.13 times the first. Production measurements are 76px / 85.88px, with the serif name at 87.5976px.
+3. Automated accessibility found 4.46:1 contrast for the active navbar item. Lightened its background to `#edf4fd`; the production WCAG checks now pass on the homepage, project collection, and WaspadAI case study.
+4. Lenis 1.3.27 already reads CSS scroll-padding. Removed the duplicated anchor offset; navbar and CTA anchor checks pass.
+
+## Completed checks
+
+- `npm run lint`: passed.
+- `npm run typecheck`: passed.
+- `npm run build`: passed. The existing unset-production-domain metadata warning remains; configure `NEXT_PUBLIC_SITE_URL` when deploying to a custom domain.
+- Production HTTP smoke checks: passed for all 13 content pages, eleven projects, six featured projects, anchors, assets, SEO endpoints, and unknown-project 404.
+- Chrome production browser suite: **7 passed**. Covers archive/social links, card entrance and hover, live reduced-motion cleanup, anchor navigation, filtering and Load More, every case study, mobile navigation, keyboard access, WCAG checks, and no-JavaScript content.
+- Responsive overflow checks: passed at 320, 375, 390, 768, 1024, 1440, and 1920px on the homepage, collection, and a case study.
+- Separate touch-device check: Lenis is absent and native scrolling works.
+
+## File and dependency summary
+
+- Added `src/app/archive.css`, `src/components/ui/PersonalArchive.tsx`, and `src/data/archive.ts` for the new composition and editable cards.
+- Added `src/lib/gsap.ts` and `src/components/animations/SmoothScrollProvider.tsx`; updated `Reveal.tsx` and root `layout.tsx` for animation and scrolling.
+- Updated Hero, About, Experience, and Projects without replacing the original section content. Existing Skills, Achievement, and Contact use the shared GSAP Reveal automatically.
+- Updated `tests/e2e/portfolio.spec.ts`, `README.md`, `package.json`, and lockfile.
+- Added three official Bootstrap Icons SVG assets and their MIT license under `public/icons/`.
+- Added dependencies: `gsap@3.15.0`, `@gsap/react@2.1.2`, and `lenis@1.3.27`.
+- Previously uncommitted `redesign.css`, `intro-transition.css`, and AGENTS instructions were retained.
+
+## Remaining editorial configuration
+
+Social links already use real values from `src/data/profile.ts`. Hero images and captions are centralized in `src/data/archive.ts`: two existing interface concepts are labeled as concepts, with the personal monogram in the middle. Replace them together with approved media and real case-study destinations when available.
+
+## Formal source comparison limitation
+
+The implementation and functional checks above are complete. The Product Design source-comparison gate remains blocked because no standalone source image is available to construct the required combined source/rendered comparison artifact. This is a verification-artifact limitation, not a failing build or a known responsive defect. A combined visual comparison has not been marked passed.
+
+final result: blocked
+
+---
+
+# Earlier design review (retained for history; predates this revision)
+
 # Moodboard redesign QA — 18 October 2026
 
 final result: passed
@@ -6,7 +61,7 @@ final result: passed
 
 This is an original redesign inspired by the two supplied moodboards, rather than a pixel-for-pixel recreation. The user's requested differences are the visual target: less hero copy, typing greeting, animated scroll cue, a 1:1 photo, gradients from multiple positions, folder/file and glass accents, and an About section with a lanyard. Earlier compact content sizing and original navbar dimensions remain in effect.
 
-Latest revision: Hero and About share a continuous off-white/pale-blue canvas; the hero note and entire footline are removed. About has a decorative outline title with a navy sans-serif “About” and blue italic serif “me” above one frosted tabbed panel. A dusty-blue lanyard enters from the lower hero on desktop, with the supplied real portrait and editable identity behind a transparent frame. Mobile order is heading, lanyard, panel. The open frosted hero folder, glass navbar, verified biography, project content, and navbar dimensions are preserved.
+Latest revision: Hero-to-About transition follows the current hero height. The lanyard enters at the About boundary, with a 120px fade on the upper fabric only. Header and panel remain in normal grid flow; an independent background layer gradually adds pale blue without fading text.
 
 - Folder moodboard source: `C:/Users/THINKPAD/AppData/Local/Temp/codex-clipboard-57826c6d-71fc-4268-8359-5a67995b33cb.png` (1000 × 1500). Local evidence copy: `artifacts/redesign/reference-folder.png`.
 - Lanyard moodboard source: `C:/Users/THINKPAD/AppData/Local/Temp/codex-clipboard-3f1ef91f-32ce-4450-a7bd-0a5bce26073a.png` (1200 × 2417). Local evidence copy: `artifacts/redesign/reference-lanyard.png`.
@@ -184,3 +239,18 @@ Five fidelity surfaces reviewed: existing brand fonts and new title hierarchy; m
 Validation: targeted ESLint, final production build including TypeScript, and four production browser checks passed (homepage/structure, seven-width responsive layouts and mobile navigation, keyboard/contrast/reduced motion, and content without JavaScript). Responsive assertions explicitly verify heading–lanyard–panel order on smaller layouts and header/panel alignment on desktop. HTTP smoke passed 13 pages, all 11 case studies, metadata, navigation, assets, SEO routes, and unknown-slug 404. Capture scripts found no page errors. The existing local metadataBase warning remains; no deployment occurred.
 
 Files: `Hero.tsx`, `About.tsx`, `LanyardCard.tsx`, `src/app/page.tsx`, `redesign.css`, the existing browser test, `README.md`, this report, and four new assets under `public/images/design/` (source PNG, transparent frame WebP, profile panel mask, and matching edge). Old decorative assets remain available but are no longer rendered in About. The hero photo slots remain placeholders; the supplied portrait is used in the requested lanyard only.
+
+## About boundary and strap fade — 2026-10-18
+
+**final result: passed**
+
+Removed the obsolete -140px hero-dependent lanyard offset. The stage now participates in the left grid column's height, with its entry aligned to the About boundary using that section's own top spacing. The heading and panel stay in their normal right-column grid rows. Mobile keeps heading, lanyard, then panel. The frame image's mask reaches full opacity after 120 CSS pixels; no mask or opacity is applied to the section, identity/photo layer, or text. Hardware and the badge lie below the fade. The shared off-white canvas and a background-only gradient beginning 180px above About remove the saturated horizontal boundary and gradually introduce pale blue below.
+
+Evidence: `artifacts/redesign/transition-adjustment-comparison.jpg` combines the preceding production capture (left) and revised capture (right), each originating at 1440 × 1000, scroll Y 450, density 1, reduced motion. Panels are normalized equally to 720 × 500 with preserved aspect ratio. Concurrent changes to hero props, hero minimum height, title styling, and panel glass opacity were retained. The header row now fits its text height rather than forcing it into a fixed-height track. Detailed views: `transition-1440x1000.png`, `transition-1156x668.png`, `transition-1920x1080.png`, `transition-390x844.png`, `transition-320x844.png`, `about-desktop.png`, and `about-small.png` in the same directory. No new assets were generated or edited.
+
+Fidelity review: existing font families, sizes, text wrapping, and copy are retained; header/panel alignment and spacing remain stable; off-white develops gradually into pale blue; both fabric ends fade softly while the clasp, frame, portrait, and identity stay sharp. Navbar dimensions remain 100px desktop and 80px phone. No actionable P0/P1/P2 issue remains.
+
+Validation: full-project ESLint and the production build including TypeScript passed. Four production browser tests passed: homepage/section links, seven-width responsive layout/mobile navigation, keyboard/contrast/reduced motion, and content without JavaScript. A focused browser check at 1440×1000, 1156×668, 1920×1080, 390×844, and 320×844 confirmed the desktop strap starts exactly at About, remains at least 333px below the hero actions in the final captures, reserves enough bottom space, and causes no horizontal overflow. About and identity have no section-wide mask and About opacity is 1. Header/panel remain in flow at every size. Capture checks found no page errors. Metrics: `artifacts/redesign/transition-metrics.json`. The existing local metadataBase warning remains. No deployment occurred.
+
+Files updated for this request: `src/app/redesign.css`, the scoped `src/app/intro-transition.css`, its import in `src/app/layout.tsx`, `README.md`, and this report. Existing tests were reused without adding implementation-mirroring tests. Production preview remains on port 3200.
+Final synchronization: concurrent edits restored the saturated general background while verification was underway. The requested off-white/pale-blue background was moved into `intro-transition.css`, imported last, while retaining the other hero/title changes. The final production build and TypeScript check passed; full-project lint passed and the added layout import passed targeted ESLint. Responsive/mobile navigation and keyboard/contrast/reduced-motion checks passed again after the hero/title changes (2 tests). The final focused five-viewport check additionally verifies computed hero/About backgrounds are transparent and the blue gradient is confined to the background pseudo-element. Refreshed captures and the same-state comparison were reviewed after this synchronization. Existing source assets remain unchanged.

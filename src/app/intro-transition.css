@@ -1,0 +1,24 @@
+/* Keep the section transition independent of hero sizing and decoration. */
+.intro-flow {
+  background:
+    radial-gradient(ellipse 48% 34% at 85% 14%, #a5cce75c, transparent 80%),
+    radial-gradient(ellipse 32% 35% at 9% 8%, #e9ecd575, transparent 85%),
+    #fafaf3;
+}
+.intro-flow .desk-hero {
+  background: transparent;
+}
+.about-desk {
+  background: transparent;
+  background-blend-mode: normal;
+}
+.about-desk::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -180px 0 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 60% at 25% 80%, #c1dced75, transparent 85%),
+    linear-gradient(to bottom, #e2edf600, #e2edf640 25%, #e2edf6b3 100%);
+}

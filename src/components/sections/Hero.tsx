@@ -1,118 +1,64 @@
-import {
-  ArrowUpRight,
-  Cloud,
-  Code2,
-  GitBranch,
-  FolderOpen,
-  FileImage,
-  Image as ImageIcon,
-} from "lucide-react";
-import Image from "next/image";
-import { PortraitCard } from "@/components/ui/PortraitCard";
-import { TypingGreeting } from "@/components/ui/TypingGreeting";
+"use client";
+
+import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { PersonalArchive } from "@/components/ui/PersonalArchive";
 import { profile } from "@/data/profile";
 
 export function Hero() {
+  const scope = useRef<HTMLElement>(null);
+  useGSAP(() => {
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      const cards = gsap.utils.toArray<HTMLElement>(".archive-card-motion", scope.current);
+      // Outer wrappers own the static fan angles; inner wrappers animate into them.
+      // The frosted front always occludes card bottoms, including during insertion.
+      gsap.timeline({ defaults: { ease: "power3.out" } })
+        .from(".archive-copy > *", { y: 16, opacity: 0, duration: 0.55, stagger: 0.08 }, 0)
+        .from(".archive-object", { y: 24, opacity: 0, duration: 0.7 }, 0.18)
+        .from(".archive-wordmark", { opacity: 0, duration: 0.65 }, 0.2)
+        .fromTo(cards,
+          { yPercent: -36, xPercent: (i) => (i - 1) * 9, rotation: (i) => [-4, 2, 4][i], opacity: 0 },
+          { yPercent: -17, xPercent: (i) => (i - 1) * 3, rotation: (i) => [-2, 1, 2][i], opacity: 1, duration: 0.4, stagger: 0.1 }, 0.48)
+        .to(cards, {
+          yPercent: 0, xPercent: 0, rotation: 0, duration: 0.65,
+          stagger: 0.1, ease: "power2.inOut", clearProps: "transform,opacity",
+        }, 0.98)
+        .addLabel("cardsSettled")
+        // Unit pathLength keeps this stroke draw independent of viewport size.
+        // fromTo initializes the stroke as hidden; no-JS/reduced-motion uses offset 0.
+        .fromTo(".archive-orbit-back .archive-orbit-path",
+          { attr: { "stroke-dashoffset": 1 } },
+          { attr: { "stroke-dashoffset": 0 }, duration: 0.34, ease: "none" },
+          "cardsSettled+=0.04")
+        .fromTo(".archive-orbit-front .archive-orbit-path",
+          { attr: { "stroke-dashoffset": 1 } },
+          { attr: { "stroke-dashoffset": 0 }, duration: 0.18, ease: "power2.out" });
+    });
+    return () => media.revert();
+  }, { scope });
+
   return (
-    <section id="top" className="hero desk-hero" aria-labelledby="hero-heading">
-      <div className="desk-hero-inner">
-        <div className="hero-composition">
-          <div className="hero-introduction">
-            <TypingGreeting name={profile.shortName} />
-            <div className="hero-actions">
-              <a href="#projects" className="button button-primary">
-                View My Work <ArrowUpRight size={16} />
-              </a>
-              <a href="#contact" className="hero-connect">
-                Let’s Connect
-              </a>
-            </div>
+    <section ref={scope} id="top" className="archive-hero" aria-labelledby="hero-heading">
+      <div className="archive-layout">
+        <div className="archive-copy">
+          <h1 id="hero-heading" className="archive-heading">
+            <span className="archive-hi">Hi there,</span>
+            <span className="archive-name">I&apos;m <em>{profile.shortName}.</em></span>
+          </h1>
+          <p className="archive-description">Informatics student crafting clean digital experiences.</p>
+          <div className="archive-socials" aria-label="Social links">
+            <a href={profile.github} target="_blank" rel="noreferrer" aria-label="A'ini on GitHub (opens in a new tab)"><span className="archive-brand-icon archive-github" aria-hidden="true" /></a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="A'ini on LinkedIn (opens in a new tab)"><span className="archive-brand-icon archive-linkedin" aria-hidden="true" /></a>
+            {profile.email && <a href={`mailto:${profile.email}`} aria-label="Email A'ini"><span className="archive-brand-icon archive-email" aria-hidden="true" /></a>}
           </div>
-          <div
-            className="hero-workspace"
-            aria-label="A glimpse inside my portfolio"
-          >
-            <div className="portfolio-folder">
-              <div className="folder-stage">
-                <div className="folder-back-panel" aria-hidden="true" />
-                <div className="folder-photos">
-                  {[1, 2].map((number) => (
-                    <div
-                      className={`photo-memory photo-memory-${number}`}
-                      key={number}
-                    >
-                      <div className="file-title">
-                        <FileImage size={12} aria-hidden="true" />
-                        <span>moment-0{number}.jpg</span>
-                      </div>
-                      <div className="photo-slot">
-                        <ImageIcon
-                          size={28}
-                          strokeWidth={1}
-                          aria-hidden="true"
-                        />
-                        <span>Photo coming soon</span>
-                      </div>
-                      <div className="file-caption">
-                        <span>0{number} / Memories</span>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="portrait-file">
-                    <div className="file-title">
-                      <FileImage size={14} aria-hidden="true" />
-                      <span>hello-aini.jpg</span>
-                      <span className="file-dots" aria-hidden="true">
-                        ···
-                      </span>
-                    </div>
-                    <PortraitCard />
-                    <div className="file-caption">
-                      <span>Qurrotul A’ini</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="folder-glass-panel" aria-hidden="true" />
-                <Image
-                  className="folder-glass-edges"
-                  src="/images/design/folder-glass-edges.svg"
-                  alt=""
-                  width={2384}
-                  height={1953}
-                  unoptimized
-                />
-                <div className="folder-front">
-                  <div className="folder-title">
-                    <FolderOpen
-                      size={30}
-                      strokeWidth={1.3}
-                      aria-hidden="true"
-                    />
-                    <span>
-                      my little
-                      <br />
-                      <strong>corner of the web.</strong>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a href="#skills" className="workspace-stack">
-              <span>
-                <Cloud size={17} />
-                Cloud
-              </span>
-              <span>
-                <Code2 size={17} />
-                Backend
-              </span>
-              <span>
-                <GitBranch size={17} />
-                DevOps
-              </span>
-            </a>
+          <div className="archive-actions">
+            <a href="#projects" className="button button-primary">View My Work <ArrowUpRight size={18} aria-hidden="true" /></a>
+            <a href="#contact" className="archive-connect">Let&apos;s Connect</a>
           </div>
         </div>
+        <PersonalArchive />
       </div>
     </section>
   );

@@ -27,8 +27,10 @@ export function Projects() {
         </div>
       </Reveal>
       <div className="projects-grid">
-        {featuredProjects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
+        {featuredProjects.map((project, index) => (
+          <Reveal key={project.slug} delay={(index % 2) * 0.08}>
+            <ProjectCard project={project} />
+          </Reveal>
         ))}
       </div>
       <div className="section-action">
