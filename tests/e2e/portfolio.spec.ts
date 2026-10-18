@@ -14,7 +14,7 @@ test("homepage archive, original content, and anchor navigation", async ({ page 
   await expect(page.locator(".archive-socials a")).toHaveCount(3);
   await expect(page.locator(".hero-prop, .workspace-stack, .typing-caret")).toHaveCount(0);
   await expect(page.locator(".archive-pocket")).toHaveCSS("backdrop-filter", /blur\(18px\)/);
-  await expect(page.locator(".profile-panel-glass")).toHaveCSS("backdrop-filter", "none");
+  await expect(page.locator(".profile-panel-glass")).toHaveCSS("backdrop-filter", "blur(12px)");
   await expect(page.locator("#about h2")).toHaveText("About me");
   expect(await page.locator("[data-project]").evaluateAll(nodes => nodes.map(node => node.getAttribute("data-project"))))
     .toEqual(featuredProjects.map(project => project.slug));

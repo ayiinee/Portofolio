@@ -237,8 +237,6 @@ html.lenis body {
 .archive-folder-label > span { font-size: 1.35cqw; letter-spacing: 0.28em; }
 .archive-folder-note { position: absolute; z-index: 6; right: 7%; bottom: 10%; font-size: 1.1cqw; letter-spacing: 0.11em; color: #304f78; pointer-events: none; }
 
-/* Retain the existing About sheet with a paper material instead of extra glass. */
-.profile-panel-glass { background: #fafbf9; backdrop-filter: none; }
 .project-card { transition: translate 0.25s var(--ease); }
 @media (hover: hover) and (pointer: fine) {
   .project-card:hover { translate: 0 -5px; }

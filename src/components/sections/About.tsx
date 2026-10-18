@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ArrowUpRight, GraduationCap } from "lucide-react";
 import { LanyardCard } from "@/components/ui/LanyardCard";
 import { AboutEntrance } from "@/components/animations/AboutEntrance";
@@ -20,14 +19,6 @@ export function About() {
         </div>
         <div className="about-sheet">
           <div className="profile-panel-glass" aria-hidden="true" />
-          <Image
-            className="profile-panel-edge"
-            src="/images/design/profile-panel-edge.svg"
-            alt=""
-            width={640}
-            height={640}
-            unoptimized
-          />
           <div className="sheet-tab">
             <span>01 / ABOUT</span>
           </div>

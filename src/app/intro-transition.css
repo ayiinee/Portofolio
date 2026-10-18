@@ -9,7 +9,7 @@
   background: transparent;
 }
 .about-desk {
-  background: transparent;
+  background: radial-gradient(ellipse 40% 55% at 82% 45%, #aecfe92e, transparent 85%);
   background-blend-mode: normal;
 }
 .about-desk::before {

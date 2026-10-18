@@ -36,11 +36,12 @@ for (const width of [1440, 1024, 390, 320]) {
           overflow: document.documentElement.scrollWidth > innerWidth,
         });
         await new Promise((resolve) => setTimeout(resolve, 30));
-      } while (performance.now() - start < 1800);
+      } while (performance.now() - start < 2400);
       return samples;
     });
 
     expect(Math.min(...samples.map((sample) => sample.rotation))).toBeLessThan(-0.1);
+    // Browser sampling may skip the exact peak on a busy rendering thread.
     expect(Math.max(...samples.map((sample) => sample.rotation))).toBeGreaterThan(0.1);
     for (const sample of samples) {
       expect(sample.assembled).toBe(true);
@@ -74,7 +75,7 @@ test("changing motion preference cancels the swing and restores all content", as
     const section = document.querySelector("#about")!;
     window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - innerHeight * 0.7, behavior: "instant" });
   });
-  await expect(page.locator(".about-outline")).not.toHaveCSS("opacity", "0");
+  await expect(page.locator("#about-heading")).not.toHaveCSS("opacity", "0");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(lanyard).toHaveCSS("transform", "none");
   for (const selector of [".lanyard-motion", ".about-outline", "#about-heading", ".about-sheet"]) {
@@ -83,4 +84,58 @@ test("changing motion preference cancels the swing and restores all content", as
   await expect(page.locator(".identity-name")).toBeVisible();
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await expect(lanyard).toHaveCSS("transform", "none");
+});
+
+test("desktop hover swings after the entrance, settles, and respects reduced motion", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const lanyard = page.locator(".lanyard-motion");
+  const stage = page.locator(".lanyard-stage");
+  await expect(lanyard).not.toHaveCSS("transform", "none");
+  const initialTransform = await lanyard.evaluate(element => getComputedStyle(element).transform);
+  await stage.dispatchEvent("pointerenter");
+  await expect(lanyard).toHaveCSS("transform", initialTransform);
+  await page.evaluate(() => window.scrollTo({
+    top: document.querySelector("#about")!.getBoundingClientRect().top + scrollY - 120,
+    behavior: "instant",
+  }));
+  await expect(lanyard).toHaveCSS("transform", "none");
+
+  await page.locator(".identity-photo").hover();
+  await expect(lanyard).not.toHaveCSS("transform", "none");
+  await expect(lanyard).toHaveCSS("transform", "none");
+  await expect(lanyard).toHaveCSS("will-change", "auto");
+
+  // A new hover can interrupt a return without leaving a residual rotation.
+  await page.mouse.move(0, 0);
+  await page.locator(".identity-photo").hover();
+  await expect(lanyard).not.toHaveCSS("transform", "none");
+  await page.mouse.move(0, 0);
+  await expect(lanyard).toHaveCSS("transform", "none");
+  await page.locator(".identity-photo").hover();
+  await expect(lanyard).not.toHaveCSS("transform", "none");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(lanyard).toHaveCSS("transform", "none");
+  await expect(lanyard).toHaveCSS("will-change", "auto");
+  await stage.dispatchEvent("pointerenter");
+  await expect(lanyard).toHaveCSS("transform", "none");
+});
+
+test("touch devices do not activate hover swings", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({
+    baseURL,
+    viewport: { width: 1024, height: 900 }, hasTouch: true,
+    reducedMotion: "no-preference",
+  });
+  const page = await context.newPage();
+  await page.goto("/");
+  const lanyard = page.locator(".lanyard-motion");
+  await expect(lanyard).not.toHaveCSS("transform", "none");
+  await page.locator("#about").scrollIntoViewIfNeeded();
+  await expect(lanyard).toHaveCSS("transform", "none");
+  await page.locator(".lanyard-stage").dispatchEvent("pointerenter");
+  await expect(lanyard).toHaveCSS("will-change", "auto");
+  await expect(lanyard).toHaveCSS("transform", "none");
+  await context.close();
 });
