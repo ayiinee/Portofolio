@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="440" viewBox="0 0 800 440" preserveAspectRatio="none">
-  <!-- One continuous curved lip: raised left shoulder, soft opening, rounded body. -->
-  <path d="M38 194C104 189 174 188 234 194C275 198 284 235 326 241C450 250 618 238 762 242C784 243 798 259 798 282V400C798 422 784 438 762 438H38C16 438 2 422 2 400V232C2 210 16 196 38 194Z" fill="white"/>
+  <!-- Shared 800 x 440 coordinates with the edge and contact-shadow assets. -->
+  <path d="M38 140C106 132 179 132 242 142C284 148 303 191 347 204C476 239 629 220 756 230C782 232 798 250 796 276L786 397C785 420 772 434 748 435L44 438C20 438 5 424 4 401L2 182C2 158 14 143 38 140Z" fill="white"/>
 </svg>

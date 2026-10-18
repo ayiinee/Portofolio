@@ -44,8 +44,10 @@ export function PersonalArchive() {
   return (
     <div className="archive-visual" role="group" aria-label="Personal Archive: a folder of selected work and interface studies">
       <EditorialBackgroundText />
+      <div className="archive-ground-shadow" aria-hidden="true" />
       <div className="archive-object">
         <div className="archive-back" aria-hidden="true" />
+        <div className="archive-cavity" aria-hidden="true" />
         <div className="archive-cards">
           {archiveCards.map((card, index) => (
             <div className={`archive-card-position archive-card-${index + 1}`} key={card.title}>
@@ -62,6 +64,14 @@ export function PersonalArchive() {
             </div>
           ))}
         </div>
+        <Image
+          className="archive-contact-shadow"
+          src="/images/design/archive-contact-shadow.svg"
+          alt=""
+          width={800}
+          height={440}
+          unoptimized
+        />
         <FolderFront />
       </div>
     </div>

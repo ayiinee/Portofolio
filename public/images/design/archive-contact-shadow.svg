@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="440" viewBox="0 0 800 440" preserveAspectRatio="none">
+  <!-- Follow the exact opening curve; the front shell occludes its lower half. -->
+  <defs>
+    <filter id="contact" x="-20%" y="-100%" width="140%" height="300%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <path d="M38 140C106 132 179 132 242 142C284 148 303 191 347 204C476 239 629 220 756 230" transform="translate(0 -3)" fill="none" stroke="#102f5b" stroke-opacity=".25" stroke-width="22" stroke-linecap="round" filter="url(#contact)"/>
+</svg>

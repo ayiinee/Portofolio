@@ -4,12 +4,16 @@ for (const width of [1440, 1024, 390, 320]) {
   test(`lanyard stays assembled and settles once at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.emulateMedia({ reducedMotion: "no-preference" });
+    // Drive GSAP's timer/RAF callbacks deterministically, including on hosts
+    // that throttle background browser frames during visual review.
+    await page.clock.install({ time: new Date("2026-01-01T00:00:00Z") });
+    await page.clock.pauseAt("2026-01-01T00:00:01Z");
     await page.goto("/");
     await page.evaluate(() => document.fonts.ready);
     // Wait for hydration to set up ScrollTrigger before crossing its start.
     await expect(page.locator(".lanyard-motion")).not.toHaveCSS("transform", "none");
 
-    const samples = await page.evaluate(async () => {
+    const samplesPromise = page.evaluate(async () => {
       const motion = document.querySelector<HTMLElement>(".lanyard-motion")!;
       const content = document.querySelector<HTMLElement>(".identity-content")!;
       const frame = document.querySelector<HTMLElement>(".lanyard-art")!;
@@ -39,9 +43,10 @@ for (const width of [1440, 1024, 390, 320]) {
       } while (performance.now() - start < 2400);
       return samples;
     });
+    await page.clock.runFor(2500);
+    const samples = await samplesPromise;
 
     expect(Math.min(...samples.map((sample) => sample.rotation))).toBeLessThan(-0.1);
-    // Browser sampling may skip the exact peak on a busy rendering thread.
     expect(Math.max(...samples.map((sample) => sample.rotation))).toBeGreaterThan(0.1);
     for (const sample of samples) {
       expect(sample.assembled).toBe(true);
@@ -53,6 +58,7 @@ for (const width of [1440, 1024, 390, 320]) {
     }
     await expect(page.locator(".lanyard-motion")).toHaveCSS("transform", "none");
     await expect(page.locator(".lanyard-motion")).toHaveCSS("will-change", "auto");
+    await page.clock.resume();
 
     // Scrolling back into About must not replay the entrance.
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));

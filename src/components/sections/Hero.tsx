@@ -16,7 +16,7 @@ export function Hero() {
       // The frosted front always occludes card bottoms, including during insertion.
       gsap.timeline({ defaults: { ease: "power3.out" } })
         .from(".archive-copy > *", { y: 16, opacity: 0, duration: 0.55, stagger: 0.08 }, 0)
-        .from(".archive-object", { y: 24, opacity: 0, duration: 0.7 }, 0.18)
+        .from(".archive-object, .archive-ground-shadow", { y: 24, opacity: 0, duration: 0.7 }, 0.18)
         .from(".archive-wordmark", { opacity: 0, duration: 0.65 }, 0.2)
         .fromTo(cards,
           { yPercent: -36, xPercent: (i) => (i - 1) * 9, rotation: (i) => [-4, 2, 4][i], opacity: 0 },
@@ -24,17 +24,7 @@ export function Hero() {
         .to(cards, {
           yPercent: 0, xPercent: 0, rotation: 0, duration: 0.65,
           stagger: 0.1, ease: "power2.inOut", clearProps: "transform,opacity",
-        }, 0.98)
-        .addLabel("cardsSettled")
-        // Unit pathLength keeps this stroke draw independent of viewport size.
-        // fromTo initializes the stroke as hidden; no-JS/reduced-motion uses offset 0.
-        .fromTo(".archive-orbit-back .archive-orbit-path",
-          { attr: { "stroke-dashoffset": 1 } },
-          { attr: { "stroke-dashoffset": 0 }, duration: 0.34, ease: "none" },
-          "cardsSettled+=0.04")
-        .fromTo(".archive-orbit-front .archive-orbit-path",
-          { attr: { "stroke-dashoffset": 1 } },
-          { attr: { "stroke-dashoffset": 0 }, duration: 0.18, ease: "power2.out" });
+        }, 0.98);
     });
     return () => media.revert();
   }, { scope });

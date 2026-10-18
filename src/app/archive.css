@@ -160,6 +160,19 @@ html.lenis body {
   transform: translateY(var(--letter-rise)) rotate(var(--letter-angle));
   transform-origin: 50% 100%;
 }
+.archive-ground-shadow {
+  position: absolute;
+  z-index: 1;
+  left: 6%;
+  right: 2%;
+  bottom: 3%;
+  height: 8%;
+  border-radius: 50%;
+  background: rgba(37, 81, 135, 0.15);
+  filter: blur(3.8cqw);
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
 .archive-object {
   position: absolute;
   left: 1%;
@@ -170,6 +183,8 @@ html.lenis body {
   z-index: 2;
 }
 .archive-back,
+.archive-cavity,
+.archive-contact-shadow,
 .archive-pocket,
 .archive-pocket-edge {
   position: absolute;
@@ -178,32 +193,39 @@ html.lenis body {
   height: 100%;
   pointer-events: none;
 }
-.archive-back {
-  z-index: 0;
+.archive-back,
+.archive-cavity {
   inset: -4% 2% 2%;
   width: 96%;
   height: 102%;
-  background: linear-gradient(135deg, #7eabe1, #5b8ed2 48%, #4c78bd);
   mask: url("/images/design/folder-back-mask.svg") 0 0 / 100% 100% no-repeat;
 }
-.archive-cards { position: absolute; inset: 0; z-index: 1; }
+.archive-back {
+  z-index: 0;
+  background: linear-gradient(135deg, #76a6df, #427dca 48%, #2a5ea8);
+}
+.archive-cavity {
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent 20%, rgba(16, 47, 91, 0.07) 31%, rgba(16, 47, 91, 0.25) 46%, rgba(16, 47, 91, 0.12) 63%, transparent 85%);
+}
+.archive-cards { position: absolute; inset: 0; z-index: 2; }
 .archive-card-position { position: absolute; width: 35%; transform-origin: 50% 85%; }
-.archive-card-1 { left: 10%; top: -23%; transform: rotate(-9deg); z-index: 1; }
-.archive-card-2 { left: 31%; top: -39%; width: 39%; transform: rotate(0deg); z-index: 3; }
-.archive-card-3 { left: 57%; top: -17%; transform: rotate(9deg); z-index: 2; }
+.archive-card-1 { left: 10%; top: -27%; transform: rotate(-9deg); z-index: 1; }
+.archive-card-2 { left: 32%; top: -42%; width: 37%; transform: rotate(0deg); z-index: 3; }
+.archive-card-3 { left: 57%; top: -19%; transform: rotate(9deg); z-index: 2; }
 .archive-photo {
   display: block;
   padding: 2.5cqw 2cqw 3cqw;
   border-radius: 2cqw;
   background: #fffdf8;
   color: var(--navy);
-  box-shadow: 0 8px 24px #172d4f21;
+  box-shadow: 0 2.1cqw 4.2cqw rgba(20, 48, 91, 0.16), 0 0.6cqw 1.4cqw rgba(20, 48, 91, 0.08);
   transition: transform 0.3s var(--ease), box-shadow 0.3s;
 }
 .archive-photo:hover,
 .archive-photo:focus-visible {
   transform: translateY(-10px);
-  box-shadow: 0 16px 30px #172d4f30;
+  box-shadow: 0 2.7cqw 4.6cqw rgba(20, 48, 91, 0.19), 0 0.8cqw 1.8cqw rgba(20, 48, 91, 0.08);
 }
 .archive-photo-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2cqw; }
 .archive-card-3 .archive-photo-meta { justify-content: flex-end; gap: 1.8cqw; }
@@ -214,23 +236,28 @@ html.lenis body {
 .archive-card-2 .archive-photo-image { aspect-ratio: 1.2; }
 .archive-photo-title { margin: 1.5cqw 0 0.7cqw; font-family: var(--font-serif); font-size: 3.2cqw; line-height: 1.2; }
 .archive-photo-caption { display: block; color: #526278; font-size: 1.05cqw; letter-spacing: 0.15em; }
+.archive-card-2 .archive-photo-title,
+.archive-card-2 .archive-photo-caption { text-align: center; }
+.archive-contact-shadow { z-index: 3; max-width: none; }
 .archive-pocket {
   z-index: 4;
   /* Blue translucent frosting; the matching edge asset follows the curved lip. */
-  background: linear-gradient(125deg, #e0f2ffc2, #b5d6f1a6 55%, #cce4f7b8);
-  backdrop-filter: blur(18px) saturate(110%);
+  background:
+    linear-gradient(90deg, #25579924, transparent 10%, transparent 90%, #2b58962b),
+    linear-gradient(125deg, rgba(165, 207, 245, 0.84), rgba(78, 145, 218, 0.74) 58%, rgba(128, 176, 227, 0.8));
+  backdrop-filter: blur(8px) saturate(110%);
   mask: url("/images/design/archive-front-mask.svg") 0 0 / 100% 100% no-repeat;
 }
 .archive-front-panel {
   position: absolute;
   inset: 0;
   z-index: 4;
-  /* The rim leans toward the viewer while the rear stays upright. */
-  transform: perspective(1200px) rotateX(-14deg) rotate(-1deg);
+  /* The SVG's raised left shoulder and recessed right edge supply the depth. */
+  transform: rotate(-1deg);
   transform-origin: 50% 100%;
   pointer-events: none;
 }
-.archive-pocket-edge { z-index: 5; max-width: none; filter: drop-shadow(0 12px 14px #20539624); }
+.archive-pocket-edge { z-index: 5; max-width: none; }
 .archive-folder-label { position: absolute; z-index: 6; left: 8%; top: 62%; color: var(--navy); pointer-events: none; }
 .archive-folder-label svg { width: 5cqw; height: 5cqw; margin-bottom: 1.5cqw; }
 .archive-folder-label p { margin: 0 0 0.9cqw; font-family: var(--font-serif); font-size: 4.5cqw; line-height: 1.2; }
@@ -274,11 +301,10 @@ html.lenis body {
   .archive-connect { font-size: 12px; }
   .archive-visual { margin-top: 26px; aspect-ratio: 1.05; }
   .archive-object { top: 36%; bottom: 8%; left: 1%; right: 1%; }
-  .archive-card-1 { left: 9%; top: -20%; transform: rotate(-8deg); }
-  .archive-card-2 { left: 30%; top: -36%; width: 40%; }
-  .archive-card-3 { left: 58%; top: -14%; transform: rotate(8deg); }
+  .archive-card-1 { left: 9%; top: -24%; transform: rotate(-8deg); }
+  .archive-card-2 { left: 31%; top: -39%; width: 38%; }
+  .archive-card-3 { left: 58%; top: -16%; transform: rotate(8deg); }
   .archive-wordmark { top: 6%; left: 0; font-size: 24cqw; }
-  .archive-front-panel { transform: perspective(1200px) rotateX(-10deg) rotate(-1deg); }
   .archive-folder-label > span { font-size: 1.7cqw; }
   .archive-folder-note { font-size: 1.3cqw; right: 6%; bottom: 8%; }
 }

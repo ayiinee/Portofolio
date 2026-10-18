@@ -1,5 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="440" viewBox="0 0 800 440" preserveAspectRatio="none">
-  <!-- Same geometry as archive-front-mask.svg; keep both paths in sync. -->
-  <path d="M38 194C104 189 174 188 234 194C275 198 284 235 326 241C450 250 618 238 762 242C784 243 798 259 798 282V400C798 422 784 438 762 438H38C16 438 2 422 2 400V232C2 210 16 196 38 194Z" fill="none" stroke="white" stroke-opacity=".48" stroke-width="2"/>
-  <path d="M38 194C104 189 174 188 234 194C275 198 284 235 326 241C450 250 618 238 762 242" fill="none" stroke="white" stroke-opacity=".9" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Keep the silhouette/lip in sync with archive-front-mask.svg and archive-contact-shadow.svg. -->
+  <defs>
+    <filter id="raised-lip" x="-20%" y="-100%" width="140%" height="300%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+    <linearGradient id="cool-edge" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#d5eaff" stop-opacity=".4"/>
+    </linearGradient>
+  </defs>
+  <path d="M38 140C106 132 179 132 242 142C284 148 303 191 347 204C476 239 629 220 756 230" transform="translate(1 6)" fill="none" stroke="#244e82" stroke-opacity=".22" stroke-width="6" filter="url(#raised-lip)"/>
+  <path d="M38 140C106 132 179 132 242 142C284 148 303 191 347 204C476 239 629 220 756 230C782 232 798 250 796 276L786 397C785 420 772 434 748 435L44 438C20 438 5 424 4 401L2 182C2 158 14 143 38 140Z" fill="none" stroke="url(#cool-edge)" stroke-width="2"/>
+  <path d="M38 140C106 132 179 132 242 142C284 148 303 191 347 204C476 239 629 220 756 230" fill="none" stroke="#f4faff" stroke-opacity=".92" stroke-width="2.5" stroke-linecap="round"/>
 </svg>
