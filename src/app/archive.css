@@ -1,5 +1,7 @@
 /* Personal Archive revision. Hero styles are isolated from the older desk art. */
 :root {
+  --site-frame-width: 1440px;
+  --site-frame-gutter: clamp(24px, 4vw, 64px);
   --cobalt: #2468d8;
   --terracotta: #ce795b;
   --navy: #172d4f;
@@ -17,6 +19,10 @@ html.lenis body {
 .button-primary { background: var(--navy); }
 .button-primary:hover { background: var(--cobalt); }
 .nav-pill { background: #ffffffb8; border-color: #ffffffcc; }
+.nav-inner {
+  max-width: var(--site-frame-width);
+  padding-inline: var(--site-frame-gutter);
+}
 .nav-pill a.is-active,
 .mobile-navigation a[aria-current] {
   color: var(--cobalt);
@@ -40,10 +46,10 @@ html.lenis body {
   pointer-events: none;
 }
 .archive-layout {
-  width: min(1520px, 100%);
+  width: min(var(--site-frame-width), 100%);
   min-height: 100svh;
   margin-inline: auto;
-  padding: 120px clamp(24px, 3.8vw, 60px) 32px;
+  padding: 120px var(--site-frame-gutter) 32px;
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
   align-items: center;
@@ -92,7 +98,7 @@ html.lenis body {
   color: #3e5068;
   text-wrap: pretty;
 }
-.archive-socials { display: flex; align-items: center; gap: 12px; margin-left: -9px; }
+.archive-socials { display: flex; align-items: center; gap: 12px; }
 .archive-socials a {
   display: inline-flex;
   align-items: center;
@@ -123,7 +129,9 @@ html.lenis body {
 .archive-visual {
   position: relative;
   /* Scale the whole archive with available screen height, not only its width. */
-  width: min(100%, calc((100svh - 164px) * 1.2));
+  /* Reserve space for the tilted pocket and orbit outside the stage itself. */
+  width: min(95%, calc((100svh - 164px) * 1.2));
+  margin-right: 5%;
   aspect-ratio: 1.2;
   justify-self: end;
   min-width: 0;
@@ -250,24 +258,27 @@ html.lenis body {
 @supports not (backdrop-filter: blur(1px)) { .archive-pocket { background: #9dc1e9; } }
 
 @media (min-width: 1600px) {
-  .archive-layout { width: min(1640px, 100%); padding-inline: 64px; gap: 48px; }
+  .archive-layout { gap: 48px; }
+}
+@media (max-width: 1199px) {
+  :root { --site-frame-gutter: 24px; }
 }
 @media (min-width: 901px) and (max-width: 1100px) {
-  .archive-layout { padding-inline: 40px; gap: 24px; }
+  .archive-layout { gap: 24px; }
   .archive-heading { font-size: clamp(52px, 5.3vw, 60px); }
   .archive-actions { gap: 20px; }
   .archive-actions .button { padding-inline: 20px; }
 }
 @media (max-width: 900px) {
-  .archive-layout { min-height: auto; grid-template-columns: minmax(0, 1fr); padding: 140px 32px 20px; gap: 8px; }
+  .archive-layout { min-height: auto; grid-template-columns: minmax(0, 1fr); padding: 140px var(--site-frame-gutter) 20px; gap: 8px; }
   .archive-copy { max-width: 580px; width: 100%; margin-inline: auto; }
   .archive-heading { font-size: clamp(52px, 8.6vw, 72px); }
-  .archive-visual { width: min(620px, 100%); margin: 18px auto 0; aspect-ratio: 1.17; }
+  .archive-visual { width: min(620px, 90%); margin: 18px auto 0; aspect-ratio: 1.17; }
   .archive-object { top: 36%; bottom: 4%; }
   .archive-wordmark { top: 5%; left: 0; font-size: 24cqw; }
 }
 @media (max-width: 600px) {
-  .archive-layout { padding: 125px 20px 20px; gap: 6px; }
+  .archive-layout { padding: 125px var(--site-frame-gutter) 20px; gap: 6px; }
   .archive-kicker { font-size: 9px; margin-bottom: 22px; }
   .archive-heading { font-size: clamp(43px, 10.8vw, 64px); }
   .archive-description { max-width: 310px; margin-top: 22px; font-size: 15px; line-height: 1.75; }
@@ -285,6 +296,12 @@ html.lenis body {
   .archive-front-panel { transform: perspective(1200px) rotateX(-10deg) rotate(-1deg); }
   .archive-folder-label > span { font-size: 1.7cqw; }
   .archive-folder-note { font-size: 1.3cqw; right: 6%; bottom: 8%; }
+}
+@media (max-width: 700px) {
+  :root { --site-frame-gutter: 20px; }
+}
+@media (max-width: 370px) {
+  :root { --site-frame-gutter: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .archive-socials a,

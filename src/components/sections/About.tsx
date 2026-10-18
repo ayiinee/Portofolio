@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { ArrowUpRight, GraduationCap } from "lucide-react";
 import { LanyardCard } from "@/components/ui/LanyardCard";
-import { Reveal } from "@/components/animations/Reveal";
+import { AboutEntrance } from "@/components/animations/AboutEntrance";
 
 export function About() {
   return (
-    <section id="about" className="about-desk" aria-labelledby="about-heading">
+    <AboutEntrance>
       <div className="about-layout">
         <header className="about-section-heading">
           <span className="about-outline" aria-hidden="true">
@@ -15,10 +15,10 @@ export function About() {
             About <em>me</em>
           </h2>
         </header>
-        <Reveal className="about-lanyard">
+        <div className="about-lanyard">
           <LanyardCard />
-        </Reveal>
-        <Reveal className="about-sheet" delay={0.08}>
+        </div>
+        <div className="about-sheet">
           <div className="profile-panel-glass" aria-hidden="true" />
           <Image
             className="profile-panel-edge"
@@ -59,8 +59,8 @@ export function About() {
               <ArrowUpRight size={15} aria-hidden="true" />
             </a>
           </div>
-        </Reveal>
+        </div>
       </div>
-    </section>
+    </AboutEntrance>
   );
 }

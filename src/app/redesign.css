@@ -957,6 +957,12 @@
   transform: translateX(-56.75%);
   container-type: inline-size;
 }
+.lanyard-motion {
+  position: absolute;
+  inset: 0;
+  /* The strap enters the source artwork near 45% of its full width. */
+  transform-origin: 45% 0%;
+}
 .lanyard-art {
   position: absolute;
   inset: 0;
