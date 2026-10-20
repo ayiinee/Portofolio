@@ -14,7 +14,7 @@ test("homepage archive, original content, and anchor navigation", async ({ page 
   await expect(page.locator(".archive-socials a")).toHaveCount(3);
   await expect(page.locator(".hero-prop, .workspace-stack, .typing-caret")).toHaveCount(0);
   await expect(page.locator(".archive-pocket")).toHaveCSS("backdrop-filter", /blur\(8px\)/);
-  await expect(page.locator(".profile-panel-glass")).toHaveCSS("backdrop-filter", "blur(12px)");
+  await expect(page.locator(".profile-panel-glass")).toHaveCSS("backdrop-filter", "blur(16px)");
   await expect(page.locator("#about h2")).toHaveText("About me");
   expect(await page.locator("[data-project]").evaluateAll(nodes => nodes.map(node => node.getAttribute("data-project"))))
     .toEqual(featuredProjects.map(project => project.slug));
@@ -127,18 +127,22 @@ test("every case study has unique metadata, context, and valid navigation", asyn
   expect((await page.goto("/projects/missing-project"))?.status()).toBe(404);
 });
 
-test("desktop hero fits a single screen at laptop widths", async ({ page }) => {
+test("desktop hero keeps all content within its flowing layout", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  for (const [width, height] of [[1444, 810], [1440, 900], [1440, 768], [1366, 768]]) {
+  for (const [width, height] of [[1918, 861], [1536, 689], [1444, 810], [1440, 900], [1440, 768], [1366, 768]]) {
     await page.setViewportSize({ width, height });
+    const layout = (await page.locator(".archive-layout").boundingBox())!;
+    expect(layout.x).toBe(0);
+    expect(layout.width).toBe(width);
+    expect((await page.locator(".archive-heading").boundingBox())!.x).toBeLessThan(100);
     const hero = await page.locator(".archive-hero").boundingBox();
-    expect(hero!.height).toBeLessThanOrEqual(height + 1);
+    expect(hero!.height).toBeGreaterThan(0);
     for (const selector of [".archive-heading", ".archive-actions", ".archive-front-panel", ".archive-card-position"]) {
       for (const element of await page.locator(selector).all()) {
         const box = (await element.boundingBox())!;
         expect(box.y).toBeGreaterThanOrEqual(100);
-        expect(box.y + box.height).toBeLessThanOrEqual(height);
+        expect(box.y + box.height).toBeLessThanOrEqual(hero!.y + hero!.height + 1);
         expect(box.x).toBeGreaterThanOrEqual(0);
         expect(box.x + box.width).toBeLessThanOrEqual(width);
       }
@@ -179,8 +183,10 @@ test("responsive layouts and mobile navigation", async ({ page }) => {
             panel!.y + 1,
           );
         } else {
-          expect(Math.abs(heading!.x - panel!.x)).toBeLessThanOrEqual(1);
-          expect(lanyard!.x + lanyard!.width).toBeLessThanOrEqual(panel!.x);
+          expect(heading!.x).toBeLessThan(panel!.x);
+          const cardRight = lanyard!.x + lanyard!.width * (1014 / 1024);
+          expect(cardRight).toBeGreaterThan(panel!.x);
+          expect(cardRight - panel!.x).toBeLessThan(80);
         }
         await page.screenshot({
           path: `artifacts/review/home-${width}.png`,

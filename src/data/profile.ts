@@ -15,6 +15,23 @@ export const profile = {
   portraitIsPlaceholder: true,
   portraitAlt:
     "Portrait placeholder for Qurrotul A'ini; photograph coming soon",
+  about: {
+    lead: ["I'm A'ini, an informatics student", "who loves building things on the web."],
+    bio: [
+      "I'm passionate about cloud, backend, and DevOps — and",
+      "how they work together to power reliable digital experiences.",
+      "I enjoy turning ideas into real, working systems, and I'm",
+      "always curious to learn and explore new technologies.",
+    ],
+    badgeRole: "Informatics student",
+    // Development placeholders approved by the owner. Replace with verified data.
+    stats: [
+      { label: "Projects completed", value: null, href: "#projects" },
+      { label: "Certifications", value: null, href: "#education" },
+      { label: "Competitions joined", value: null, href: "#education" },
+      { label: "Years building", value: null, href: "#experience" },
+    ],
+  },
 };
 
 export const navigation = [

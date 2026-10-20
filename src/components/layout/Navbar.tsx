@@ -67,7 +67,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={cn("nav-shell", scrolled && "is-scrolled")}>
+    <header className={cn("nav-shell", isHome && "home-nav", scrolled && "is-scrolled")}>
       <div className="nav-glass" aria-hidden="true" />
       <div className="nav-inner">
         <a

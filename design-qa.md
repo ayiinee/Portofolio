@@ -1,256 +1,76 @@
-# Personal Archive revision ? 18 October 2026
+﻿# Hero–About design QA — latest correction
 
-## Current implementation verification
+**Preview:** http://localhost:3002/ (production build).
 
-The supplied 1672 ? 941 mockup is the visual direction. The written brief takes precedence where it explicitly differs: Plus Jakarta Sans semibold for the greeting, Instrument Serif italic only for the name, 76/86px desktop sizing, original project content, and existing assets instead of invented project imagery.
+**Visual source:** `C:/Users/THINKPAD/Downloads/A’ini portfolio hero and about panel.png`, 1122 × 1402. The owner's latest request changes the target to a wider Hero, smaller greeting, restored original folder front, and keycaps without extra rotation. These instructions take precedence over the corresponding mockup dimensions.
 
-Source visual: the user's attached mockup in this conversation. It is available inline, but no standalone source file is available in the workspace. The rendered implementation was visually inspected in Chrome at 1672 ? 941, 390 ? 844, and 320 ? 844, at device scale factor 1. No pixel-diff or combined source/implementation comparison artifact is claimed.
+## Evidence and capture conditions
 
-- Final production captures: `artifacts/archive/final-desktop.png`, `final-mobile.png`, and `final-small.png`.
-- Initial captures: `artifacts/archive/iteration-1-desktop.png` and `iteration-1-mobile.png`.
-- Material/spacing refinement: `artifacts/archive/iteration-2-desktop.png`, `iteration-2-mobile.png`, and `iteration-2-small.png`.
-- Runtime evidence: `artifacts/archive/browser-evidence.json` (no browser errors, measured type sizes, and native touch scrolling).
-- Runtime preview: `http://localhost:3200/` (production); the existing development server remains on port 3000.
+- Installed Google Chrome, controlled through Playwright; deviceScaleFactor 1; fonts loaded; home route at top; reduced motion for static screenshots. Original archive animation was tested separately with motion enabled.
+- Source beside production render: `artifacts/hero-review/correction-final-comparison.png`, 2244 × 1402, source left and implementation right. Opened and reviewed after the final production build.
+- Source and implementation remain at the same 1122 × 1402 viewport for this comparison. There is no screenshot scaling in the saved comparison.
+- Exact large desktop viewport captures: `correction-desktop-1918.png` (1918 × 861) and `correction-desktop-1536.png` (1536 × 689).
+- Additional production renders: `correction-final-1440.png`, `correction-final-1024.png`, `correction-final-768.png`, `correction-final-390.png`. Focused Hero/About crops are saved as `correction-preview-*.png`.
+- Baseline before this correction: `correction-before-1536.png`, `correction-before-1918.png`. Earlier `production-*`, `final-*` and `focused-*` files belong to the previous iteration and are not current evidence.
 
 ## Findings and fixes
 
-1. Initial front material was too opaque. Reduced the tint opacity while retaining backdrop blur, the supplied mask geometry, edge highlights, and substantial blue depth. Recaptured at desktop and both phone sizes.
-2. Heading tracking was slightly tight. Relaxed it while keeping the second line at 1.13 times the first. Production measurements are 76px / 85.88px, with the serif name at 87.5976px.
-3. Automated accessibility found 4.46:1 contrast for the active navbar item. Lightened its background to `#edf4fd`; the production WCAG checks now pass on the homepage, project collection, and WaspadAI case study.
-4. Lenis 1.3.27 already reads CSS scroll-padding. Removed the duplicated anchor offset; navbar and CTA anchor checks pass.
+1. **P1 — excessive left space on wide desktop.** The 1280 px centered Hero wrapper placed the heading at x224 at a 1536 px viewport and x415 at 1918 px. Hero and home navigation now span the available width with responsive gutters. Both large captures measure heading x72; the Hero wrapper starts at x0 and equals the viewport width. The illustration retains a proportional stage capped at 820 px so it does not grow without bounds. Other section wrappers were not changed in this correction.
+2. **P1 — greeting too large.** The desktop heading was capped at 96 px. It now caps at 72 px, with smaller tablet sizing and the existing compact mobile layout. The original two lines and serif italic blue name remain. At 1122 px the heading is approximately 60.6 px. Its reduced height also moves the following description, social links and CTAs upward, as expected.
+3. **P1 — folder front no longer had its previous shape.** Restored the original mask, edge and contact-shadow SVGs from the repository baseline together, restored the full front-panel bounds and original −1 degree transform, and restored the previous surface/blur treatment. Removed the compressed, shifted front-panel geometry. All three helper SVGs match the baseline. The original GSAP archive entrance source remains unchanged.
+4. **P2 — extra keycap rotation.** Removed the −45 and −40 degree rotations from the two PNG wrappers. Both now compute to `transform: none` in the actual production browser. The photographed perspective remains part of each original image. Press feedback and keyboard/click navigation still work.
 
-## Completed checks
+## Surfaces reviewed
 
-- `npm run lint`: passed.
-- `npm run typecheck`: passed.
-- `npm run build`: passed. The existing unset-production-domain metadata warning remains; configure `NEXT_PUBLIC_SITE_URL` when deploying to a custom domain.
-- Production HTTP smoke checks: passed for all 13 content pages, eleven projects, six featured projects, anchors, assets, SEO endpoints, and unknown-project 404.
-- Chrome production browser suite: **7 passed**. Covers archive/social links, card entrance and hover, live reduced-motion cleanup, anchor navigation, filtering and Load More, every case study, mobile navigation, keyboard access, WCAG checks, and no-JavaScript content.
-- Responsive overflow checks: passed at 320, 375, 390, 768, 1024, 1440, and 1920px on the homepage, collection, and a case study.
-- Separate touch-device check: Lenis is absent and native scrolling works.
-
-## File and dependency summary
-
-- Added `src/app/archive.css`, `src/components/ui/PersonalArchive.tsx`, and `src/data/archive.ts` for the new composition and editable cards.
-- Added `src/lib/gsap.ts` and `src/components/animations/SmoothScrollProvider.tsx`; updated `Reveal.tsx` and root `layout.tsx` for animation and scrolling.
-- Updated Hero, About, Experience, and Projects without replacing the original section content. Existing Skills, Achievement, and Contact use the shared GSAP Reveal automatically.
-- Updated `tests/e2e/portfolio.spec.ts`, `README.md`, `package.json`, and lockfile.
-- Added three official Bootstrap Icons SVG assets and their MIT license under `public/icons/`.
-- Added dependencies: `gsap@3.15.0`, `@gsap/react@2.1.2`, and `lenis@1.3.27`.
-- Previously uncommitted `redesign.css`, `intro-transition.css`, and AGENTS instructions were retained.
-
-## Remaining editorial configuration
-
-Social links already use real values from `src/data/profile.ts`. Hero images and captions are centralized in `src/data/archive.ts`: two existing interface concepts are labeled as concepts, with the personal monogram in the middle. Replace them together with approved media and real case-study destinations when available.
-
-## Formal source comparison limitation
-
-The implementation and functional checks above are complete. The Product Design source-comparison gate remains blocked because no standalone source image is available to construct the required combined source/rendered comparison artifact. This is a verification-artifact limitation, not a failing build or a known responsive defect. A combined visual comparison has not been marked passed.
-
-final result: blocked
-
----
-
-# Earlier design review (retained for history; predates this revision)
-
-# Moodboard redesign QA — 18 October 2026
-
-final result: passed
-
-## Target and evidence
-
-This is an original redesign inspired by the two supplied moodboards, rather than a pixel-for-pixel recreation. The user's requested differences are the visual target: less hero copy, typing greeting, animated scroll cue, a 1:1 photo, gradients from multiple positions, folder/file and glass accents, and an About section with a lanyard. Earlier compact content sizing and original navbar dimensions remain in effect.
-
-Latest revision: Hero-to-About transition follows the current hero height. The lanyard enters at the About boundary, with a 120px fade on the upper fabric only. Header and panel remain in normal grid flow; an independent background layer gradually adds pale blue without fading text.
-
-- Folder moodboard source: `C:/Users/THINKPAD/AppData/Local/Temp/codex-clipboard-57826c6d-71fc-4268-8359-5a67995b33cb.png` (1000 × 1500). Local evidence copy: `artifacts/redesign/reference-folder.png`.
-- Lanyard moodboard source: `C:/Users/THINKPAD/AppData/Local/Temp/codex-clipboard-3f1ef91f-32ce-4450-a7bd-0a5bce26073a.png` (1200 × 2417). Local evidence copy: `artifacts/redesign/reference-lanyard.png`.
-- Browser implementation: `http://localhost:3200/`, production build in installed Chrome, desktop viewport 1440 × 1000 and mobile 390 × 844 / 320 × 844, device scale factor 1.
-- Full implementation: `artifacts/redesign/final-desktop.png`, `final-mobile.png`, `final-small.png`.
-- Focused regions: `hero-desktop.png`, `about-desktop.png`, `hero-mobile.png`, `about-mobile.png`, `hero-small.png`, `about-small.png` in the same evidence directory.
-- Side-by-side comparisons: `artifacts/redesign/comparison-hero.jpg` and `comparison-about.jpg`. Both source and implementation are normalized to 800px-wide panels, preserving aspect ratio. Hero source crop: 1000 × 590; implementation: 1440 × 920. About source crop: 1200 × 800; final implementation: 1440 × 977. These are visual-motif comparisons; the moodboards have different content and section proportions.
-- Screenshots use reduced motion and the complete greeting so typography and wrapping can be assessed consistently. Normal-motion typing and the scroll cue are separately tested in Chrome.
-
-## Comparison history and findings
-
-1. **[P2, fixed] Square portrait obscured by the folder pocket.** Initial evidence: `iteration-1-hero.png`. Raised the portrait file above the folder front, then moved folder labels and its open action out of the portrait's footprint. The final portrait remains fully square and the project action remains reachable.
-2. **[P2, fixed] Editable identity exceeded the generated badge face.** Initial evidence: `iteration-1-about.png`. Matched overlay coordinates to the actual generated asset, removed the extra rotated HTML card background, and sized the photo and labels inside the badge.
-3. **[P2, fixed] Small-screen badge/caption alignment.** Evidence: `iteration-2-about-small.png`. Replaced fixed-height art stages with the asset's 1092:1440 aspect ratio, scaled badge labels with the stage, and reserved explicit caption space, including a two-line caption at 320px.
-4. **[P2, fixed] Tiny-screen folder label met the dark floating card.** Evidence: `iteration-2-hero-small.png`. Shortened the decorative folder label, constrained its line lengths, and positioned its label and open action independently.
-5. **[P2, fixed] Low-contrast white type on the cyan folder.** Changed folder copy to dark blue; the main image, folder silhouette, and white paper retain the requested palette.
-
-## Required fidelity surfaces
-
-- **Typography:** Plus Jakarta Sans supports the moodboard's bold, tight sans-serif headings; Instrument Serif retains a restrained personal accent. The main greeting is short and its full accessible name is server-rendered. Body copy remains readable instead of reproducing the dense reference résumé verbatim.
-- **Spacing and layout:** Desktop uses a balanced text/folder split and a text/lanyard About sheet. Mobile stacks both compositions without horizontal overflow. Original navbar dimensions are preserved: desktop height 100px; mobile height 80px. Border, tab, and paper treatments reference the moodboards without duplicating their branding.
-- **Colors/tokens:** Warm off-white, cobalt, cyan, charcoal, and soft blue connect the moodboards to the existing portfolio. Hero gradients originate at upper-right, upper-left, and center; glass cards use subtle blur. Project, skill, education, and contact styling shares the updated tokens.
-- **Images:** The generated lanyard is an isolated transparent WebP (1092 × 1440, about 167KB) with no borrowed face or branding. The new folder is a transparent 1200 × 900 WebP (99,426 bytes). The owner photograph remains a visibly labeled monogram placeholder; both hero and badge use 1:1 cropping. Two additional photo slots are explicitly labeled placeholders. Editable cards and actions sit above the decorative folder; none of these assets represents project evidence.
-- **Copy/content:** No award, employer, metric, or biographical claim comes from the moodboards. The About section condenses the existing verified biography. All 11 case studies and six featured projects remain available.
+- **Typography:** original Plus Jakarta Sans / Instrument Serif remain. Smaller greeting follows the latest request. ABOUT keeps its existing sans outline font and overlaps About me. Body text and other sections were not restyled.
+- **Layout / spacing:** reviewed source beside 1122 render, focused large-desktop Hero captures, and tablet/mobile captures. Hero/navigation fill the screen with intentional gutters. The About panel follows the content height; at 1122 its top is y818.6, approximately 14 px below the original mockup guide after the wider Hero reflow. No fixed 1402 px page height was introduced.
+- **Colors:** retained the continuous cream/blue Hero–About background. No new section-boundary gradient or white overlay was added.
+- **Images:** the supplied A, Enter and lanyard PNG files match the original Downloads files by SHA-256. The lanyard remains one static artwork with its existing monogram content and sibling panel anchor.
+- **Content / controls:** existing copy, social links, CTAs, navigation, four pending statistics, disabled CV control and Experience link remain. No data values or PDF URL were invented. No unrelated section was redesigned in this correction.
 
 ## Verification
 
-- TypeScript checks and production build passed.
-- Full-project ESLint passed.
-- Production HTTP smoke check passed for 13 content pages, media placeholders, static assets, metadata, SEO routes, section anchors, and the unknown-project 404.
-- Five browser checks passed during implementation: hero/typing, collection filtering, responsive layouts/mobile navigation, keyboard/contrast/reduced motion, and content without JavaScript.
-- Final production browser rerun: **3 passed** (hero/typing, responsive layouts/mobile navigation, keyboard/contrast/reduced motion). The responsive check covers 320, 375, 390, 768, 1024, 1440, and 1920px across the homepage, collection, and an AWS case study.
-- Final browser captures: recaptured from the production build at 1440, 390, and 320px, then compared against both moodboards in the combined inputs listed above. Final small-screen captures show clear folder labels, no overlapping badge/caption, a square portrait, and no horizontal overflow. No actionable P0/P1/P2 finding remains.
-- Browser-error evidence: `artifacts/redesign/browser-errors.json`.
-- The in-app browser could not initialize. The user explicitly approved installed Chrome through Playwright; no new browser permission is needed for this task.
+- **10/10 selected Playwright tests passed**, including the two new wide viewport checks, responsive layout/navigation, keycap orientation and navigation, static lanyard, honest summaries and pending CV.
+- Desktop containment checks cover 1918 × 861, 1536 × 689, 1444 × 810, 1440 × 900, 1440 × 768 and 1366 × 768. The responsive test also covers 320, 375, 390, 768, 1024, 1440 and 1920 px.
+- Separate interaction script passed: original archive entrance, hover/focus lift, reduced motion, static lanyard on hover/scroll, artwork anchoring after Hero height changes, CTA links, and mobile menu/Escape focus restoration. Playwright virtual clock was used for the original archive timeline.
+- Alpha sampling found no opaque lanyard material over the checked Hero/About text or controls at 1122, 1440, 1024, 768 and 390 px.
+- Production screenshots at 1122, 1536, 1918, 1440, 1024, 768 and 390 px reported no horizontal overflow or browser console/page errors. Additional production geometry assertions passed at the exact two large desktop viewports.
+- Production build, TypeScript check, ESLint and `git diff --check`: passed. The existing metadataBase warning remains because the deployment origin has not been configured.
+- Unrelated gallery/animation suites, field performance metrics and native browser zoom were not rerun or claimed in this focused correction. The previous axe result is historical; no new accessibility audit is claimed here.
 
-## Generated asset provenance
+## Remaining differences from the original mockup
 
-- Tool: built-in ImageGen, followed by a WebP format conversion preserving alpha.
-- Workspace asset: `public/images/design/blue-lanyard.webp`.
-- Original generated image: `C:/Users/THINKPAD/.codex/generated_images/01a14004-0f62-77e0-8225-ed1b5dccaa29/exec-5a42b87c-b58e-43b4-818a-8c63b0ac0a59.png`.
-- Generation prompt: “Use case: stylized-concept. Asset type: decorative lanyard and identity card for a personal developer portfolio About section. Reference image is STYLE INSPIRATION ONLY: use the soft dimensional blue lanyard from its second panel. Generate ONE isolated studio 3D product render on genuinely transparent background, portrait composition. A cobalt blue woven lanyard makes a large loop above a straight-on, nearly unrotated white rectangular blank identity badge, with a silver metal clasp; its loose ribbon tail curls to the lower right behind the badge. Ribbon has a subtle woven texture and tiny white dash details, NO writing. Badge is large, front facing, 55% of overall image width, centered horizontally, situated in lower-middle; completely blank warm white card face with very small rounded corners, thin cobalt edge. No photograph, no avatar, no person, no text, no QR, no logos, no attached stickers. Gentle realistic shadows, crisp premium playful 3D clay/product aesthetic, coherent with a cream and vivid cobalt blue website. Entire loop and ribbon in frame with 8% margins. Intended display 440px wide by 580px tall. The blank card will receive editable HTML portrait and labels, keep its face clean and unobstructed.”
+- The full-width desktop composition, smaller greeting and unrotated PNG wrappers intentionally follow the latest instruction. This is not a claim of pixel identity with the earlier mockup.
+- ABOUT uses the original sans font as requested. The Enter PNG has a different shape and perspective from the mockup. Archive concept content is retained.
+- Material reflections and shadow softness still differ from the flattened reference; the folder front now uses its previous implementation rather than the rejected reshaping.
+- On narrow screens, Hero and About stack. Overlap is reduced to keep content clear. Statistics remain dashes and Download CV remains disabled until verified values and the PDF link are supplied.
 
-## Implementation checklist and remaining editorial work
+No remaining P0/P1/P2 findings in the four requested corrections after the final production review. The noted reference differences are explicit constraints or residual polish.
 
-- [x] Implement requested hero, About composition, responsive behavior, and reduced motion.
-- [x] Preserve project routes, verified content, contact links, and navbar sizes.
-- [x] Keep generated decorative art separate from actual project evidence.
-- [x] Recheck the final small-screen adjustments in production captures.
-- [ ] Supply an approved real photograph when available; this does not block the requested redesign.
+## Latest feature — editable 3D keycap
 
-No hosting deployment or external publication was performed. The local preview is retained for review.
+The owner subsequently authorized replacing the ivory PNG instance with a real 3D model whose letter changes. This supersedes the previous A-keycap navigation behavior and PNG-only rendering for that one object. The original PNG file remains unchanged; the Enter keycap, original archive timeline and other sections remain as before.
 
-## Follow-up: hero tagline
+- Created `public/models/aini-keycap.glb`: 65,924 bytes, self-contained glTF 2.0 binary with no external textures/buffers. Rounded tapered ivory shell, shallow top dish, stationary stem, and separate navy `Legend_A`, `Legend_I`, `Legend_N` meshes. `Pressable_Cap` moves independently of the stem.
+- Model source is `scripts/create-keycap.mjs`; glyph source/attribution is retained. `public/models/KEYCAP.md` documents regeneration, node names, press travel and the glyph license.
+- The Hero button cycles A → I → N → I → A through mouse, keyboard or touch, without navigating away. Enter keycap still links to Projects. There is no hover rotation or idle spin. Reduced motion applies the pressed pose without the spring transition.
+- Three.js loads asynchronously on the client. Demand rendering stops at rest. Resources are disposed on unmount. If the model/WebGL is unavailable, the letter remains usable as a flat button.
+- Actual production screenshots reviewed: `artifacts/hero-review/keycap-home.png`, `keycap-A.png`, `keycap-pressed.png`, `keycap-I.png`, `keycap-N.png`, plus `keycap-production-1122.png` and responsive captures at 1440/1024/768/390. Captured with installed Chrome through Playwright, deviceScaleFactor 1. The small model follows the ivory/navy palette and existing footprint; its modeled silhouette and lighting are an intentional replacement rather than a pixel clone of the PNG.
+- **6/6 targeted tests passed on the final production build:** real canvas pixels change under compression; the full letter cycle works; keyboard and repeated-key handling work; mobile taps preserve Hero geometry; model failure has a functioning fallback; Enter navigation and desktop containment remain intact.
+- Production screenshots and interaction capture reported no page/console errors or horizontal overflow. Build/TypeScript, scoped ESLint, GLB header/node checks and `git diff --check` passed. The existing metadataBase warning remains unrelated. PNG hashes and original Hero/unrelated section source checks passed.
+- Older screenshot paths and the earlier 10-test result above document the preceding layout iteration; these are not the evidence for the 3D feature. Native device/GPU coverage and a fresh full-site accessibility audit are not claimed.
 
-Removed the annotated “Code, cloud & everything in between.” tagline so the hero focuses on the typing greeting and actions. Removed its unused responsive styles and updated the existing homepage assertion. Targeted ESLint, production build (including TypeScript), and the homepage browser test passed. Refreshed the production captures at 1440, 390, and 320px; no horizontal overflow or browser errors were detected, and navbar heights remain 100px on desktop and 80px on mobile. The build retains the existing local-development metadataBase warning.
+## Latest refinement — plastic shader and studio reflections
 
-## Follow-up: eight browser annotations
+The owner asked whether the model was from Spline and requested shader/reflection work to recover the original theme. The implementation remains a custom Three.js model. This pass changes its material and lighting; it does not change the geometry, camera, layout, press travel or letter sequence.
 
-**Scope and source:** User annotations on the existing homepage request deletions, direct About copy, a document-folder container, a photograph inside the hero folder, and subtle glass on its front panel. The original prototype was captured before these changes at 1440 × 1000 CSS pixels, density 1: `artifacts/redesign/before-folder-hero.png` and `before-folder-about.png`. These baseline captures and the user's marked screenshots are change references, rather than an unchanged image to clone.
-
-**Combined comparisons:** `artifacts/redesign/folder-comparison-hero.jpg` and `folder-comparison-about.jpg` show the baseline on the left and the revised production capture on the right. Both panels are 720px wide, scaled equally from the 1440px source, with aspect ratio preserved and top alignment. The shorter About section is intentional following the copy reduction. Focused final captures are `hero-desktop.png`, `about-desktop.png`, `hero-mobile.png`, `about-mobile.png`, `hero-small.png`, and `about-small.png` in the same directory. Full captures remain `final-desktop.png`, `final-mobile.png`, and `final-small.png`. Mobile viewports: 390 × 844 and 320 × 844, density 1; full section captures may exceed viewport height.
-
-Desktop section pixels: hero source and result 1440 × 920; About source 1440 × 977 and result 1440 × 907. Combined outputs: hero 1440 × 460; About 1440 × 489.
-
-**Iteration:** [P2, fixed] The revised pocket put its open action behind the floating skills card. Evidence: `artifacts/redesign/folder-action-before-fix.png`. Moved the action to the left and reflowed the mobile label beside it. Recaptured and opened the combined comparison and both mobile hero captures. The action is now visible, and actual clicks reach `#projects` at every tested width.
-
-**Fidelity surfaces:**
-- Typography: retained Plus Jakarta Sans and existing sizes; replaced the generic serif About slogan with “About me.” and removed the redundant tagline/caption. Body copy remains readable at 320px.
-- Layout: About uses a sloped folder tab and blue folder edge around its profile sheet. The lanyard stays inside the page frame. The square hero photo is layered behind the pocket, with its main image visible. Original navbar heights remain 100px desktop, 88px tablet, and 80px mobile.
-- Color: retained the cobalt and off-white palette. The pocket uses translucent blue, an 8px backdrop blur, a light border, and dark lettering. The photo's lower edge is intentionally visible through the pocket.
-- Assets: reused the approved transparent lanyard and the labeled portrait placeholder; no new identity or project imagery was invented. The map is a functional document container with its existing project link.
-- Copy: two paragraphs describe the existing university studies, project interests, vocational foundation, city-level victory, and provincial participation. No provincial win or AWS certification is claimed. Contact and experience links remain functional.
-
-**Checks run:** Targeted ESLint passed. The final production build, including TypeScript, passed. Three browser tests passed for the homepage, seven responsive widths/mobile navigation, and keyboard/contrast/reduced motion. After the action-position fix, a focused Chrome check passed at 320, 375, 390, 768, 1024, 1440, and 1920px: deleted phrases absent, heading correct, photograph behind the pocket, original navbar height, folder action clickable, and no horizontal overflow. Final production captures report no page errors. Existing local-development metadataBase warning remains unchanged.
-
-**Changed files this revision:** `src/components/sections/About.tsx`, `src/app/redesign.css`, and this report. Earlier phrase deletions remain in `Hero.tsx` and `LanyardCard.tsx` from the preceding revisions.
-
-**Remaining:** An approved real portrait is still needed. No actionable P0/P1/P2 issue remains. Local preview retained at port 3200; no deployment performed.
+- Replaced the shell's flat standard material with dielectric `MeshPhysicalMaterial`: satin ivory, metalness 0, roughness .34, clearcoat .28 / roughness .24, IOR 1.46. Kept the navy ink from washing out with a low-specular physical material.
+- Added a shell-local procedural GLSL grain shader with small roughness, color and surface-normal variation. Screen derivatives filter the fine grain at the actual small Hero size. No time-driven shader loop or idle motion was added.
+- Generated a 128 px PMREM studio environment from white/warm/blue reflection panels. The environment lights the model only; the Hero's transparent background and shared gradient remain intact. Reflection resources are released on teardown, and failed environment initialization disposes the renderer before the existing fallback activates.
+- The updated self-contained model is 66,344 bytes. Its PBR clearcoat/IOR properties are included in the GLB. The custom grain and generated studio lighting are runtime features; this distinction is documented in `public/models/KEYCAP.md`.
+- Opened the original ivory PNG and compared it beside the final production model in `artifacts/hero-review/material-final-source-comparison.png`. The model detail is temporarily displayed at 600 × 600 solely for material inspection. Actual 1122 × 1402 page and native keycap captures are `material-final-home.png` and `material-final-key.png`. The ivory/navy palette, subtle grain, soft edge highlights and cool side reflections were reviewed. Geometry and viewing angle still differ from the PNG; this is not an exact asset recreation.
+- Initial room-lighting iteration overexposed the shell. Replaced it with a darker reflection-only studio and tuned the lighting, then recaptured. Also corrected reflected navy ink that had become gray. Final production capture reported no console/page errors, including shader compilation.
+- **6/6 targeted Playwright tests passed again on the final production build**, covering actual rendered compression, letter cycle, keyboard/repeated key behavior, touch/reduced motion, fallback, Enter navigation and desktop containment. Production build/TypeScript, scoped ESLint and diff whitespace checks passed. The existing metadataBase warning remains unrelated.
+- Representative responsive production captures at 1440 and 390 px were reviewed in addition to the primary viewport. Native device/GPU coverage is not claimed. The previous screenshots/test counts above are historical.
 
 final result: passed
-
-## Ten browser annotations — final verification
-
-**final result: passed**
-
-Scope: the ten annotated hero, header, transition, and About details. The provided screenshots identify the elements to revise; they are before-state evidence, not a request to reproduce their defects. The existing palette, fonts, lower sections, routes, and factual content are retained.
-
-Evidence opened and compared together:
-
-- `artifacts/redesign/annotations-comparison-hero.jpg`: before and after hero at the same 1440px CSS width, device scale 1; each side normalized to 720px. The shorter hero after removing the edition row is intentional, with padding rather than image distortion used for the comparison canvas.
-- `artifacts/redesign/annotations-comparison-about.jpg`: matching before/after About content regions at the same CSS width and scale. Focused comparison confirms larger tab text, browser-tab edges, gradients/glass, and removal of Email me.
-- `artifacts/redesign/scrolled-navbar.png`: 1191 × 668 viewport, scrolled to the About transition. The continuous background has `blur(24px) saturate(1.45)` and opacity 1. Navigation dimensions and links stay intact.
-- Final hero/About captures at 1440, 390, and 320px: `hero-desktop.png`, `hero-mobile.png`, `hero-small.png`, and matching `about-*` files in `artifacts/redesign/`.
-- Tablet inspection: `candidate-hero-768.png`, captured while checking the final CSS positioning before the production rebuild. Final responsive production browser checks cover that width as well.
-
-Iteration 1 found P2 issues: the folder label sat too close to its lower edge, and the side photo cards crowded mobile boundaries. Tablet inspection also found the label overlapping card captions. The second iteration reduced side-card width, moved cards up on tablet, adjusted the label inside the pocket, and removed the duplicate folder shortcut only where it collided on narrow/tablet layouts. The primary project CTA remains available at every width. Fresh production captures confirm the fixes. No P0/P1/P2 issue remains.
-
-Typography, spacing, colors, image quality, and copy were checked: existing fonts and compact sizing remain, tab type increases from 9px to 13px (12px on phones), gradients meet the hero paper background, folder edges come from one coherent raster, all photo slots are labeled placeholders, and no claims were added.
-
-Validation: full-project ESLint passed before the final spacing-only adjustments; targeted ESLint passed afterward. The final production build and its TypeScript check passed. HTTP smoke passed all 13 pages, all 11 projects, metadata, links, assets, SEO routes, and the unknown-slug 404. Four production browser checks passed for homepage interactions, seven-width responsiveness/mobile navigation, keyboard/contrast/reduced motion, and content without JavaScript. Final capture scripts detected no horizontal overflow or browser errors. The pre-existing local metadataBase warning remains.
-
-New/updated implementation files: `Hero.tsx`, `About.tsx`, `Navbar.tsx`, `ScrollCue.tsx`, `redesign.css`, `profile.ts`, `portfolio.spec.ts`, `README.md`, this report, and `public/images/design/portfolio-folder.webp`.
-
-Folder provenance: generated with the built-in ImageGen tool using the existing hero capture as visual grounding, then converted to WebP with its alpha preserved. Original: `C:/Users/THINKPAD/.codex/generated_images/01a14b52-6615-7bd2-bef0-9d46d80cb032/exec-f54428e7-d3e7-4b46-afae-04155cc0feb2.png`. Prompt requested an individual front-facing cobalt document folder, upper-left tab, coherent clean edges, subtle thickness, powder-blue acrylic front pocket, transparent 4:3 canvas, no cards/photos/text/logos/UI; editable cards and labels were implemented separately. Motion behavior follows [Motion's repeating transition API](https://motion.dev/docs/react-transitions), with reduced motion and offscreen animation stopping handled by the component.
-
-Remaining content limitation: real approved photographs are unavailable, so all three slots remain intentionally labeled placeholders. No deployment was performed.
-
-## Follow-up: photos inside the folder and overlapping skills card
-
-**final result: passed**
-
-The two latest annotations are scoped to the hero artwork. Cards now share the folder image's 4:3 frame and stay between its back panel and front pocket. The front pocket reuses the same transparent raster, masked along its existing edge; no replacement artwork or fabricated photographs were introduced. The photo placeholders remain square, and their visible labels identify them as placeholders. The Cloud/Backend/DevOps card moves upward to overlap the lower-right folder edge on desktop and phones. Its overlap does not cover the folder label or primary CTA. The duplicate folder shortcut is hidden on phones where the skills card covers it, so it cannot receive hidden keyboard focus.
-
-Compared before/after evidence in the same inputs: `artifacts/redesign/tucked-comparison-desktop.jpg` (1440px CSS capture width, normalized to 720px per side) and `artifacts/redesign/tucked-comparison-mobile.jpg` (390px per side, no scaling). The final phone capture is `artifacts/redesign/tucked-final-mobile.png`; 320px and desktop section captures are `hero-small.png` and `hero-desktop.png`. The intentional change is the pocket occluding the lower card portions. Typography, palette, navigation dimensions, About, and other sections remain as before. No actionable P0/P1/P2 issue remains.
-
-Changed files for this follow-up: `src/components/sections/Hero.tsx`, `src/app/redesign.css`, `tests/e2e/portfolio.spec.ts` (the decorative folder now has two visual layers), and this report. Targeted ESLint and the final production build including TypeScript passed. Three browser checks passed after the layering change: homepage interactions, seven-width responsive/mobile navigation, and keyboard/contrast/reduced motion. After hiding the covered phone shortcut, the final production rerun passed both homepage and keyboard/contrast/reduced-motion checks. HTTP preview returned 200. No horizontal overflow or browser errors appeared in the capture run. The existing unconfigured-local-origin metadataBase warning is unchanged.
-
-## Open frosted-glass folder — latest reference
-
-**final result: passed**
-
-The new target is the user's open-folder reference PNG and the two supplied Figma SVG paths. The supplied paths are the geometry authority; the PNG guides the widened front, layered photographs, frosted material, subtle edge highlights, and depth. The portfolio retains its blue palette rather than copying the reference's branding, grayscale background, or experience badge.
-
-The back, editable photo cards, live front glass, vector edge highlight, and front label are separate layers. The front is slightly wider than the back, with rounded tab geometry and a white/powder-blue tint. Native backdrop blur softens the card portions behind it while the exposed upper photographs remain sharp. The overlapping skills card is preserved. Photo slots remain square and visibly use placeholders. The SVG paths came directly from the user; no new generated bitmap is needed for these editable vector shapes. The earlier raster folder remains available as a historical asset but is no longer rendered.
-
-Evidence opened and compared together:
-
-- `artifacts/redesign/open-folder-reference-comparison.jpg`: the supplied 267 × 192 PNG, supplied Figma paths, and final rendered folder detail, each normalized to 440px width without aspect distortion. Different image density and the intentional blue theme are accounted for. This combined view checks the rounded geometry, open-folder layering, and actual frost rather than pixel-matching reference branding.
-- `artifacts/redesign/open-folder-detail.png`: final production hero artwork at a 1440 × 1000 CSS viewport, device scale 1, cropped with margin around the workspace.
-- `artifacts/redesign/open-folder-1440.png`, `open-folder-390.png`, `open-folder-320.png`, and `open-folder-768.png`: final production hero captures. All four captures detected no horizontal overflow and reported `blur(16px) saturate(0.85)` on the front panel.
-- The source PNG is preserved at `artifacts/redesign/open-folder-reference.png`; a renderable copy of the supplied Figma shapes is at `figma-open-folder-reference.svg` beside it.
-
-Visual iteration found a P2 issue: the first production front looked transparent without visibly blurring the cards. Inspection of emitted CSS found that manually repeating the prefixed blur declaration removed the standard declaration during optimization. Keeping one standard declaration lets the compiler emit both supported forms; fresh production screenshots now show the intended frosting. A homepage browser assertion guards against this production regression. A misplaced placeholder label was also moved below the monogram. The earlier perspective experiment was removed, keeping a consistently frosted widened front. No actionable P0/P1/P2 finding remains.
-
-Fidelity surfaces: existing fonts and hero copy remain; card spacing stays within the folder and screen bounds; the brand blue is preserved with a softer glass tint; supplied vector edges stay sharp at all widths while the intended content behind glass blurs; no personal, project, or award content was invented. Navbar, About, and lower sections retain their preceding design.
-
-Files changed: `Hero.tsx`, `redesign.css` (including removal of obsolete raster-folder styles), three supplied-path SVG assets under `public/images/design/`, the existing homepage browser test, `README.md`, and this report. The final production build including TypeScript passed. Targeted ESLint passed. Three final production browser checks passed: homepage/typing/anchors and glass retention, responsive layouts/mobile navigation at 320, 375, 390, 768, 1024, 1440, and 1920px, and keyboard/contrast/reduced motion. All three new asset paths returned HTTP 200; capture scripts found no page errors. The pre-existing unconfigured-local-origin metadataBase warning remains. No deployment was performed.
-
-## Latest annotations: cleaner arrows, glass selection, and split About
-
-**final result: passed**
-
-Scope: remove the redundant folder shortcut, apply glass to the active navbar item, move the folder label toward the annotated upper-left position, align the frosted front's overhang and edge, move the lanyard outside the About tab to its left, and reduce unnecessary arrows. The text-only About panel and its browser-style tab retain a frosted treatment. On phones, the standalone lanyard is above the panel.
-
-Before/after inputs opened together: `artifacts/redesign/polish-comparison-hero.jpg` and `polish-comparison-about.jpg`. Both pairs originate at 1440px CSS width and device scale 1, normalized to 720px per side without stretching. The intentional About height/layout change is padded on the comparison canvas. Final detailed captures are `hero-desktop.png`, `about-desktop.png`, `hero-mobile.png`, `about-mobile.png`, `hero-small.png`, and `about-small.png` beside them. The annotations identify requested changes to the preceding design; existing palette, typography, verified copy, routes, and navbar dimensions are preserved.
-
-The frosted edge mismatch came from the default image maximum width constraining the SVG edge to 100% while its glass surface extended to 106%. Allowing the edge image's full width makes both shapes share the same bounds and keeps the intentional overhang outside the back panel. The homepage check now guards the matching bounds. The folder label is smaller and higher on the left, away from the skills card. Its arrow shortcut is deleted. Decorative arrows were removed from the note, photo caption, skills card, badge, secondary hero action, navbar, About footer, collection CTA, Load More, and redundant email actions. The primary hero CTA, project-card link indicators, external profile links, scroll cue, gallery controls, adjacent-project navigation, and Back to top retain useful directional cues.
-
-The About section now has two sibling elements: the left lanyard and the right text-only tab panel. No lanyard is inside `.about-sheet`. Typography stays readable at existing content sizes, spacing keeps both desktop columns separate and stacks them on phones, the active nav uses a soft blue/white glass surface with dark readable text, vector edges remain sharp while the front blurs the cards behind it, and no personal/project claims were changed. No actionable P0/P1/P2 finding remains.
-
-Validation: targeted ESLint passed. Production build including TypeScript passed. An initial verification attempt exited without diagnostics; sequential lint/build retries completed successfully. Five final production browser checks passed: homepage/glass bounds/About structure, filtering and Load More, responsive/mobile navigation at all seven existing widths (320 through 1920px), keyboard/contrast/reduced motion, and JavaScript-disabled content. Final captures at 1440, 390, and 320px report no horizontal overflow; navbar heights remain 100px desktop and 80px phone. No page errors appeared in capture or homepage checks. The existing local metadataBase warning remains.
-
-Updated files: `Hero.tsx`, `About.tsx`, `Navbar.tsx`, `LanyardCard.tsx`, `Contact.tsx`, `Projects.tsx`, `ProjectCollection.tsx`, `redesign.css`, the existing browser test, `README.md`, and this report. Existing image assets are reused; no new image generation or deployment occurred. The preview remains on port 3200.
-
-## Hanging dusty-blue identity and unified About — latest brief
-
-**final result: passed**
-
-Implemented the user's six-part brief and both deletion annotations. Hero and About now share one off-white/pale-blue gradient canvas. The note and whole hero footline (including the scroll cue) are removed. The About container matches the hero's desktop width and gutters, with a 72px column gap. The right-column header uses a pale 1px outline ABOUT, a navy sans-serif About, and an Instrument Serif italic me; it has no sparkle or star. A single masked frosted surface forms both the 01 / ABOUT tab and profile body, with a thin matching edge and no close icon or inner white box. The internal duplicate heading and old footer row are gone. Existing factual copy is retained, with 17px desktop / 16px phone paragraphs at 1.7 line height and bold topic emphasis. The experience action follows education.
-
-The supplied PNG already contains the real portrait. Its unchanged public copy is `public/images/design/aini-lanyard-source.png` (1006 × 1326). The built-in ImageGen editor cleared only the badge interior to create a separate transparent frame, retaining the dusty-blue strap, frame, clasp, texture, and straight-on composition. The final `dusty-blue-lanyard-frame.webp` is 1092 × 1440, 190,874 bytes, with alpha preserved. Original generated output: `C:/Users/THINKPAD/.codex/generated_images/01a14b52-6615-7bd2-bef0-9d46d80cb032/exec-3725ccce-40ab-46ef-ab7d-f81d78c30753.png`. Prompt requested removal of only the existing woman and opaque badge interior into a true transparent window while preserving the supplied composition and all frame/strap/clasp details. The visible portrait is a CSS crop of the supplied original, not a generated face. Name, role, and focus text are editable behind the frame with safe insets. The visible desktop frame is about 280px wide. No swinging animation is applied.
-
-The wrapper spans both sections and allows vertical overflow while clipping only horizontal overflow. The strap crosses the hero/About boundary on desktop without being clipped there. Its entry has a short alpha fade to soften the source's flat cut. The card is approximately level with the profile panel. Phones use heading, lanyard, then panel; the strap does not cross the title. The full opaque lanyard and all identity text remain on screen.
-
-Evidence opened and compared together:
-
-- `artifacts/redesign/hanging-comparison-hero.jpg` and `hanging-comparison-about.jpg`: before/after at 1440px CSS width, device scale 1, each side normalized to 720px without distortion. Changed section height and the intentionally protruding strap are accounted for; the About crop is not treated as the full asset boundary.
-- `artifacts/redesign/hanging-asset-comparison.jpg`: supplied PNG beside the rendered frame/identity at the same width; confirms the dusty palette, retained portrait, readable identity, and safe frame/clasp clearance. The portrait crop is intentional to make space for editable identity text.
-- `artifacts/redesign/hanging-transition.png`: final scrolled transition capture, compared with `hanging-transition-before-fade.png`. The flat source entry was softened after the first pass. The tab icon was removed to give the 320px label adequate room, and a small word gap was added between About and me.
-- Final full section captures: `hero-desktop.png`, `about-desktop.png`, `about-mobile.png`, and `about-small.png`, plus full-page captures under the same directory. The 1440, 390, and 320px captures show no horizontal overflow, no hard hero/About background boundary, and preserved 100px desktop / 80px phone navbar heights.
-
-Five fidelity surfaces reviewed: existing brand fonts and new title hierarchy; matched desktop gutters, column gap, header-to-panel spacing, and responsive order; continuous off-white/blue colors and readable navy text; supplied photo plus transparent frame quality; unchanged biography/education facts and removed duplicate/decorative copy. No actionable P0/P1/P2 finding remains.
-
-Validation: targeted ESLint, final production build including TypeScript, and four production browser checks passed (homepage/structure, seven-width responsive layouts and mobile navigation, keyboard/contrast/reduced motion, and content without JavaScript). Responsive assertions explicitly verify heading–lanyard–panel order on smaller layouts and header/panel alignment on desktop. HTTP smoke passed 13 pages, all 11 case studies, metadata, navigation, assets, SEO routes, and unknown-slug 404. Capture scripts found no page errors. The existing local metadataBase warning remains; no deployment occurred.
-
-Files: `Hero.tsx`, `About.tsx`, `LanyardCard.tsx`, `src/app/page.tsx`, `redesign.css`, the existing browser test, `README.md`, this report, and four new assets under `public/images/design/` (source PNG, transparent frame WebP, profile panel mask, and matching edge). Old decorative assets remain available but are no longer rendered in About. The hero photo slots remain placeholders; the supplied portrait is used in the requested lanyard only.
-
-## About boundary and strap fade — 2026-10-18
-
-**final result: passed**
-
-Removed the obsolete -140px hero-dependent lanyard offset. The stage now participates in the left grid column's height, with its entry aligned to the About boundary using that section's own top spacing. The heading and panel stay in their normal right-column grid rows. Mobile keeps heading, lanyard, then panel. The frame image's mask reaches full opacity after 120 CSS pixels; no mask or opacity is applied to the section, identity/photo layer, or text. Hardware and the badge lie below the fade. The shared off-white canvas and a background-only gradient beginning 180px above About remove the saturated horizontal boundary and gradually introduce pale blue below.
-
-Evidence: `artifacts/redesign/transition-adjustment-comparison.jpg` combines the preceding production capture (left) and revised capture (right), each originating at 1440 × 1000, scroll Y 450, density 1, reduced motion. Panels are normalized equally to 720 × 500 with preserved aspect ratio. Concurrent changes to hero props, hero minimum height, title styling, and panel glass opacity were retained. The header row now fits its text height rather than forcing it into a fixed-height track. Detailed views: `transition-1440x1000.png`, `transition-1156x668.png`, `transition-1920x1080.png`, `transition-390x844.png`, `transition-320x844.png`, `about-desktop.png`, and `about-small.png` in the same directory. No new assets were generated or edited.
-
-Fidelity review: existing font families, sizes, text wrapping, and copy are retained; header/panel alignment and spacing remain stable; off-white develops gradually into pale blue; both fabric ends fade softly while the clasp, frame, portrait, and identity stay sharp. Navbar dimensions remain 100px desktop and 80px phone. No actionable P0/P1/P2 issue remains.
-
-Validation: full-project ESLint and the production build including TypeScript passed. Four production browser tests passed: homepage/section links, seven-width responsive layout/mobile navigation, keyboard/contrast/reduced motion, and content without JavaScript. A focused browser check at 1440×1000, 1156×668, 1920×1080, 390×844, and 320×844 confirmed the desktop strap starts exactly at About, remains at least 333px below the hero actions in the final captures, reserves enough bottom space, and causes no horizontal overflow. About and identity have no section-wide mask and About opacity is 1. Header/panel remain in flow at every size. Capture checks found no page errors. Metrics: `artifacts/redesign/transition-metrics.json`. The existing local metadataBase warning remains. No deployment occurred.
-
-Files updated for this request: `src/app/redesign.css`, the scoped `src/app/intro-transition.css`, its import in `src/app/layout.tsx`, `README.md`, and this report. Existing tests were reused without adding implementation-mirroring tests. Production preview remains on port 3200.
-Final synchronization: concurrent edits restored the saturated general background while verification was underway. The requested off-white/pale-blue background was moved into `intro-transition.css`, imported last, while retaining the other hero/title changes. The final production build and TypeScript check passed; full-project lint passed and the added layout import passed targeted ESLint. Responsive/mobile navigation and keyboard/contrast/reduced-motion checks passed again after the hero/title changes (2 tests). The final focused five-viewport check additionally verifies computed hero/About backgrounds are transparent and the blue gradient is confined to the background pseudo-element. Refreshed captures and the same-state comparison were reviewed after this synchronization. Existing source assets remain unchanged.

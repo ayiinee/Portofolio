@@ -8,8 +8,8 @@ import { SmoothScrollProvider } from "@/components/animations/SmoothScrollProvid
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import "./redesign.css";
-import "./intro-transition.css";
 import "./archive.css";
+import "./hero-about.css";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
