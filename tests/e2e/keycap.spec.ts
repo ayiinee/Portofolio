@@ -61,18 +61,19 @@ test("keycap remains usable when the model is unavailable", async ({ page }) => 
   await expect(key.locator(".keycap-3d-fallback")).toHaveText("I");
 });
 
-test("mobile tap advances one letter without resizing the Hero", async ({ browser }) => {
+test("mobile tap advances one letter without resizing the About panel", async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: "reduce" });
   const page = await context.newPage();
   await page.goto("/");
   const key = page.locator(".keycap-3d");
   await expect(key).toHaveAttribute("data-renderer", "ready");
-  const initial = await page.locator(".archive-visual").boundingBox();
+  await key.scrollIntoViewIfNeeded();
+  const initial = await page.locator(".about-sheet").boundingBox();
   await key.tap();
   await expect(key).toHaveAttribute("data-letter", "I");
   await key.tap();
   await expect(key).toHaveAttribute("data-letter", "N");
-  expect(await page.locator(".archive-visual").boundingBox()).toEqual(initial);
+  expect(await page.locator(".about-sheet").boundingBox()).toEqual(initial);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await context.close();
 });

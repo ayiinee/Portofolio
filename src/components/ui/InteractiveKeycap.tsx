@@ -6,7 +6,7 @@ import type { KeycapControls, KeycapScene } from "@/lib/keycap-scene";
 
 const letters = ["A", "I", "N", "I"] as const;
 
-export function InteractiveKeycap() {
+export function InteractiveKeycap({ className = "" }: { className?: string }) {
   const [index, setIndex] = useState(0);
   const [pressed, setPressed] = useState(false);
   const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading");
@@ -42,7 +42,7 @@ export function InteractiveKeycap() {
   return (
     <button
       type="button"
-      className="intro-keycap intro-keycap-a keycap-3d"
+      className={`intro-keycap intro-keycap-a keycap-3d ${className}`}
       aria-label={`Keycap ${letter}. Press to change to ${next}.`}
       title="Press to cycle A → I → N → I"
       data-letter={letter}

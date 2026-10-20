@@ -133,18 +133,22 @@ test("desktop hero keeps all content within its flowing layout", async ({ page }
   for (const [width, height] of [[1918, 861], [1536, 689], [1444, 810], [1440, 900], [1440, 768], [1366, 768]]) {
     await page.setViewportSize({ width, height });
     const layout = (await page.locator(".archive-layout").boundingBox())!;
-    expect(layout.x).toBe(0);
-    expect(layout.width).toBe(width);
-    expect((await page.locator(".archive-heading").boundingBox())!.x).toBeLessThan(100);
+    const frameWidth = Math.min(width, 1600);
+    expect(layout.x).toBe((width - frameWidth) / 2);
+    expect(layout.width).toBe(frameWidth);
+    const heading = (await page.locator(".archive-heading").boundingBox())!;
+    expect(heading.x - layout.x).toBeGreaterThanOrEqual(32);
+    expect(heading.x - layout.x).toBeLessThanOrEqual(104);
     const hero = await page.locator(".archive-hero").boundingBox();
     expect(hero!.height).toBeGreaterThan(0);
-    for (const selector of [".archive-heading", ".archive-actions", ".archive-front-panel", ".archive-card-position"]) {
+    for (const selector of [".archive-heading", ".archive-actions", ".archive-front-panel", ".archive-card-position", ".archive-folder-label", ".archive-specialties", ".archive-visual .intro-keycap"]) {
       for (const element of await page.locator(selector).all()) {
         const box = (await element.boundingBox())!;
         expect(box.y).toBeGreaterThanOrEqual(100);
         expect(box.y + box.height).toBeLessThanOrEqual(hero!.y + hero!.height + 1);
         expect(box.x).toBeGreaterThanOrEqual(0);
         expect(box.x + box.width).toBeLessThanOrEqual(width);
+        expect(box.y + box.height).toBeLessThanOrEqual(height + 1);
       }
     }
   }
@@ -184,10 +188,10 @@ test("responsive layouts and mobile navigation", async ({ page }) => {
           );
         } else {
           expect(heading!.x).toBeLessThan(panel!.x);
-          const cardRight = lanyard!.x + lanyard!.width * (1014 / 1024);
-          expect(cardRight).toBeGreaterThan(panel!.x);
-          expect(cardRight - panel!.x).toBeLessThan(80);
         }
+        expect(lanyard!.x).toBeCloseTo(0, 0);
+        expect(lanyard!.x + lanyard!.width).toBeLessThanOrEqual(width + 1);
+        await expect(page.locator(".lanyard-art")).toHaveCSS("opacity", "0.85");
         await page.screenshot({
           path: `artifacts/review/home-${width}.png`,
           fullPage: true,

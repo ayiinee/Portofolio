@@ -3,6 +3,7 @@ import { LanyardCard } from "@/components/ui/LanyardCard";
 import { AboutStats } from "@/components/ui/AboutStats";
 import { DownloadCVLink } from "@/components/ui/DownloadCVLink";
 import { AboutEntrance } from "@/components/animations/AboutEntrance";
+import { InteractiveKeycap } from "@/components/ui/InteractiveKeycap";
 import { profile } from "@/data/profile";
 
 export function About() {
@@ -15,6 +16,7 @@ export function About() {
         </header>
         <div className="about-lanyard"><LanyardCard /></div>
         <div className="about-sheet">
+          <InteractiveKeycap className="about-keycap" />
           <div className="profile-panel-glass" aria-hidden="true" />
           <div className="sheet-tab"><span>01</span><span>ABOUT</span></div>
           <div className="about-profile-copy">

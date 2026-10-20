@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Cloud, CodeXml, Folder, GitBranch } from "lucide-react";
 import { KeycapLink } from "@/components/ui/KeycapLink";
-import { InteractiveKeycap } from "@/components/ui/InteractiveKeycap";
 import { archiveCards } from "@/data/archive";
 import type { CSSProperties } from "react";
 
@@ -46,7 +45,6 @@ export function PersonalArchive() {
   return (
     <div className="archive-visual" role="group" aria-label="Personal Archive: a folder of selected work and interface studies">
       <EditorialBackgroundText />
-      <InteractiveKeycap />
       <KeycapLink kind="enter" />
       <div className="archive-ground-shadow" aria-hidden="true" />
       <div className="archive-object">
