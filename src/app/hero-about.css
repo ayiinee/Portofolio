@@ -7,13 +7,16 @@
   --intro-gap: 48px;
   --intro-gutter: clamp(24px, 5.9vw, 72px);
   --lanyard-width: clamp(580px, 53.48vw, 770px);
+  --hero-glow-y: 12%;
+  --about-glow-y: 70%;
   position: relative;
   isolation: isolate;
   overflow: clip;
   color: var(--intro-ink);
   background:
-    radial-gradient(ellipse 70% 47% at 100% 12%, #8bbcf0 0%, #b0d8f6 46%, #d5eafa80 72%, transparent 100%),
-    radial-gradient(ellipse 72% 38% at 87% 65%, #94c4f6 0%, #c0e0ff 50%, transparent 100%),
+    radial-gradient(ellipse 70% 45% at 100% var(--hero-glow-y), #8bbcf0 0%, #b0d8f6 42%, #d5eafa80 72%, #d5eafa00 100%),
+    radial-gradient(ellipse 72% 36% at 0% var(--about-glow-y), #94c4f6 0%, #b7daf6b3 42%, #d9ebf866 70%, #d9ebf800 100%),
+    radial-gradient(ellipse 62% 28% at 52% 44%, #b8d8f54d 0%, #d5eafa26 52%, #d5eafa00 100%),
     #fafbf7;
 }
 /* Navbar behavior stays shared; these dimensions apply only to the home route. */
@@ -91,7 +94,6 @@
 .intro-keycap { position: absolute; z-index: 5; display: block; min-width: 44px; min-height: 44px; border-radius: 20px; touch-action: manipulation; }
 .intro-keycap-face,.intro-keycap img { display: block; width: 100%; height: auto; }
 .intro-keycap img { filter: drop-shadow(0 12px 9px #244b7533); }
-.intro-keycap-a { top: 5%; right: 6%; width: 23%; }
 .intro-keycap-enter { bottom: 0; left: -11%; width: 22%; }
 .intro-keycap-enter { isolation: isolate; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
 /* Two aligned views of the approved asset: the socket stays still while the cap travels. */
@@ -110,11 +112,11 @@
 .archive-specialties svg { width: 3.78cqw; height: 3.78cqw; }
 .about-desk { position: relative; padding: 45px 0 72px; }
 .about-layout { position: relative; isolation: isolate; width: min(1280px, 100%); min-height: calc(var(--lanyard-width) * .9); margin-inline: auto; padding-inline: var(--intro-gutter); display: grid; grid-template-columns: minmax(0, .452fr) minmax(0, .548fr); grid-template-rows: auto; align-items: start; gap: var(--intro-gap); }
-.about-section-heading { grid-column: 1; grid-row: 1; position: relative; z-index: 21; min-width: 0; min-height: 172px; padding-top: 88px; isolation: isolate; }
+.about-section-heading { position: relative; grid-column: 1; grid-row: 1; z-index: 21; min-width: 0; height: 90px; padding-top: 36px; isolation: isolate; }
 /* Same existing sans font and overlapping outline treatment; larger scale follows
    the reference composition. It intentionally does not use the mock's serif ABOUT. */
-.about-outline { position: absolute; z-index: 0; top: -10px; left: -3px; font-size: clamp(100px, 11.4vw, 128px); line-height: 1; font-weight: 700; letter-spacing: -.065em; color: transparent; -webkit-text-fill-color: transparent; -webkit-text-stroke: 1.2px #75a1cd; user-select: none; pointer-events: none; }
-.about-section-heading h2 { position: relative; z-index: 1; margin: 0; color: #141923; font-size: 60px; line-height: 1.1; font-weight: 700; letter-spacing: -.055em; }
+.about-outline { position: absolute; z-index: 0; top: 0; left: -3px; font-size: clamp(72px, 6.7vw, 96px); line-height: 1; font-weight: 700; letter-spacing: -.065em; color: transparent; -webkit-text-fill-color: transparent; -webkit-text-stroke: 1.2px #527fae; opacity: .24; user-select: none; pointer-events: none; }
+.about-section-heading h2 { position: relative; z-index: 1; margin: 0; color: #141923; font-size: clamp(48px, 4vw, 56px); line-height: 1; font-weight: 700; letter-spacing: -.055em; white-space: nowrap; }
 .about-section-heading em { margin-left: .12em; font-family: var(--font-serif); font-weight: 400; color: var(--intro-accent); }
 /* The artwork is a sibling of the panel, anchored to the panel's grid cell.
    Its window is at x .5505 / y .554 in the 1024 × 1536 supplied PNG. */
@@ -123,7 +125,7 @@
 .lanyard-stage { position: relative; width: 100%; aspect-ratio: 2 / 3; container-type: inline-size; }
 .lanyard-static,.lanyard-art { position: absolute; inset: 0; }
 .lanyard-art { z-index: 30; opacity: .85; pointer-events: none; }
-.lanyard-art img { display: block; width: 100%; height: auto; filter: drop-shadow(8px 14px 14px #204e7929); }
+.lanyard-art img { display: block; width: 100%; height: auto; filter: drop-shadow(6px 10px 10px #235c9729) drop-shadow(16px 24px 28px #6daae37a); }
 .identity-content { position: absolute; z-index: 29; left: 55.05%; top: 55.4%; width: 33.8%; height: 33.2%; padding: 3cqw 2.6cqw 2cqw; border: 1px solid #ffffffa6; border-radius: 2cqw; background: #f7f8f4eb; backdrop-filter: blur(12px); transform: rotate(-10.6deg); transform-origin: 0 0; text-align: center; color: #152c49; }
 .identity-monogram { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; margin-top: 1.5cqw; overflow: hidden; border-radius: 1.4cqw; background: linear-gradient(135deg, #e4eff8, #b4d4ec); }
 .identity-monogram::before,.identity-monogram::after { content: ''; position: absolute; inset: 4%; border: 1px solid #ffffffa6; border-radius: 50%; }
@@ -132,7 +134,6 @@
 .identity-name { margin: 2.8cqw 0 1cqw; font: 5.1cqw / 1.15 var(--font-serif); letter-spacing: -.02em; }
 .identity-role { margin: 0; font-size: 1.35cqw; letter-spacing: .2em; line-height: 1.6; text-transform: uppercase; }
 .about-sheet { grid-column: 2; grid-row: 1; position: relative; z-index: 20; min-width: 0; isolation: isolate; }
-.about-sheet .about-keycap { top: -64px; right: 12px; width: 104px; z-index: 3; }
 .profile-panel-glass { position: absolute; z-index: -1; inset: 0; background: linear-gradient(145deg, #ffffffa6, #ffffffd9 75%); backdrop-filter: blur(16px); mask: url('/images/design/profile-panel-mask.svg') 0 0 / 100% 100% no-repeat; pointer-events: none; }
 .about-sheet::before { content: ''; position: absolute; inset: 0; z-index: 1; background: url('/images/design/profile-panel-edge.svg') 0 0 / 100% 100% no-repeat; pointer-events: none; }
 .sheet-tab { position: absolute; inset: 24px 36px auto 26px; height: 30px; display: flex; align-items: center; justify-content: space-between; color: #183c63; }
@@ -183,7 +184,6 @@
   .about-actions .download-cv { min-height: 60px; font-size: 17px; }
   .about-actions .download-cv > span:not(.sr-only) { width: 44px; height: 44px; }
   .about-experience-link { font-size: 15px; }
-  .about-section-heading h2 { font-size: 64px; }
 }
 @media (min-width: 901px) and (max-width: 1100px) {
   .intro-flow { --intro-gap: 32px; }
@@ -202,7 +202,7 @@
   .about-layout { min-height: calc(var(--lanyard-width) * 1.42); }
 }
 @media (max-width: 900px) {
-  .intro-flow { --intro-gutter: 32px; --lanyard-width: 600px; }
+  .intro-flow { --intro-gutter: 32px; --lanyard-width: 600px; --hero-glow-y: 15%; --about-glow-y: 67%; }
   .home-nav .nav-inner { height: 100px; padding-inline: 32px; }
   .archive-layout { min-height: 0; grid-template-columns: minmax(0, 1fr); padding: 140px 32px 64px; gap: 48px; }
   .archive-copy { max-width: 580px; width: 100%; margin-inline: auto; padding-top: 0; }
@@ -210,15 +210,15 @@
   .archive-visual { width: min(522px, 78.3%); justify-self: center; margin-inline: auto; }
   .about-desk { padding-top: 24px; padding-bottom: 56px; }
   .about-layout { min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; row-gap: 24px; }
-  .about-section-heading { grid-column: 1; grid-row: 1; min-height: 140px; padding-top: 72px; }
-  .about-outline { font-size: 112px; }
-  .about-section-heading h2 { font-size: 56px; }
+  .about-section-heading { grid-column: 1; grid-row: 1; align-self: center; height: 82px; padding-top: 32px; }
+  .about-outline { font-size: 72px; }
+  .about-section-heading h2 { font-size: 44px; }
   .about-lanyard { position: relative; grid-column: 1; grid-row: 2; top: auto; left: auto; width: min(640px, calc(100% + 32px)); left: -32px; justify-self: start; }
   .about-sheet { grid-column: 1; grid-row: 3; width: 100%; }
   .about-profile-copy { padding-top: 96px; }
 }
 @media (max-width: 600px) {
-  .intro-flow { --intro-gutter: 22px; --mobile-lanyard-width: 100vw; }
+  .intro-flow { --intro-gutter: 22px; --mobile-lanyard-width: 100vw; --hero-glow-y: 12%; --about-glow-y: 63%; }
   .home-nav .nav-inner { padding-inline: 22px; }
   .home-nav .brand { font-size: 38px; }
   .archive-layout { padding: 124px 22px 52px; gap: 40px; }
@@ -232,20 +232,19 @@
   .archive-actions .button { font-size: 13px; padding-inline: 20px; gap: 12px; }
   .archive-connect { font-size: 13px; }
   .archive-visual { width: 81%; }
-  .intro-keycap-a { width: 25%; }
   .intro-keycap-enter { width: 25%; left: -5%; }
   .archive-specialties { right: -3%; width: 33.3cqw; padding: 3.15cqw; gap: 8px; border-radius: 12px; }
   .archive-specialties li { gap: 6px; font-size: 10px; }
   .archive-specialties svg { width: 13.5px; height: 13.5px; flex-shrink: 0; }
   .about-layout { row-gap: 20px; }
-  .about-section-heading { min-height: 118px; padding-top: 60px; }
-  .about-outline { top: 0; font-size: clamp(80px, 21vw, 104px); }
-  .about-section-heading h2 { font-size: 44px; }
+  .about-section-heading { height: 70px; padding-top: 27px; }
+  .about-outline { font-size: clamp(56px, 16vw, 64px); }
+  .about-section-heading h2 { font-size: clamp(34px, 10vw, 40px); }
   .about-lanyard { width: var(--mobile-lanyard-width); height: calc(var(--mobile-lanyard-width) * 1.5 - 90px); aspect-ratio: auto; left: -22px; justify-self: start; }
   .lanyard-stage { top: -90px; }
   .about-profile-copy { padding: 92px 24px 32px; }
   .sheet-tab { left: 24px; right: 24px; }
-  .about-sheet .about-keycap { top: -56px; right: 0; width: 88px; }
+  .lanyard-art img { filter: drop-shadow(5px 8px 8px #235c9729) drop-shadow(10px 16px 20px #6daae366); }
   .about-lead { font-size: 22px; }
   .about-profile-copy > p + p { font-size: 16px; letter-spacing: 0; }
   .about-bio > span,.about-lead > span { display: inline; }

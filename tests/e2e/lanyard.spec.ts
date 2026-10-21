@@ -41,17 +41,13 @@ test("the static artwork follows About when hero height changes", async ({ page 
   expect(after.inset).toBe(before.inset);
 });
 
-test("keycap interaction, About summaries stay honest and CV waits for a file", async ({ page }) => {
+test("Enter interaction, About summaries stay honest and CV waits for a file", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.locator(".about-stats dd")).toHaveText(["—", "—", "—", "—"]);
   await expect(page.getByRole("button", { name: /Download CV/ })).toBeDisabled();
-  await expect(page.locator(".intro-keycap-a")).toHaveCSS("transform", "none");
+  await expect(page.locator(".intro-keycap-a, .about-keycap")).toHaveCount(0);
   await expect(page.locator(".intro-keycap-enter")).toHaveCSS("transform", "none");
-  await page.locator(".intro-keycap-a").focus();
-  await page.keyboard.press("Enter");
-  await expect(page.locator(".intro-keycap-a")).toHaveAttribute("data-letter", "I");
-  await expect(page).not.toHaveURL(/#about$/);
   await page.locator(".intro-keycap-enter").click();
   await expect(page).toHaveURL(/#projects$/);
 });

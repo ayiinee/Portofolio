@@ -95,3 +95,32 @@ final result: passed
 - Comparison history: initial screenshot detail used document/viewport coordinates inconsistently; recaptured and normalized the focused region from the actual viewport screenshot before the comparison above. This was a capture correction, not a product visual change.
 
 final result: passed
+
+## Hero–About gradients and A keycap removal — 2026-10-20
+
+- Implemented the approved follow-up plan: removed the mounted A keycap from About and its placement styles. Original component/model/assets remain as source; the homepage has no 3D canvas or model request. Enter remains in the archive.
+- Kept a single `.intro-flow` background with three overlapping radial layers: right-side Hero blue, left-side About blue, and a low-opacity connecting layer. Tablet/mobile centers follow the stacked layout. Gradients fade into the same paper color without section-local background edges.
+- Replaced the lanyard shadow with a close blue shadow and a wider soft blue shadow. Mobile uses smaller offsets/blur. Original artwork, opacity .85, layout and identity layers are unchanged.
+- Visual evidence: `artifacts/gradient-review/hero-{1440,768,390}.png`, `about-{1440,768,390}.png`, `transition-{1440,768,390}.png`, and complete `intro-{1440,768,390}.png`. Viewports 1440x900, 768x1024, 390x844; browser screenshots at native CSS density. Reviewed desktop/mobile complete composition and tablet/mobile transition captures. No visible gradient boundary or new shadow clipping. Section and lanyard typography, content and proportions retained; blue shadows follow the transparent artwork silhouette. Panel text remains readable against its pale surface.
+- Validation: 14 targeted browser tests passed (Chrome against the local development server): three visual/responsive checks, A/model absence, actual held Enter cap travel with fixed socket, keyboard/reduced motion, mobile tap, five lanyard viewport checks, About anchoring, and existing summaries/CV/Enter navigation. Responsive captures reported no console/page errors and no horizontal overflow. TypeScript, scoped ESLint and diff whitespace checks passed. No production build or full-site regression suite was run for this scoped CSS/component update.
+
+final result: passed
+
+## Compact About with complete biography dialog — 2026-10-21
+
+- Source visual: the user-provided screenshot, copied to `artifacts/about-refinement/source-original.png` (1918x870), plus the explicitly approved compact About plan. This is an intentional refinement, not an exact recreation of the previous oversized layout.
+- Implementation evidence: `artifacts/about-refinement/about-{1918,1440,1366,1280,768,390,375}.png` at native CSS-pixel density, respectively 1918x870, 1440x900, 1366x768, 1280x720, 768x1024, 390x844, 375x667. At rest after direct #about navigation, the heading, framed lanyard and complete profile panel sit below the navbar and above the viewport bottom. No horizontal overflow was observed. The original artwork is framed, not replaced; its decorative straps may fade at the vignette edges while the identity card stays visible.
+- Combined full-view comparison: `source-comparison.png` places the provided screenshot beside the final 1918x870 implementation, both normalized to 959x435. Inspected both together. The smaller/lighter overlapping heading, separated artwork, condensed panel and omission of empty stats match the approved changes. Focused visual checks: native desktop 1366 and mobile 375 captures, plus `dialog.png` (1280x720 in-app browser). Card silhouette, title separation and panel copy remain readable at native scale.
+- Required fidelity surfaces: existing sans/serif typography retained, with 16px minimum profile-body text; tighter panel spacing and a separate heading/artwork grid remove overlap; approved blue gradients and silhouette shadows retained; the real PNG and identity overlay remain aligned, with soft framing instead of abrupt rectangular cuts; summary copy matches the approved wording and the original full biography remains in the dialog. CV remains honestly unavailable and Experience stays linked.
+- Iteration history: first-pass vignette edges were too abrupt (P2); applied soft alpha framing and reviewed revised captures. First keyboard test found focus leaving the native dialog after Tab (P1); added explicit Tab/Shift+Tab wrapping, then the full About suite passed. No remaining actionable P0/P1/P2 findings.
+- Validation: first targeted run passed 20/21 tests, then all 10 About tests passed after the focus/framing fixes; the other 11 passing tests cover Enter input/navigation and static lanyard assembly/anchoring. Two additional existing tests passed for responsive layouts/mobile navigation and keyboard/contrast/reduced motion (including axe checks across Home, Projects and a case study). About tests include seven viewport containment checks, navbar navigation from Hero and Contact, dialog focus/background scroll/Escape/close/restore, dialog axe, touch and doubled profile-body text with natural page scrolling. TypeScript, scoped ESLint and whitespace checks passed. In-app browser dialog review reported no console errors. Native device hardware and a production build were not tested.
+
+final result: passed
+
+## Restore original About composition, retain heading refinement — 2026-10-21
+
+- At the owner's request, reverted the compact About redesign: restored full-size original lanyard positioning, original panel layout, complete original bio, four placeholder statistics, and original CV/Experience styling. Removed the biography dialog, summary-only copy, viewport-fit/framing styles, and tests for those removed features.
+- Retained only the latest heading treatment: smaller, lighter ABOUT outline and the overlapping About me title, including responsive sizes. Earlier approved gradient/shadow updates and removal of keycap A remain intact.
+- Reviewed the restored page in the in-app browser; screenshot `artifacts/about-refinement/restored-about.png`. Seven lanyard/anchoring/Enter tests passed across 1122, 1440, 1024, 768 and 390px. TypeScript and scoped ESLint passed. Previous compact About acceptance results above are historical and no longer describe the current layout.
+
+final result: passed
