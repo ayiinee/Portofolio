@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
+import { useReducedMotion } from "motion/react";
 import { ArrowLeft, ArrowRight, Maximize2 } from "lucide-react";
 import type { ProjectMedia } from "@/types/project";
 import { MediaPlaceholder } from "./MediaPlaceholder";
@@ -23,13 +24,20 @@ function caption(item: ProjectMedia) {
 export function ProjectGallery({
   media,
   title,
+  variant = "inline",
+  category,
 }: {
   media: ProjectMedia[];
   title: string;
+  variant?: "inline" | "hero";
+  category?: string;
 }) {
+  const viewportId = useId();
+  const reducedMotion = useReducedMotion();
   const [viewportRef, embla] = useEmblaCarousel({
     loop: false,
     watchDrag: media.length > 1,
+    duration: reducedMotion ? 0 : 25,
   });
   const [selected, setSelected] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -47,14 +55,14 @@ export function ProjectGallery({
 
   if (!media.length)
     return (
-      <div className="gallery-empty">
-        <MediaPlaceholder title={title} />
+      <div className={`gallery-empty${variant === "hero" ? " project-gallery--hero" : ""}`}>
+        <MediaPlaceholder title={title} category={category} showFullTitle={variant === "hero"} />
       </div>
     );
 
   return (
     <div
-      className="project-gallery"
+      className={`project-gallery${variant === "hero" ? " project-gallery--hero" : ""}`}
       role="region"
       aria-label={`${title} gallery`}
       aria-roledescription={media.length > 1 ? "carousel" : undefined}
@@ -62,6 +70,7 @@ export function ProjectGallery({
     >
       <div
         className="gallery-viewport"
+        id={viewportId}
         ref={viewportRef}
         tabIndex={media.length > 1 ? 0 : undefined}
         aria-label={
@@ -106,7 +115,8 @@ export function ProjectGallery({
                   alt={item.alt}
                   width={item.width}
                   height={item.height}
-                  sizes="(max-width: 1280px) 100vw, 1184px"
+                  sizes={variant === "hero" ? "(max-width: 844px) calc(100vw - 44px), 800px" : "(max-width: 1280px) 100vw, 1184px"}
+                  preload={variant === "hero" && index === 0}
                 />
               </button>
             </figure>
@@ -146,6 +156,24 @@ export function ProjectGallery({
           </div>
         )}
       </div>
+      {variant === "hero" && media.length > 1 && (
+        <div className="gallery-thumbnails" role="group" aria-label="Choose a project image">
+          {media.map((item, index) => (
+            <button
+              key={item.src}
+              type="button"
+              className="gallery-thumbnail"
+              aria-label={`Show image ${index + 1}: ${item.alt}`}
+              aria-current={index === selected ? "true" : undefined}
+              aria-controls={viewportId}
+              disabled={!embla}
+              onClick={() => embla?.scrollTo(index)}
+            >
+              <Image src={item.src} width={item.width} height={item.height} alt="" sizes="80px" />
+            </button>
+          ))}
+        </div>
+      )}
       {lightboxIndex !== null && (
         <MediaLightbox
           media={media}

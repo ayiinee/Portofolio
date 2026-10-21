@@ -1,4 +1,6 @@
 import "../../../src/app/globals.css";
+import "../../../src/app/experience.css";
+import "../../../src/app/projects/projects.css";
 
 export const metadata = { title: "Portfolio gallery QA fixtures" };
 

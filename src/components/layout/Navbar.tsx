@@ -10,6 +10,7 @@ export function Navbar() {
   const [active, setActive] = useState("top");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const menuRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -17,7 +18,20 @@ export function Navbar() {
   const sectionHref = (id: string) => `${isHome ? "" : "/"}#${id}`;
 
   useEffect(() => {
-    const updateScroll = () => setScrolled(window.scrollY > 24);
+    let previousY = Math.max(0, window.scrollY);
+    const updateScroll = () => {
+      // Clamp overscroll so bouncing at either edge cannot flip the direction.
+      const currentY = Math.max(0, Math.min(window.scrollY,
+        document.documentElement.scrollHeight - window.innerHeight));
+      setScrolled(currentY > 24);
+      if (currentY <= 24) {
+        setHidden(false);
+        previousY = currentY;
+      } else if (Math.abs(currentY - previousY) >= 8) {
+        setHidden(currentY > previousY);
+        previousY = currentY;
+      }
+    };
     updateScroll();
     window.addEventListener("scroll", updateScroll, { passive: true });
     return () => window.removeEventListener("scroll", updateScroll);
@@ -32,11 +46,6 @@ export function Navbar() {
         const section = document.getElementById(item.id);
         if (section && section.offsetTop <= marker) current = item.id;
       }
-      if (
-        window.scrollY + window.innerHeight >=
-        document.documentElement.scrollHeight - 8
-      )
-        current = "contact";
       setActive(current);
     };
     updateActive();
@@ -67,7 +76,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={cn("nav-shell", isHome && "home-nav", scrolled && "is-scrolled")}>
+    <header className={cn("nav-shell", isHome && "home-nav", scrolled && "is-scrolled", hidden && !open && "is-hidden")}>
       <div className="nav-glass" aria-hidden="true" />
       <div className="nav-inner">
         <a

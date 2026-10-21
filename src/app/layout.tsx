@@ -10,6 +10,8 @@ import "./globals.css";
 import "./redesign.css";
 import "./archive.css";
 import "./hero-about.css";
+import "./experience.css";
+import "./selected-projects.css";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],

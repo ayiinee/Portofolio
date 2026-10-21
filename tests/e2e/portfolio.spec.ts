@@ -17,11 +17,14 @@ test("homepage archive, original content, and anchor navigation", async ({ page 
   await expect(page.locator(".profile-panel-glass")).toHaveCSS("backdrop-filter", "blur(16px)");
   await expect(page.locator("#about h2")).toHaveText("About me");
   expect(await page.locator("[data-project]").evaluateAll(nodes => nodes.map(node => node.getAttribute("data-project"))))
-    .toEqual(featuredProjects.map(project => project.slug));
+    .toEqual(featuredProjects.slice(0, 4).map(project => project.slug));
   await expect(page.getByRole("link", { name: "View My Work" })).toHaveAttribute("href", "#projects");
   await expect(page.getByRole("link", { name: "Let's Connect", exact: true })).toHaveAttribute("href", "#contact");
   await page.getByRole("link", { name: "View My Work" }).click();
   await expect(page.locator("#projects")).toBeInViewport();
+  // Navigation intentionally hides while scrolling down; scroll up to reveal it.
+  await page.mouse.wheel(0, -160);
+  await expect(page.locator(".nav-shell")).not.toHaveClass(/is-hidden/);
   await page.locator('.nav-pill a[href="#education"]').click();
   await expect(page.locator('.nav-pill a[href="#education"]')).toHaveAttribute("aria-current", "location");
   await expect(page.locator(".nav-glass")).toHaveCSS("opacity", "1");
@@ -120,6 +123,13 @@ test("every case study has unique metadata, context, and valid navigation", asyn
       "Project image coming soon",
     );
     await expect(page.locator("main")).not.toContainText("TODO");
+    const outcomes = page.getByRole("region", { name: "Impact & achievements", exact: true });
+    await expect(outcomes).toContainText(project.impact![0]);
+    if (project.achievements?.length) {
+      for (const achievement of project.achievements) await expect(outcomes).toContainText(achievement);
+    } else {
+      await expect(outcomes.getByRole("heading", { name: "Milestones & recognition" })).toHaveCount(0);
+    }
     expect(errors).toEqual([]);
     page.off("pageerror", handler);
     page.off("console", onConsole);
@@ -133,12 +143,12 @@ test("desktop hero keeps all content within its flowing layout", async ({ page }
   for (const [width, height] of [[1918, 861], [1536, 689], [1444, 810], [1440, 900], [1440, 768], [1366, 768]]) {
     await page.setViewportSize({ width, height });
     const layout = (await page.locator(".archive-layout").boundingBox())!;
-    const frameWidth = Math.min(width, 1600);
-    expect(layout.x).toBe((width - frameWidth) / 2);
-    expect(layout.width).toBe(frameWidth);
+    const baseline = (await page.locator("#skills > .section").boundingBox())!;
+    expect(layout.x).toBeCloseTo(baseline.x, 0);
+    expect(layout.width).toBeCloseTo(baseline.width, 0);
     const heading = (await page.locator(".archive-heading").boundingBox())!;
-    expect(heading.x - layout.x).toBeGreaterThanOrEqual(32);
-    expect(heading.x - layout.x).toBeLessThanOrEqual(104);
+    const skills = (await page.locator(".skills-grid").boundingBox())!;
+    expect(heading.x).toBeCloseTo(skills.x, 0);
     const hero = await page.locator(".archive-hero").boundingBox();
     expect(hero!.height).toBeGreaterThan(0);
     for (const selector of [".archive-heading", ".archive-actions", ".archive-front-panel", ".archive-card-position", ".archive-folder-label", ".archive-specialties", ".archive-visual .intro-keycap"]) {
@@ -159,7 +169,8 @@ test("responsive layouts and mobile navigation", async ({ page }) => {
   // Capture every section without offscreen scroll-reveal opacity hiding it.
   await page.emulateMedia({ reducedMotion: "reduce" });
   await fs.mkdir("artifacts/review", { recursive: true });
-  for (const width of [320, 375, 390, 768, 1024, 1440, 1920]) {
+  await fs.mkdir("artifacts/projects-review", { recursive: true });
+  for (const width of [320, 375, 390, 768, 1024, 1264, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     for (const route of [
       "/",
@@ -174,6 +185,13 @@ test("responsive layouts and mobile navigation", async ({ page }) => {
         `${route} at ${width}px`,
       ).toBe(true);
       if (route === "/") {
+        if ([390, 768, 1264, 1440].includes(width)) {
+          await page.locator("#projects").screenshot({
+            path: `artifacts/projects-review/projects-${width}.png`,
+            // Capture the section without floating shared UI obscuring the cards.
+            style: ".nav-shell, .skip-link, nextjs-portal { visibility: hidden !important; }",
+          });
+        }
         const heading = await page
           .locator(".about-section-heading")
           .boundingBox();

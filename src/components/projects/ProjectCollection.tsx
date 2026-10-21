@@ -18,36 +18,38 @@ export function ProjectCollection({ items }: { items: CollectionItem[] }) {
   );
   return (
     <>
-      <div
-        className="project-filters"
-        role="group"
-        aria-label="Filter projects"
-      >
-        {(["All", ...projectCategories] as const).map((category) => (
-          <button
-            key={category}
-            type="button"
-            aria-pressed={category === filter}
-            aria-controls="project-results"
-            className={`filter-button ${category === filter ? "is-active" : ""}`}
-            onClick={() => {
-              setFilter(category);
-              setLimit(6);
-            }}
-          >
-            {category}
-            <span>
-              {category === "All"
-                ? items.length
-                : items.filter((item) => item.category === category).length}
-            </span>
-          </button>
-        ))}
+      <div className="collection-toolbar">
+        <div
+          className="project-filters"
+          role="group"
+          aria-label="Filter projects"
+        >
+          {(["All", ...projectCategories] as const).map((category) => (
+            <button
+              key={category}
+              type="button"
+              aria-pressed={category === filter}
+              aria-controls="project-results"
+              className={`filter-button ${category === filter ? "is-active" : ""}`}
+              onClick={() => {
+                setFilter(category);
+                setLimit(6);
+              }}
+            >
+              {category}
+              <span>
+                {category === "All"
+                  ? items.length
+                  : items.filter((item) => item.category === category).length}
+              </span>
+            </button>
+          ))}
+        </div>
+        <p className="project-count" role="status" aria-live="polite">
+          Showing {Math.min(limit, matching.length)} of {matching.length} projects
+          {filter !== "All" ? ` in ${filter}` : ""}
+        </p>
       </div>
-      <p className="project-count" role="status" aria-live="polite">
-        Showing {Math.min(limit, matching.length)} of {matching.length} projects
-        {filter !== "All" ? ` in ${filter}` : ""}
-      </p>
       <div id="project-results" className="projects-grid">
         {matching.slice(0, limit).map((item) => (
           <div key={item.slug}>{item.card}</div>

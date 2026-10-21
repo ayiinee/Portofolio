@@ -5,7 +5,7 @@
   --intro-secondary: #526887;
   --intro-accent: #096bf0;
   --intro-gap: 48px;
-  --intro-gutter: clamp(24px, 5.9vw, 72px);
+  --intro-gutter: var(--section-gutter);
   --lanyard-width: clamp(580px, 53.48vw, 770px);
   --hero-glow-y: 12%;
   --about-glow-y: 70%;
@@ -28,10 +28,10 @@
 .home-nav .nav-talk { min-height: 40px; padding: 9px 20px; background: #fff; font-size: 13px; }
 .archive-hero { position: relative; isolation: isolate; }
 .archive-layout {
-  width: 100%;
+  width: min(var(--section-width), 100%);
   min-height: 760px;
   margin-inline: auto;
-  padding: 146px var(--intro-gutter) 32px;
+  padding: 146px var(--intro-gutter) var(--section-space);
   display: grid;
   grid-template-columns: minmax(0, .4fr) minmax(0, .6fr);
   align-items: start;
@@ -110,7 +110,7 @@
 .archive-specialties { position: absolute; z-index: 5; right: -1%; bottom: 3.2%; display: grid; gap: 13.5px; width: 31.5cqw; margin: 0; padding: 3.6cqw; list-style: none; border: 1px solid #ffffff65; border-radius: 18px; background: linear-gradient(125deg, #345f89b8, #152c49d9); backdrop-filter: blur(14px); box-shadow: 0 12px 24px #152c4926, inset 0 1px 0 #ffffff26; transform: rotate(7deg); color: white; pointer-events: none; }
 .archive-specialties li { display: flex; align-items: center; gap: 12.6px; font-size: clamp(12px, 2.34cqw, 14.4px); }
 .archive-specialties svg { width: 3.78cqw; height: 3.78cqw; }
-.about-desk { position: relative; padding: 45px 0 72px; }
+.about-desk { --intro-gutter: clamp(24px, 5.9vw, 72px); position: relative; padding: 45px 0 72px; }
 .about-layout { position: relative; isolation: isolate; width: min(1280px, 100%); min-height: calc(var(--lanyard-width) * .9); margin-inline: auto; padding-inline: var(--intro-gutter); display: grid; grid-template-columns: minmax(0, .452fr) minmax(0, .548fr); grid-template-rows: auto; align-items: start; gap: var(--intro-gap); }
 .about-section-heading { position: relative; grid-column: 1; grid-row: 1; z-index: 21; min-width: 0; height: 90px; padding-top: 36px; isolation: isolate; }
 /* Same existing sans font and overlapping outline treatment; larger scale follows
@@ -163,9 +163,8 @@
   .identity-content { background: #f2f6fa; }
   .archive-specialties { background: #243f60; }
 }
-/* Keep the desktop greeting and archive together inside a centered frame. */
+/* The navbar keeps its original frame independently of the section baseline. */
 @media (min-width: 1101px) {
-  .archive-layout,
   .home-nav .nav-inner {
     max-width: 1600px;
     margin-inline: auto;
@@ -202,26 +201,27 @@
   .about-layout { min-height: calc(var(--lanyard-width) * 1.42); }
 }
 @media (max-width: 900px) {
-  .intro-flow { --intro-gutter: 32px; --lanyard-width: 600px; --hero-glow-y: 15%; --about-glow-y: 67%; }
+  .intro-flow { --lanyard-width: 600px; --hero-glow-y: 15%; --about-glow-y: 67%; }
   .home-nav .nav-inner { height: 100px; padding-inline: 32px; }
-  .archive-layout { min-height: 0; grid-template-columns: minmax(0, 1fr); padding: 140px 32px 64px; gap: 48px; }
+  .archive-layout { min-height: 0; grid-template-columns: minmax(0, 1fr); padding-top: 140px; gap: 48px; }
   .archive-copy { max-width: 580px; width: 100%; margin-inline: auto; padding-top: 0; }
   .archive-heading { font-size: clamp(48px, 7.8vw, 64px); }
   .archive-visual { width: min(522px, 78.3%); justify-self: center; margin-inline: auto; }
-  .about-desk { padding-top: 24px; padding-bottom: 56px; }
+  .about-desk { --intro-gutter: 32px; padding-top: 24px; padding-bottom: 56px; }
   .about-layout { min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; row-gap: 24px; }
   .about-section-heading { grid-column: 1; grid-row: 1; align-self: center; height: 82px; padding-top: 32px; }
   .about-outline { font-size: 72px; }
   .about-section-heading h2 { font-size: 44px; }
-  .about-lanyard { position: relative; grid-column: 1; grid-row: 2; top: auto; left: auto; width: min(640px, calc(100% + 32px)); left: -32px; justify-self: start; }
+  .about-lanyard { position: relative; grid-column: 1; grid-row: 2; top: auto; width: min(640px, calc(100% + var(--intro-gutter))); left: calc(-1 * var(--intro-gutter)); justify-self: start; }
   .about-sheet { grid-column: 1; grid-row: 3; width: 100%; }
   .about-profile-copy { padding-top: 96px; }
 }
 @media (max-width: 600px) {
-  .intro-flow { --intro-gutter: 22px; --mobile-lanyard-width: 100vw; --hero-glow-y: 12%; --about-glow-y: 63%; }
+  .intro-flow { --mobile-lanyard-width: 100vw; --hero-glow-y: 12%; --about-glow-y: 63%; }
   .home-nav .nav-inner { padding-inline: 22px; }
+  .about-desk { --intro-gutter: 22px; }
   .home-nav .brand { font-size: 38px; }
-  .archive-layout { padding: 124px 22px 52px; gap: 40px; }
+  .archive-layout { padding-top: 124px; gap: 40px; }
   .archive-heading { font-size: clamp(40px, 11vw, 52px); }
   .archive-name em { font-size: 1.1em; }
   .archive-description { max-width: 320px; font-size: 16px; }
@@ -240,7 +240,7 @@
   .about-section-heading { height: 70px; padding-top: 27px; }
   .about-outline { font-size: clamp(56px, 16vw, 64px); }
   .about-section-heading h2 { font-size: clamp(34px, 10vw, 40px); }
-  .about-lanyard { width: var(--mobile-lanyard-width); height: calc(var(--mobile-lanyard-width) * 1.5 - 90px); aspect-ratio: auto; left: -22px; justify-self: start; }
+  .about-lanyard { width: var(--mobile-lanyard-width); height: calc(var(--mobile-lanyard-width) * 1.5 - 90px); aspect-ratio: auto; left: calc(-1 * var(--intro-gutter)); justify-self: start; }
   .lanyard-stage { top: -90px; }
   .about-profile-copy { padding: 92px 24px 32px; }
   .sheet-tab { left: 24px; right: 24px; }

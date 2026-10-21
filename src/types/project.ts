@@ -22,6 +22,7 @@ export type Project = {
   title: string;
   subtitle?: string;
   year: number;
+  timeline?: string;
   category: ProjectCategory;
   tags: string[];
   type: string;
@@ -29,11 +30,14 @@ export type Project = {
   featured: boolean;
   featuredOrder?: number;
   shortDescription: string;
+  cardSummary?: string;
   overview: string[];
   challenge?: string;
   personalContributions?: string[];
   contributionStatement?: string;
   engineeringHighlights?: string[];
+  impact?: string[];
+  achievements?: string[];
   technologies: string[];
   architecture?: { description: string; media: ProjectMedia };
   status?: string;

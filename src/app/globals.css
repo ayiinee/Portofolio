@@ -20,6 +20,9 @@
   --glass: rgba(255, 255, 255, 0.55);
   --radius: 1.5rem;
   --ease: cubic-bezier(0.22, 0.68, 0.24, 1);
+  --section-width: 80rem;
+  --section-gutter: 3rem;
+  --section-space: 7rem;
 }
 * {
   box-sizing: border-box;
@@ -91,6 +94,13 @@ svg {
   inset: 0 0 auto;
   z-index: 30;
   pointer-events: none;
+  transition: transform 0.28s ease;
+}
+.nav-shell.is-hidden {
+  transform: translateY(-100%);
+}
+.nav-shell:has(:focus-visible) {
+  transform: translateY(0);
 }
 /* Navigation retains its original size independently of compact content. */
 .nav-shell .brand {
@@ -386,9 +396,9 @@ svg {
   letter-spacing: normal;
 }
 .section {
-  width: min(80rem, 100%);
+  width: min(var(--section-width), 100%);
   margin-inline: auto;
-  padding: 7rem 3rem;
+  padding: var(--section-space) var(--section-gutter);
 }
 .eyebrow {
   display: flex;
@@ -881,9 +891,9 @@ svg {
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
-  max-width: 90rem;
+  max-width: var(--section-width);
   margin: auto;
-  padding: 2rem 3rem;
+  padding: 2rem var(--section-gutter);
   border-top: 1px solid var(--line);
 }
 .footer .brand {
@@ -1200,8 +1210,9 @@ svg {
   .portrait-card {
     width: 6.875rem;
   }
-  .section {
-    padding: 5.5rem 2rem;
+  :root {
+    --section-space: 5.5rem;
+    --section-gutter: 2rem;
   }
   .page-section {
     padding-top: 9rem;
@@ -1299,8 +1310,9 @@ svg {
   .hero-bottom > span {
     display: none;
   }
-  .section {
-    padding: 4.5rem max(1.5rem, 24px);
+  :root {
+    --section-space: 4.5rem;
+    --section-gutter: max(1.5rem, 24px);
   }
   .eyebrow {
     font-size: 10px;
@@ -1401,7 +1413,7 @@ svg {
   }
   .footer {
     flex-wrap: wrap;
-    padding: 1.5rem;
+    padding: 1.5rem var(--section-gutter);
     gap: 0.75rem;
   }
   .footer p {

@@ -124,3 +124,203 @@ final result: passed
 - Reviewed the restored page in the in-app browser; screenshot `artifacts/about-refinement/restored-about.png`. Seven lanyard/anchoring/Enter tests passed across 1122, 1440, 1024, 768 and 390px. TypeScript and scoped ESLint passed. Previous compact About acceptance results above are historical and no longer describe the current layout.
 
 final result: passed
+
+## Experience compact archive and detail gallery — 2026-10-21
+
+### Evidence
+
+- Source: `docs/design/experience/experience-overview-approved.png` and `experience-dialog-approved.png`, each 1487 × 1058 pixels. Final requirements in `IMPLEMENTATION.md` override the eyebrow, expansion-button visibility, and gallery behavior.
+- Final browser captures: `artifacts/experience/overview-1487.png` (1487 × 833 section capture), `dialog-1487.png` (1487 × 1058 viewport capture), `overview-390.png` and `dialog-390.png`. Desktop CSS viewport 1487 × 1058; phone viewport 390 × 1058; deviceScaleFactor 1. No image stretching or density rescaling was used. The overview excludes navigation/About above the section, so its shorter height is a crop difference.
+- Opened and compared source and implementation together in `artifacts/experience/overview-comparison.png` and `dialog-comparison.png`. The first board preserves blank space below the shorter section capture. Focused native-scale evidence in `row-comparison.png` verifies typography, date wrapping, dividers, thumbnail size and detail controls. Focus outlines show the actual keyboard-visible state, absent in the reference.
+- Responsive overflow checks additionally cover 320, 768 and 1024px. Touch/short-dialog checks use 390 × 650. No mobile visual source was provided; mobile is a responsive adaptation.
+
+### Findings and iteration history
+
+- P1, fixed: dialog cleanup dispatched a close event during React development effect replay and dismissed the dialog immediately. Removed the redundant close-event state handler. Escape and explicit close buttons handle dismissal.
+- P1, fixed: native reverse tabbing could leave the dialog controls. Added explicit Tab/Shift+Tab boundary wrapping alongside native modal background inertness. Final focus, restoration, Escape and scroll-lock tests pass.
+- P2, fixed: the first dialog lacked the small archive tab and visible contribution bullets. Added the tab and explicit disc markers; reviewed revised `dialog-comparison.png`.
+- P2, fixed: narrow date columns wrapped the ending year away from its month. Dates now break between their exact start/end periods, with preserved textual whitespace. Final captures and period assertions pass.
+- No remaining actionable P0/P1/P2 findings in Experience. Expected differences: the explicit 40–44px heading and modest body sizing override the larger raster target; the three-record production list needs no expansion button; missing documentation is identified honestly; focus rings remain visible.
+
+### Required fidelity surfaces
+
+- Typography: existing Plus Jakarta Sans and Instrument Serif; approximately 44px maximum section heading, 19px role, 15px course, 14px body/date and 32px serif year at the default root scale. Blue italic heading accent retained. Rem sizing respects root scaling; content is not clipped.
+- Layout/spacing: one 1152px milky archive sheet, integrated label tab, three compact horizontal rows, fine rules, narrow date track and 170 × 96px folder-shaped thumbnails. Natural content height. Phones read date, content, thumbnail and action in order. No internal list scroller or sticky heading. The 760px rounded paper dialog scrolls internally with a reachable sticky close control.
+- Colors/surfaces: warm `#fafbf7`, powder `#b7daf6`, navy `#152c49`, slate `#526887`, cobalt `#096bf0`, subtle edges/shadow and a blue blurred backdrop. Experience styles are scoped; Home/About and shared navbar sources remain unchanged.
+- Images/icons: current entries deliberately have no approved photos. Empty slots follow the reference and the dialog says documentation has not been added. Lucide supplies image/close/arrow icons. Production contains no synthetic activity images. Gallery records require source, dimensions and meaningful alt text; captions are optional.
+- Content/states: all three roles/course names, organizations, exact periods and contributions preserved. No ended role is labelled current. Detail and inline expansion remain distinct. Zero/one/multiple-photo, caption, selected position, disabled ends, hover/focus and reduced-motion states implemented.
+
+### Validation and limits
+
+- Final Experience suite: **5 passed** using installed Microsoft Edge via `PLAYWRIGHT_CHANNEL=msedge`; log `artifacts/experience/e2e-final.txt`. Covers record selection through both triggers, both close controls, Escape, focus containment/restoration, background lock/scroll restoration, initial counts 3 and 5, seven-record inline expansion fixtures, zero/one/three-photo fixtures, arrows, focused keyboard navigation, captions, reset, touch swipe, short-screen overflow and close reachability.
+- Existing gallery suite: **3 passed** in the preceding combined run. The two Experience failures in that run were superseded by the final five-test pass. Axe found no WCAG A/AA violations in the tested dialog/gallery states.
+- Typecheck, full ESLint, production build and smoke checks passed during implementation. Build includes TypeScript; the existing unset `metadataBase` warning remains. Smoke verifies 13 content pages, all 11 projects, anchors, metadata, assets and unknown-project 404.
+- The broader suite reported two failures in unchanged Home/Projects animation expectations: `project hover and focus share one lift; reduced motion removes it` expected a transform translation although existing CSS uses individual `translate`; `cards insert once, lift on hover, and respect live motion preferences` expected unequal paper widths although the existing layout reports equal widths. Those components/styles/tests were preserved. No full-suite pass is claimed.
+- The in-app browser opened the implemented detail dialog and reported no console errors. Cross-browser engines and real-device hardware were not tested.
+
+### Maintenance
+
+- Add approved local photos with their actual dimensions/alt text to each record's ordered `gallery` array in `src/data/experience.ts`; its first entry supplies the thumbnail. Exact instructions: `docs/design/experience/MAINTENANCE.md`.
+- Set `INITIAL_EXPERIENCE_COUNT` in `ExperienceArchive.tsx` to 5 when desired. The expansion control only appears when records exceed the limit.
+- Local preview remains the existing project on port 3000. No deployment or publication performed.
+
+final result: passed
+
+## Experience browser annotations — 2026-10-21
+
+- Source truth: the owner's three browser comments at 714 × 668: refine the archive folder silhouette, add an outline EXPERIENCE heading like ABOUT, and remove all date-column dots. These instructions supersede the corresponding details of the original approved overview.
+- Changes: added a curved folder shoulder using the repository's existing vector-surface pattern (`public/images/design/experience-folder-tab.svg`); matched tab/body paper color and removed the doubled border/rounded junction. Added an aria-hidden outline behind the existing accessible heading, using the About stroke/color/opacity treatment with responsive sizing. Removed the date pseudo-element circles while retaining the vertical dividers.
+- Visual evidence: opened `artifacts/experience/annotation-comparison.png`, which places the before and after section captures together at native scale. Both use a 1487 × 1058 CSS viewport, deviceScaleFactor 1. The section crop grows by 28px to accommodate the outline; no density scaling was applied. Before source: `annotation-before-1487.png`; final: `overview-1487.png`. Also opened final `overview-714.png`, from the exact annotated 714 × 668 viewport. These native captures make the heading, tab seam and first-row divider readable without further detail crops.
+- Fidelity review: existing sans/serif typography, cobalt accent, slate outline and body copy retained; heading overlap follows About. The curved folder silhouette has a continuous fill and no detached right corner. Content, thumbnail scale, row spacing, gallery and dialog behavior remain intact. This is a code-native UI surface, with no replacement photographic assets. The decorative outline is hidden from assistive technology, so the section's accessible name stays The journey so far.
+- Checks: existing production archive test passed at 320, 390, 714, 768, 1024 and 1487px, including detail opening/closing and no horizontal overflow. Typecheck, scoped ESLint and diff whitespace checks passed. In-app browser inspection confirmed EXPERIENCE text, `::after` content `none` for all three dates, no horizontal overflow and no console errors. Full suite/build were not repeated for these scoped presentation edits.
+- Findings: no remaining actionable P0/P1/P2 issue within the three requested annotations. Home/About and navbar sources remain unchanged by this revision.
+
+final result: passed
+
+## Projects review applied; Experience expansion — 2026-10-21
+
+### Source and visual evidence
+
+- Read the referenced chat `Cari referensi Journey So Far` with `read_thread`, then read its actual `projects-four-review/review.md` and opened its source screenshots. A copy of that review and its linked images is in `docs/design/projects/`.
+- The target is the review's explicit recommendations for the existing four-card section, rather than a new visual concept: 40–44px heading, 18–20px names, 14–16px summary, 12px chips, 16:9 covers, 1152px frame, lighter paper materials and the Experience palette.
+- Reviewed source and final render together in `artifacts/projects-review/comparison.png` and `detail-comparison.png`. The baseline section image is 1120 × 1603, placed on a 1264px-wide canvas without scaling; final section capture is 1264 × 1430 from a 1264 × 1000 CSS viewport, density 1. The source section crop already clips some left-edge text; original full viewport `03-after-top.png` and `04-after-bottom.png` were also opened to check that text. Crop differences are not product findings.
+- Final captures also include `projects-390.png` (390 × 2325), `projects-768.png` (768 × 1363) and `projects-1440.png` (1440 × 1431). These are content-only section captures: floating shared navigation, skip link and development tools were hidden only during capture, so they do not obscure the cards. Application navigation remains functional and was tested separately.
+
+### Fidelity and iteration
+
+- Typography and content: retained Jakarta Sans and Instrument Serif, the original heading words and four factual project identities. Measured desktop heading 42.98px, names 19px, chips 12px; body 14px. Three tags per card and concise homepage-only `cardSummary` text provide two-line desktop summaries without clipping mobile text. The PROJECTS outline mirrors Experience. Case-study descriptions and metadata are preserved.
+- Spacing and surfaces: 1152px centered frame aligns with Experience; desktop grid remains 2 × 2 with 28px horizontal/36px vertical gaps. Cover/info form one rounded milky paper surface. The background uses warm `#fafbf7`, subtle powder blue, navy `#152c49`, slate `#526887` and cobalt `#096bf0`. The collection link uses a navy pill. Mobile stacks all four cards naturally.
+- Images: 16:9 slots preserve complete real diagrams through the existing contain behavior. No approved covers are present, so the review's explicit placeholder fallback is used: full distinct project names plus an unavailable-image label. No real application screen or architecture diagram was invented. Shared collection placeholders keep their original default mode.
+- States/icons: each whole-card link and its visible View details cue leads to the existing case study; the footer link reaches the complete collection. Existing Lucide arrow icons, focus indicators, hover and reduced-motion handling remain. The owner-selected Experience behavior now shows two records and reveals the third inline, with a 236 × 46px navy pill and collapse action.
+- Initial capture issue, corrected: fixed navbar and offscreen reveal states obscured the full-section browser capture. Final reduced-motion captures expose all cards and exclude only floating shared UI. This was a capture correction, not an application layout workaround. No remaining actionable P0/P1/P2 issue was found against the requested review; real media remains an explicit content gap.
+
+### Verification
+
+- Production build (including TypeScript), explicit typecheck, scoped ESLint and smoke checks passed. Smoke confirms four homepage selections, all 11 case studies, metadata, anchors, static assets and 404. The existing unset metadataBase warning remains.
+- Six distinct relevant Playwright scenarios passed across the final run and targeted rerun: Experience initial two/expand-to-three and detail accessibility/focus/scroll; homepage anchors; collection filtering/Load More/case-study routing; responsive layout/mobile navigation; and keyboard/axe contrast/reduced motion on Home, collection and a case study.
+- The first run encountered concurrent tests deleting the shared trace directory, so later runs used isolated output folders. A case-study route initially exceeded the 10s expectation during development compilation; the same collection test passed on rerun without application changes. Logs: `artifacts/projects-review/validation.txt` (5 passed, 1 route timeout), `recheck.txt` (2 passed).
+- Responsive checks cover 320, 375, 390, 768, 1024, 1264, 1440 and 1920px, with no horizontal overflow. Existing homepage navigation testing was updated to scroll upward before using the navbar, matching its current intentional hide-on-downward-scroll behavior.
+- This implementation scopes the new design to the homepage Projects section. Concurrent edits to shared navigation, profile data and language were preserved. No deployment or publication was performed.
+
+final result: passed
+
+## Collection and project story redesign — 2026-10-21
+
+### Findings and resolution
+
+- No remaining actionable P0/P1/P2 issue in the requested collection/detail redesign. The owner explicitly requested an additive adaptation of the attached story layout within the existing portfolio style, rather than a wholesale copy of the dark screenshot.
+- Reading measure refinement: the first desktop inspection exposed a broad narrative column. Limited narrative content to 75ch while allowing galleries/architecture to use the available column. Recaptured and opened `detail-after-aligned.png` after the change; body copy remains readable with the metadata rail and contribution ordinals clearly separated.
+- Existing content gaps remain explicit: project photos/covers have not been supplied. Existing unavailable-image states remain; no screenshots, personal contributions, dates, or technical claims were invented. Optional `timeline` is supported but omitted when absent from the record.
+
+### Source and comparison evidence
+
+- Structural reference: owner attachment copied to `artifacts/project-routes-redesign/reference-story.png` (1458 × 816 pixels). Palette and card source: existing Home/selected Projects, captured in `home-selected-source.png` (1265 × 712 pixels); the fixed shared navbar obscures part of that source header, so this capture is used for its visible card treatment rather than header-position precision.
+- Final collection: `artifacts/project-routes-redesign/collection-after-desktop.png`; final story: `detail-after-aligned.png`; supplemental contribution view: `detail-after-desktop-story.png`. All desktop final screenshots were requested at a 1458 × 816 CSS viewport; browser screenshot output is 1443 × 807 pixels. The source is 1458 × 816; the browser returned a slightly smaller raster. Images were opened together in one comparison input without rescaling; no pixel-perfect clone or exact raster-density match is claimed. Structure, hierarchy, line wrapping and palette are the intended comparisons.
+- Opened Home card source and final collection together, then opened the owner's exact reference and final aligned story together. The story capture starts with metadata and Overview near the top, followed by Challenge and What I did, matching the reference's reading state. This preserves the existing Challenge content and therefore intentionally makes What I did section 03. Differences in facts, paragraph lengths, theme, type size and section order reflect the owner's existing site/content and additive scope.
+- Mobile evidence: `collection-after-mobile.png` and `detail-after-mobile-header.png` / `detail-after-mobile-story.png`, requested at 390 × 844 CSS pixels; returned collection raster is 375 × 811 pixels. Opened the saved mobile collection and story images to verify wrapping, stacked metadata, chips and narrative. The desktop story and mobile story already make typography, chips, borders and ordinals readable, so no extra magnification crop was needed.
+
+### Required fidelity surfaces
+
+- Typography: existing Plus Jakarta Sans and Instrument Serif. Compact collection heading approximately 40–44px, card names 19px, summaries 14px and chips 12px at the default root scale. Narrative headings 26px desktop / 22px mobile; body 15px / 14px. Retained the serif blue accent and outline PROJECTS treatment. No fixed-height text clipping.
+- Layout/spacing: 1152px centered frame; collection uses three columns on wide desktops, two on tablets and one on phones. Covers are 16:9 and card content stretches consistently. Detail preserves header, cover, gallery, external links and adjacent-project navigation; the new reading area uses a 240px metadata rail plus narrative, collapsing to one column below 760px. Thin rules and comfortable section spacing establish hierarchy.
+- Colors/tokens: warm #fafbf7, powder blue #b7daf6, navy #152c49, slate #526887 and cobalt #096bf0 follow Home/About/Experience. Light paper surfaces, soft outlines and restrained shadows are intentional adaptations of the dark structural reference. Styles are route scoped; Home still contains exactly four selected projects.
+- Images/icons: retained original media dimensions, contain behavior, provenance captions and working ProjectGallery component. Full project names distinguish the existing empty covers. Existing Lucide arrows remain. The supplied reference has no photo asset to recreate; no raster asset generation was needed.
+- Copy/content/states: all existing project records, overview paragraphs, challenges, contribution statements/bullets, engineering highlights, architecture, limitations and links are preserved. Roles and technologies come from local project data rather than the different claims in the screenshot. The new semantic ordered contribution list keeps all six WaspadAI contributions.
+
+### Verification and handoff
+
+- Production build passed with all 11 static project pages. Existing metadataBase warning remains. After the final Next Image priority-to-preload update, explicit typecheck and scoped ESLint passed again; diff whitespace check passed. Relevant bundled Next.js routing, CSS, server/client and Image documentation was read before implementation.
+- HTTP smoke passed for 13 content pages, all 11 projects, homepage selected-count four, metadata, anchors, assets and unknown-project 404.
+- In-app browser: exercised every category (Cloud 2, Backend 4, AI 3, GIS 2), All initial six, Load More to all 11, collection-to-detail navigation, and return to selected Home projects. Mobile AI filter and WaspadAI navigation also worked. Collection no-overflow checks: 320, 390, 768 and desktop widths; story: 320, 390, 768, 1440 and 1458. Browser console error check returned none.
+- Existing gallery code is reused. No new real-photo/lightbox fixture, cross-browser engine run or full Playwright suite was performed for this change. Prior unrelated working-tree edits were preserved.
+- Implementation checklist complete: collection restyled, reference structure added to detail, source facts retained, responsive browser checks complete, build/typecheck/lint/smoke passed, screenshots opened and compared. Local collection and WaspadAI previews remain open. No deployment/publication performed.
+
+final result: passed
+
+## Case-study cover size and back visibility — 2026-10-21
+
+- Source truth: the owner's two annotations on `/projects/aws-serverless-ticketing`: reduce the oversized desktop cover and improve Back to Projects visibility. Scoped changes are in route-local `projects.css` and the detail page's empty-cover class/arrow semantics.
+- Desktop at 1440 × 900 CSS pixels: measured cover reduced from 1152 × 648 to 880 × 320. Figures now cap at 880px; actual-image containers cap at 420px high. Empty covers use a responsive 180–320px height and smaller 24–36px placeholder typography, retaining the complete project identity and honest unavailable-media label. Existing diagram containment stays intact.
+- Back to Projects now has navy text, an opaque white pill, defined border, larger arrow, hover styling, and a minimum 44px target. Its accessible name and `/projects` destination remain. At 484 × 668 it measures about 171 × 44, starts at y112 below the navbar, and successfully navigates to `/projects` with keyboard Enter.
+- Visual evidence: `artifacts/case-hero-refinement/before-1440.png` and `after-1440.png` were opened together in `comparison.png`. Both API captures are 1425 × 891 from the same 1440 × 900 CSS viewport, without further scaling; provider raster normalization is shared. `after-484.png` is 469 × 647 from the annotated 484 × 668 CSS viewport and was also opened. These native captures clearly show both requested surfaces, so another focused crop was unnecessary.
+- Fidelity surfaces: existing sans/serif pairing, copy, navy/slate/powder palette, rounded paper surface, media state and surrounding layout retained. Only cover bounds/placeholder scale and back-control contrast/padding changed. No replacement image assets or project facts were introduced. The smaller hero brings project metadata and Overview higher in the document.
+- P2 found and fixed during validation: the old mobile 16:9 rule combined with the new fixed empty-slot height produced a 320px intrinsic width inside a 276px container. Added explicit 100% width and a more-specific auto aspect ratio for empty covers. The responsive test passed after that correction; no actionable P0/P1/P2 issue remains.
+- Checks: typecheck, scoped ESLint and whitespace validation passed. Existing metadata/navigation coverage passed for all 11 case studies; keyboard/axe contrast/reduced-motion coverage passed. Responsive/mobile-navigation coverage passed on rerun at 320, 375, 390, 768, 1024, 1264, 1440 and 1920px. Manual annotated-viewport check found no horizontal overflow and verified the back action. Logs: `artifacts/case-hero-refinement/validation.txt` and `recheck.txt`. Full build/suite were not repeated for these scoped presentation edits.
+
+final result: passed
+
+## Centered 16:9 project gallery — 2026-10-21
+
+- Source truth: owner's AWS detail annotations request a centered Devpost-inspired gallery, smaller title, landscape 16:9 media and carousel. Inspected https://devpost.com/software/hack-stack in the browser and saved `artifacts/case-carousel/devpost-reference.png`. Its centered title and media-before-story hierarchy informed this scoped adaptation. Existing portfolio palette, navigation, typography and narrative remain authoritative.
+- Layout: introduction centered at an 800px measure; title now 30–36px desktop and 28–30px mobile at the 14px root scale. Media is centered, capped at 800px and exactly 16:9 for empty and populated states. The previous fixed-height empty-cover rule is superseded by the owner's explicit landscape request. Back to Projects retains its visible 44px pill outside the centered introduction.
+- Media behavior: cover first, then gallery, deduplicated by src. Reused Embla and the existing lightbox with a hero variant, thumbnail navigation, captions/provenance and contain sizing. No duplicate A closer look section remains below the story; architecture media stays in its contextual section. Arrows, keyboard and swipe synchronize thumbnails. Inactive slides remain inert; lightbox focus restores. Reduced motion sets Embla duration to zero. No autoplay.
+- Honest states: all current production records lack approved image files. Empty slots show the existing explicit label and no controls; one image can enlarge; multiple images reveal navigation and thumbnails. Synthetic 800x500 test images remain confined to the fixture app and demonstrate containment within the 16:9 slot. No project imagery or facts were fabricated.
+- Visual evidence opened together: previous `artifacts/case-hero-refinement/after-1440.png` and current `artifacts/case-carousel/after-1440.png`, both 1425x891 raster from a 1440x900 CSS viewport, without rescaling. Also opened the actual Devpost source and current desktop/mobile captures together. Devpost is a structural reference rather than a pixel clone; its source capture uses the default 1280x720 CSS viewport (1265x712 raster), while the current annotated 484x668 viewport yields 469x647. `carousel-fixture.png` plus manual browser thumbnail selection verify populated media treatment. No further magnification was needed for the requested surfaces.
+- Fidelity review: existing Plus Jakarta Sans / Instrument Serif pairing, navy/slate/powder-blue colors, rounded border and truthful copy retained. Title hierarchy and balanced wrapping are smaller, media centered, metadata/story still flow below. All image content is contained; captions and control targets remain readable. No remaining actionable P0/P1/P2 issue in the requested scope.
+- Verification: typecheck, scoped ESLint, whitespace checks and production build passed (all eleven project routes). Eight distinct Playwright scenarios passed across the initial run and focused rerun: empty/single media and focus restoration; inline gallery controls/lightbox/axe; hero thumbnail/keyboard/lightbox synchronization and 16:9 slots at 320/484/1440; touch swipes on both gallery variants; every detail route and metadata; responsive navigation at eight widths; keyboard/contrast/reduced motion; and no-JavaScript reading. The first hero-test assertion wrongly expected role queries to omit inert elements; corrected the assertion to inspect inert slide state, then reran successfully. The existing metadataBase warning persists. No deployment performed.
+
+final result: passed
+
+## Project introduction alignment correction — 2026-10-21
+
+- Owner clarification: the annotated category, title and description should be left aligned; only the media gallery should be centered. Supersedes the centered-introduction choice documented above.
+- Updated route-local header alignment/margins, eyebrow flex alignment and introduction margins. Smaller typography and the centered 16:9 carousel remain intact. Updated the gallery design note accordingly.
+- Browser verification at the supplied narrow viewport: category, title and paragraph align with the Back to Projects control and page edge. Computed text alignment is left, eyebrow justification is flex-start, introduction left margin is 0, and horizontal overflow is absent. Saved and opened `artifacts/case-text-alignment/after.png`; compared with the owner's annotated centered state. Existing colors, content, line height and gallery treatment are retained. No remaining actionable issue in this correction.
+- CSS-only adjustment verified visually; no additional automated test or production build was needed.
+
+final result: passed
+
+## Project detail Impact & achievements — 2026-10-21
+
+- Owner explicitly selected project detail pages, rather than the homepage Achievement section. Added a numbered Impact & achievements section after engineering/architecture and before project context, with Project outcomes and optional Milestones & recognition groups.
+- Added optional impact/achievements arrays to Project and documented editing in `docs/design/projects/IMPACT-ACHIEVEMENTS.md`. Server-rendered content uses semantic headings and lists. Empty groups and a fully empty section are omitted; narrative numbering remains automatic.
+- Content for all 11 projects summarizes existing documented capabilities and contribution statements. Where recorded, provincial competition participation and hackathon MVP/prototype/concept stages appear as milestones. No measured user/business results, placement awards, feature ownership, or relationships between general profile awards and particular projects were invented. Anabool explicitly retains concept status and unknown implementation/real-world outcomes.
+- Presentation follows the existing narrative column: restrained powder-blue card, navy subgroup headings, slate text, thin separators, rounded corners, and the site's existing typography. Browser inspection confirmed readable desktop/mobile wrapping and no horizontal overflow at 320px. Opened saved desktop and mobile screenshots during verification: `artifacts/project-impact/impact-1440.png` (1440x900 CSS viewport) and `impact-484.png` (484x800 CSS viewport). Screenshots retain the native browser raster. No actionable issue remains in this scope.
+- Verification passed: production build (all 11 static project detail routes), explicit typecheck, scoped ESLint, whitespace check and HTTP smoke. Two focused Playwright scenarios passed: content/metadata/navigation for every project, including outcomes and conditional milestones; and keyboard, contrast/axe and reduced-motion coverage. Existing metadataBase warning persists. No deployment performed.
+
+final result: passed
+
+## Detail palette and gradient refinement — 2026-10-21
+
+### Findings and comparison
+
+- No actionable P0/P1/P2 issue remains in this scoped refinement. The owner requested closer alignment with Home/About colors and more visible gradients/depth on existing detail pages. Existing local screenshots and the implemented portfolio palette remain the target; this is an additive style revision, not a new layout concept.
+- Source/current-state evidence: `artifacts/project-routes-redesign/color-refinement/before-header.png` and `before-story.png`. Final evidence: `after-header.png`, `after-story-focused.png`, `after-mobile.png`, and `after-long-title-mobile.png` in the same folder. Opened before/after header images together in one tool input alongside final story/mobile captures. The original Home palette/card source was already opened in the preceding comparison.
+- Header before/after are both the WaspadAI route at scroll top in the default 870 × 668 CSS viewport; both saved images are 855 × 656 pixels. No image rescaling performed. The floating shared navbar changes its existing appearance with scroll history; it was not edited. The new category pill intentionally adds modest height before the existing gallery. Story capture is a supplemental focused reading-state view, rather than an exact before/after scroll-position match.
+- Responsive snapshots: WaspadAI at 390 × 900 CSS pixels (375 × 864 returned raster) and AWS Infrastructure Automation & Recovery at 320 × 844 CSS pixels (305 × 804 raster). The browser capture returns a smaller raster than the DOM-reported viewport; no exact 1:1 pixel fidelity is claimed. No fixed device frame or extra normalization was used.
+
+### Required fidelity surfaces
+
+- Typography: retained the existing Jakarta Sans / Instrument Serif families, header sizes, 26px desktop / 22px mobile section titles, 15px / 14px narrative text and all wrapping behavior. Title ink now matches navy. Section ordinals gain small blue tinted badges while maintaining the established hierarchy.
+- Layout/spacing: retained the existing left-aligned introduction, centered gallery, metadata/narrative columns and mobile stacking. Metadata becomes a padded 18px-radius paper surface; Overview gains a 20px-radius panel, with 28px desktop / 22px mobile padding. Remaining narrative stays open, separated by existing rules. Adjacent-project links gain restrained paper surfaces. No sticky regions, motion or extra controls were added.
+- Colors/tokens: detail-only background uses the existing warm #fafbf7 base with powder #b7daf6 radial washes at top, middle-left and lower-right. White-to-blue gradients on metadata/Overview/outcomes and the empty hero create depth, with subtle white borders and navy-tinted shadows. Body slate #526887 and navy #152c49 remain legible over the light surfaces. Tech chips use translucent white to separate them from the metadata panel.
+- Images/icons: no image files, gallery content, image contain behavior, thumbnails or icon assets changed. The existing missing-image state receives a surface gradient; it still explicitly identifies missing project imagery. This is background material styling, not a substitute image asset.
+- Copy/content/states: all project facts and narrative remain intact, including six WaspadAI contributions and current impact/achievement content. Only a detail-route modifier class and existing route stylesheet were edited. Existing collection/Home, gallery interactions and content work from other edits were preserved.
+
+### Verification
+
+- Browser no-overflow checks at 320, 390, 768 and 1440px passed for WaspadAI; verified 14px mobile / 14.994px desktop body text and six contribution items. Inspected saved mobile screenshots and the long AWS title at 320px: no clipped content or horizontal overflow.
+- Clicked the adjacent-project link to AWS Infrastructure Automation & Recovery and Back to Projects. Collection still shows six initial cards and has no detail background modifier. Browser console error check returned none.
+- Production build, including TypeScript and all 11 static project pages, passed. Scoped route ESLint and whitespace checks passed. Existing unset metadataBase warning remains. No new tests were added for these reversible visual changes; the full e2e suite and real-photo/lightbox fixtures were not rerun.
+- Responsive viewport overrides reset; collection and detail previews kept open. No publication or deployment performed.
+
+final result: passed
+
+## Detail narrative panel annotation — 2026-10-21
+
+- Source truth: browser Comment 1 asks for matching backgrounds on the unframed The challenge / What I did area. This supersedes the preceding refinement's choice to leave later narrative sections open. The supplied annotation is a structural/style instruction rather than a pixel-identical target at the current browser width.
+- [P2] Resolved: narrative surfaces were inconsistent with Overview. Applied its exact white-to-blue gradient, white border, 20px radius and subtle shadow to all case-section panels, with 24px gaps. Removed the old between-section rules and the now-redundant inner Impact panel surface. Desktop padding is 28px; phone padding is 22px. Only the existing route CSS changed.
+- Evidence: opened `artifacts/project-routes-redesign/panel-consistency/before.png` and `after.png` together in one comparison input, plus `mobile.png`. Before/after show WaspadAI's Challenge/Contribution reading state at the same default 754 × 668 CSS viewport, both 739 × 655 returned pixels. Browser scroll anchoring shifts nearby content slightly after panel padding changes; no rescaling or exact pixel-clone claim. Mobile is 390 × 900 CSS / 375 × 864 pixels. These focused views show the full panel widths, typography, borders and gradient treatment clearly; no further detail crop was needed.
+- Fidelity surfaces: existing Jakarta Sans/Instrument Serif families, font sizes, navy/slate copy, blue ordinals and all content preserved. Panel spacing and materials now match Overview throughout. Images/icons and gallery behavior are untouched; no new assets. All six WaspadAI sections report the same computed background/radius/padding; all six contribution items remain.
+- Checks: browser layout at 320, 390, 754 and 1440px has no horizontal overflow; saved desktop/mobile screenshots inspected. No browser console errors. Whitespace check passed. No new tests or repeated build/full suite for this scoped CSS-only annotation; the immediately preceding production build passed before this edit. Viewport overrides reset and previews retained.
+- No remaining actionable P0/P1/P2 findings for this annotation. No deployment/publication performed.
+
+final result: passed
+
+## Detail back-button size annotation — 2026-10-21
+
+- Owner request: reduce the oversized Back to Projects button. Scoped CSS change: height 44 → 34px, padding 9px 16px → 6px 11px, label 14 → 13px, arrow 18 → 14px, gap 10 → 6px. Measured width 171.1 → 145.3px. Color, pill shape, border, shadow, focus/hover styling and /projects destination preserved.
+- Opened source `back-button/before.png` and final `back-button/after.png` together, under the existing local visualization directory `project-routes-redesign/`, at the same 754 × 668 CSS viewport / 739 × 655 raster and scroll-top state. No resizing or density normalization; the focused header region is legible in both full captures. Typography/spacing changes match the explicit request; other content, assets, background and layout retained.
+- Browser confirms 34px rendered height, 13.006px label and /projects link target. No actionable P0/P1/P2 findings. CSS-only revision; no new tests or repeated build. Preview retained.
+
+final result: passed

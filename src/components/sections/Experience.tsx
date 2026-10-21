@@ -1,40 +1,22 @@
 import { Reveal } from "@/components/animations/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ExperienceArchive } from "@/components/experience/ExperienceArchive";
 import { experience } from "@/data/experience";
 
 export function Experience() {
   return (
     <section
       id="experience"
-      className="experience-band"
+      className="experience-section"
       aria-labelledby="experience-heading"
     >
-      <div className="section">
-        <Reveal>
-          <SectionHeading
-            number="02"
-            label="EXPERIENCE"
-            title="The journey"
-            accent="so far."
-            id="experience-heading"
-          />
+      <div className="experience-frame">
+        <Reveal className="experience-section-heading">
+          <span className="experience-outline" aria-hidden="true">EXPERIENCE</span>
+          <h2 className="experience-heading" id="experience-heading">
+            The journey <em>so far.</em>
+          </h2>
         </Reveal>
-        <div className="timeline">
-          {experience.map((item, index) => (
-            <Reveal key={item.role} className="timeline-row" delay={index * 0.06}>
-              <p className="timeline-period">{item.period}</p>
-              <div>
-                <h3>{item.role}</h3>
-                <p className="timeline-organization">{item.organization}</p>
-                <ul>
-                  {item.contributions.map((text) => (
-                    <li key={text}>{text}</li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <ExperienceArchive items={experience} />
       </div>
     </section>
   );

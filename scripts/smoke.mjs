@@ -97,6 +97,7 @@ for (const route of [
       slugs,
       records
         .filter((project) => project.featured)
+        .slice(0, 4)
         .map((project) => project.slug),
     );
     assert(html.includes("mailto:qurrotulaini0325@gmail.com"));
@@ -132,5 +133,5 @@ for (const asset of [
     assert(response.headers.get("content-type")?.startsWith("image/png"));
 }
 console.log(
-  "PASS: 13 pages, 11 unique projects, six featured projects in order, section anchors, metadata, media placeholders, navigation, static assets, SEO routes, and unknown-project 404.",
+  "PASS: 13 pages, 11 unique projects, four homepage selections in order, section anchors, metadata, media placeholders, navigation, static assets, SEO routes, and unknown-project 404.",
 );

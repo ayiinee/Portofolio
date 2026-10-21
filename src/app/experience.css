@@ -1,0 +1,121 @@
+/* Experience owns its archive and dialog; Home/About and shared headings stay independent.
+   rem values account for the site's 14px default root size. */
+.experience-section {
+  color: #152c49;
+  padding: var(--section-space) var(--section-gutter);
+  background:
+    radial-gradient(ellipse at 96% 15%, #b7daf6d9, transparent 61%),
+    radial-gradient(ellipse at 4% 75%, #b7daf6b3, transparent 57%),
+    #fafbf7;
+}
+.experience-frame { width: min(calc(var(--section-width) - 2 * var(--section-gutter)), 100%); margin-inline: auto; }
+.experience-section-heading { position: relative; isolation: isolate; padding-top: 30px; margin-bottom: 64px; }
+.experience-outline { position: absolute; z-index: 0; top: 0; left: -2px; color: transparent; -webkit-text-fill-color: transparent; -webkit-text-stroke: 1.2px #527fae; opacity: .24; font-size: clamp(48px, 6.7vw, 84px); font-weight: 700; line-height: 1; letter-spacing: -.065em; user-select: none; pointer-events: none; }
+.experience-heading { position: relative; z-index: 1; margin: 0; color: #141923; font-size: clamp(2.5rem, 3.4vw, 3.14rem); font-weight: 600; letter-spacing: -.055em; line-height: 1.16; }
+.experience-heading em { color: #096bf0; font: italic 1.14em / 1 var(--font-serif); letter-spacing: -.045em; }
+.experience-archive { position: relative; border-radius: 18px 0 18px 18px; background: #fdfefe; box-shadow: 0 14px 40px #689bca12; }
+/* Use the same vector-surface approach as the About folder: a curved shoulder
+   and one opaque paper color keep the tab/body junction seamless. */
+.experience-archive-tab { position: absolute; right: 0; bottom: calc(100% - 1px); isolation: isolate; display: flex; align-items: center; justify-content: center; width: 320px; max-width: calc(100% - 24px); height: 40px; padding: 6px 20px 0 48px; color: #526887; font-size: .786rem; font-weight: 600; letter-spacing: .18em; }
+.experience-archive-tab::before { content: ""; position: absolute; z-index: -1; inset: 0; background: url('../../public/images/design/experience-folder-tab.svg') center / 100% 100% no-repeat; }
+.experience-list { margin: 0; padding: 0 20px; list-style: none; }
+.experience-row { position: relative; display: grid; grid-template-columns: 185px minmax(0, 1fr) 170px; align-items: start; gap: 28px; padding: 24px 16px; border-radius: 10px; cursor: pointer; transition: background-color .32s cubic-bezier(.22, 1, .36, 1); }
+.experience-row:has(:focus-visible) { background: #f3f7fc; }
+.experience-row + .experience-row { border-top: 1px solid #a9c3dd80; }
+.experience-date { position: relative; align-self: stretch; padding-right: 24px; border-right: 1px solid #b8cce0; }
+.experience-year { display: block; margin: 3px 0 9px; font: italic 2.286rem / 1.05 var(--font-serif); letter-spacing: -.045em; }
+.experience-date p { max-width: 142px; margin: 0; color: #526887; font-size: 1rem; line-height: 1.55; }
+.experience-copy { min-width: 0; padding-top: 2px; }
+.experience-copy h3 { margin: 0 0 2px; color: #152c49; font-size: 1.357rem; font-weight: 600; letter-spacing: -.035em; line-height: 1.35; }
+.experience-course { margin: 0 0 2px; color: #526887; font-size: 1.071rem; font-weight: 500; line-height: 1.45; }
+.experience-organization { margin: 0; color: #526887; font-size: 1rem; line-height: 1.5; }
+.experience-summary { margin: 12px 0 0; padding: 0; color: #526887; font-size: 1rem; line-height: 1.55; list-style: none; }
+.experience-preview { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.experience-thumbnail { position: relative; z-index: 1; display: block; width: 170px; height: 96px; padding: 0; overflow: hidden; border: 0; border-radius: 7px; clip-path: polygon(0 0, 30% 0, 34% 5%, 100% 5%, 100% 100%, 0 100%); background: #deedfc; cursor: pointer; transition: background-color .32s ease; }
+.experience-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.experience-thumbnail:focus-visible { clip-path: none; }
+.experience-photo-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 100%; padding: 20px; color: #526887; font-size: 1.071rem; text-align: center; }
+.experience-photo-empty.is-compact { gap: 5px; padding: 10px; font-size: .857rem; }
+.experience-detail-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 36px; padding: 4px 0; border: 0; border-bottom: 1px solid #096bf0; color: #152c49; background: transparent; font-size: 1rem; cursor: pointer; transition: color .32s ease; }
+/* Stretch the native detail button across its row without nesting controls. */
+.experience-detail-link::after { content: ""; position: absolute; inset: 0; border-radius: 10px; }
+.experience-detail-link svg { transition: translate .32s cubic-bezier(.22, 1, .36, 1); }
+.experience-expand-wrap { display: flex; justify-content: center; margin-top: 24px; }
+.experience-expand,.experience-dismiss { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 44px; border: 1px solid #152c49; background: #152c49; color: white; font-size: 1rem; }
+.experience-expand { min-width: 236px; max-width: 100%; min-height: 46px; padding: 10px 28px; border-radius: 999px; background: linear-gradient(180deg, #203c5e, #12263f); box-shadow: inset 0 1px 0 #ffffff1f, 0 2px 5px #152c4914; }
+.experience-expand[aria-expanded="true"] svg { rotate: 180deg; }
+.experience-dialog { width: min(760px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 48px); margin: auto; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 0; border-radius: 20px; background: transparent; color: #152c49; filter: drop-shadow(0 20px 40px #152c492e); }
+.experience-dialog::before { content: ""; display: block; width: 28%; height: 20px; margin-left: auto; border: 1px solid #fff; border-bottom: 0; border-radius: 20px 20px 0 0; background: #fafbf7; }
+.experience-dialog::backdrop { background: #244c7b99; backdrop-filter: blur(4px); }
+.experience-dialog-top { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 24px 0 44px; border: 1px solid #fff; border-bottom: 0; background: #fafbf7; border-radius: 20px 0 0 0; }
+.experience-dialog-top p { margin: 0; color: #526887; font-size: .786rem; font-weight: 600; letter-spacing: .18em; }
+.experience-close { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; color: #152c49; background: transparent; }
+.experience-dialog-content { padding: 4px 44px 24px; border: 1px solid #fff; border-top: 0; border-radius: 0 0 20px 20px; background: #fafbf7; }
+.experience-dialog-heading { margin-bottom: 20px; }
+.experience-dialog-heading h3 { margin: 0 0 6px; font-size: 2.143rem; font-weight: 600; line-height: 1.2; letter-spacing: -.04em; }
+.experience-dialog-heading h3 span { display: block; margin-top: 5px; font-size: 1.357rem; font-weight: 500; letter-spacing: -.025em; line-height: 1.4; }
+.experience-dialog-heading p { margin: 3px 0 0; color: #526887; font-size: 1.143rem; line-height: 1.5; }
+.experience-gallery-empty { height: 265px; border-radius: 9px; background: #deedfc; }
+.experience-gallery-viewport { overflow: hidden; border-radius: 9px; background: #deedfc; touch-action: pan-y pinch-zoom; }
+.experience-gallery-track { display: flex; }
+.experience-gallery-slide { flex: 0 0 100%; min-width: 0; margin: 0; }
+.experience-gallery-slide img { display: block; width: 100%; height: 265px; object-fit: contain; }
+.experience-gallery-controls { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 10px; }
+.experience-gallery-caption { color: #526887; font-size: 1rem; line-height: 1.5; }
+.experience-gallery-caption span { color: #152c49; font-weight: 600; }
+.experience-gallery-caption p { margin: 2px 0 0; }
+.experience-gallery-buttons { display: flex; flex-shrink: 0; gap: 8px; }
+.experience-gallery-buttons button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #b2cbe1; border-radius: 50%; background: #f5f9fe; color: #152c49; }
+.experience-contributions { margin-top: 24px; }
+.experience-contributions h4 { margin: 0 0 10px; font-size: 1.286rem; font-weight: 600; letter-spacing: -.025em; }
+.experience-contributions ul { margin: 0; padding-left: 22px; color: #526887; font-size: 1.071rem; line-height: 1.65; list-style: disc; }
+.experience-contributions li { padding-left: 4px; }
+.experience-contributions li::marker { color: #096bf0; }
+.experience-dialog-footer { display: flex; justify-content: flex-end; margin-top: 28px; }
+.experience-dismiss { min-width: 112px; padding: 9px 24px; border-radius: 12px; }
+.experience-section :focus-visible,.experience-dialog :focus-visible { outline: 2px solid #096bf0; outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) {
+  .experience-row:hover { background: #f3f7fc; }
+  .experience-row:hover .experience-detail-link { color: #096bf0; }
+  .experience-row:hover .experience-detail-link svg { translate: 2px -2px; }
+  .experience-thumbnail:hover { background: #d7e9fb; }
+  .experience-detail-link:hover { color: #096bf0; }
+  .experience-close:hover { background: #deedfc; }
+  .experience-expand:hover,.experience-dismiss:hover { background: #244a73; }
+}
+@media (max-width: 1000px) {
+  .experience-row { grid-template-columns: 145px minmax(0, 1fr) 160px; gap: 22px; padding-inline: 8px; }
+  .experience-thumbnail { width: 160px; height: 96px; }
+  .experience-date { padding-right: 18px; }
+}
+@media (max-width: 760px) {
+  .experience-row { grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding: 24px 4px; }
+  .experience-preview { grid-column: 2; }
+  .experience-date { grid-row: span 2; }
+  .experience-archive-tab { width: 280px; font-size: .714rem; }
+  .experience-section-heading { padding-top: 24px; margin-bottom: 65px; }
+}
+@media (max-width: 600px) {
+  .experience-section-heading { padding-top: 20px; }
+  .experience-outline { font-size: clamp(32px, 9.8vw, 54px); }
+  .experience-heading { font-size: clamp(2.286rem, 8.3vw, 2.857rem); }
+  .experience-list { padding-inline: 20px; }
+  .experience-row { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-block: 26px; }
+  .experience-date { grid-row: auto; padding: 0; border: 0; }
+  .experience-date p { max-width: none; font-size: .929rem; }
+  .experience-year { margin-top: 0; font-size: 2.143rem; }
+  .experience-preview { grid-column: 1; }
+  .experience-thumbnail { width: 180px; height: 102px; }
+  .experience-detail-link { min-height: 44px; }
+  .experience-dialog { max-height: calc(100dvh - 24px); border-radius: 16px; }
+  .experience-dialog-top { padding: 10px 12px 0 22px; }
+  .experience-dialog-content { padding: 8px 22px 22px; }
+  .experience-dialog-heading h3 { font-size: 1.857rem; }
+  .experience-dialog-heading p { font-size: 1rem; }
+  .experience-gallery-empty,.experience-gallery-slide img { height: 200px; }
+  .experience-gallery-empty .experience-photo-empty { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-row,.experience-thumbnail,.experience-detail-link,.experience-detail-link svg { transition: none; }
+  .experience-row:hover .experience-detail-link svg { translate: none; }
+}

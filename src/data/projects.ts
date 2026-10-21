@@ -3,10 +3,18 @@ import type { Project } from "@/types/project";
 // Content authority: the supplied master brief.
 // TODO: Add approved real media to each gallery and coverImage.
 // TODO: Confirm detailed SiDika and Anabool feature ownership before expanding contributions.
+// Outcomes summarize documented capabilities, not measured user/business impact.
+// Only attach awards when their association with this project is confirmed.
 export const projects: Project[] = [
   {
     slug: "aws-serverless-ticketing",
+    impact: [
+      "Connected ticketing application components through serverless APIs, asynchronous queues, and managed databases in the competition environment.",
+      "Configured networking, access controls, application settings, and monitoring to support the supplied architecture.",
+    ],
+    achievements: ["Provincial LKS Cloud Computing participation, 2024."],
     title: "AWS Serverless Ticketing Architecture",
+    cardSummary: "An event-driven ticketing deployment with AWS Lambda, API Gateway, and managed data services.",
     year: 2024,
     category: "Cloud & DevOps",
     tags: [],
@@ -54,7 +62,13 @@ export const projects: Project[] = [
   },
   {
     slug: "aws-infrastructure-recovery",
+    impact: [
+      "Configured separate development and production environments for the supplied file-storage application.",
+      "Integrated scaling, shared storage, monitoring, and backup/restore workflows within the competition exercise.",
+    ],
+    achievements: ["Provincial LKS Cloud Computing participation, 2024."],
     title: "AWS Infrastructure Automation & Recovery",
+    cardSummary: "Multi-stage AWS infrastructure with load balancing, auto scaling, shared storage, and backup recovery.",
     year: 2024,
     category: "Cloud & DevOps",
     tags: [],
@@ -103,7 +117,13 @@ export const projects: Project[] = [
   },
   {
     slug: "waspadai",
+    impact: [
+      "Connected Android verification workflows with backend authentication, remote AI analysis, media handling, and verification history.",
+      "Enabled community interactions and real-time communication alongside verification features in the hackathon MVP.",
+    ],
+    achievements: ["Contributed to a collaborative Android and backend hackathon MVP."],
     title: "WaspadAI",
+    cardSummary: "An Android safety platform with AI-assisted checks for suspicious information and social engineering.",
     year: 2026,
     category: "AI & Security",
     tags: [],
@@ -160,7 +180,12 @@ export const projects: Project[] = [
   },
   {
     slug: "panenin",
+    impact: [
+      "Established account authentication, role onboarding, and farmer profile workflows across the mobile application and backend.",
+      "Contributed account-linking, webhook handling, and retrieval components for the ongoing AI-assisted WhatsApp integration.",
+    ],
     title: "Panenin",
+    cardSummary: "A farmer-to-business platform connecting mobile workflows with an evolving AI and WhatsApp integration.",
     year: 2026,
     category: "Backend & Web",
     tags: ["AI Integration", "Mobile", "WhatsApp"],
@@ -217,6 +242,11 @@ export const projects: Project[] = [
   },
   {
     slug: "smartbin-ai",
+    impact: [
+      "Connected classification records, monitoring data, locations, and dashboard APIs within a hackathon software prototype.",
+      "Added visual–audio fusion, anomaly handling, and human validation workflows to support review of classification outputs.",
+    ],
+    achievements: ["Contributed to a multimodal waste-management hackathon prototype."],
     title: "SmartBin AI",
     year: 2026,
     category: "AI & Security",
@@ -271,6 +301,10 @@ export const projects: Project[] = [
   },
   {
     slug: "desa-sukomulyo",
+    impact: [
+      "Brought population records, family administration, document requests, and content publishing into database-backed administrative workflows.",
+      "Supported structured data exchange through validated Excel imports, CSV exports, and integration with public information pages.",
+    ],
     title: "Website Profil Desa Sukomulyo",
     year: 2026,
     category: "Backend & Web",
@@ -324,6 +358,10 @@ export const projects: Project[] = [
   },
   {
     slug: "bedengan-gis",
+    impact: [
+      "Connected environmental monitoring summaries with administrative dashboards and database-backed camping management.",
+      "Enabled mitigation reports to move through submission, review, status management, and supporting photo storage.",
+    ],
     title: "Bedengan GIS",
     year: 2026,
     category: "GIS & IoT",
@@ -364,6 +402,10 @@ export const projects: Project[] = [
   },
   {
     slug: "everbloom-batu",
+    impact: [
+      "Enabled destination exploration through price, category, landmark, and visit-date filters backed by structured destination data.",
+      "Connected seasonal calendar information, destination detail pages, and homepage selections within the discovery workflow.",
+    ],
     title: "Everbloom Batu GIS",
     year: 2026,
     category: "GIS & IoT",
@@ -406,6 +448,10 @@ export const projects: Project[] = [
   },
   {
     slug: "assyifa-laundry",
+    impact: [
+      "Connected service discovery and reservation forms with validated, database-backed reservation and helpdesk records.",
+      "Provided service and reservation management for administrators, with prepared WhatsApp message links for customer contact.",
+    ],
     title: "Assyifa Laundry",
     year: 2025,
     category: "Backend & Web",
@@ -440,6 +486,9 @@ export const projects: Project[] = [
   },
   {
     slug: "sidika-admin",
+    impact: [
+      "Contributed to database-backed administrative operations within a Laravel Mini-ERP integrated with MySQL.",
+    ],
     title: "SiDika / Dinoyo Kamera Admin",
     year: 2025,
     category: "Backend & Web",
@@ -465,6 +514,11 @@ export const projects: Project[] = [
   },
   {
     slug: "anabool",
+    impact: [
+      "The team concept connects pet-care guidance, preliminary visual screening, and responsible litter-waste collection workflows.",
+      "The documented concept outlines potential user benefits; implemented features and real-world outcomes are not established in this case study.",
+    ],
+    achievements: ["Participated in the Anabool hackathon team."],
     title: "Anabool",
     year: 2026,
     category: "AI & Security",

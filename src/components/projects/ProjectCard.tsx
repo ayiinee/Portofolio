@@ -7,11 +7,20 @@ import { MediaPlaceholder } from "./MediaPlaceholder";
 export function ProjectCard({
   project,
   heading = "h3",
+  variant = "default",
 }: {
   project: Project;
   heading?: "h2" | "h3";
+  variant?: "default" | "selected";
 }) {
   const Heading = heading;
+  const tags = (
+    <div className="project-tags">
+      {project.technologies.slice(0, variant === "selected" ? 3 : 4).map((technology) => (
+        <span key={technology}>{technology}</span>
+      ))}
+    </div>
+  );
   return (
     <article className="project-card" data-project={project.slug}>
       <Link
@@ -32,6 +41,7 @@ export function ProjectCard({
             <MediaPlaceholder
               title={project.title}
               category={project.category}
+              showFullTitle={variant === "selected"}
             />
           )}
         </div>
@@ -42,19 +52,19 @@ export function ProjectCard({
           </p>
           <div className="project-title-row">
             <Heading id={`title-${project.slug}`}>{project.title}</Heading>
-            <ArrowUpRight
-              className="project-arrow"
-              size={24}
-              strokeWidth={1.4}
-              aria-hidden="true"
-            />
+            {variant !== "selected" && (
+              <ArrowUpRight className="project-arrow" size={24} strokeWidth={1.4} aria-hidden="true" />
+            )}
           </div>
-          <p className="project-summary">{project.shortDescription}</p>
-          <div className="project-tags">
-            {project.technologies.slice(0, 4).map((technology) => (
-              <span key={technology}>{technology}</span>
-            ))}
-          </div>
+          <p className="project-summary">{variant === "selected" ? project.cardSummary ?? project.shortDescription : project.shortDescription}</p>
+          {variant === "selected" ? (
+            <div className="selected-project-footer">
+              {tags}
+              <span className="selected-project-detail">
+                View details <ArrowUpRight size={15} aria-hidden="true" />
+              </span>
+            </div>
+          ) : tags}
         </div>
       </Link>
     </article>

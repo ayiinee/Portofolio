@@ -41,5 +41,4 @@ export const navigation = [
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "education", label: "Achievement" },
-  { id: "contact", label: "Contact" },
 ] as const;
