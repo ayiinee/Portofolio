@@ -1,0 +1,98 @@
+{
+  "id": "744000144468230",
+  "name": "Software Engineer Intern",
+  "uuid": "8b1d6964-817d-4efe-ae88-68c9bf8be476",
+  "jobId": "b6fc34a9-e306-4596-801e-a986e18dc007",
+  "jobAdId": "50980854-97bc-40b9-81cc-3ce5d310bd1b",
+  "defaultJobAd": true,
+  "refNumber": "REF921G",
+  "company": {
+    "name": "Cermati.com",
+    "identifier": "Cermaticom"
+  },
+  "location": {
+    "city": "Jakarta",
+    "region": "Jakarta",
+    "country": "id",
+    "remote": false,
+    "hybrid": false,
+    "latitude": "-6.1944491",
+    "longitude": "106.8229198",
+    "fullLocation": "Jakarta, Jakarta, Indonesia"
+  },
+  "customField": [
+    {
+      "fieldId": "58b7e4f7e4b0885c92cd99e1",
+      "fieldLabel": "Brands",
+      "valueId": "372bb6f4-b3aa-4755-83e8-fd2a71a24afb",
+      "valueLabel": "Indodana"
+    },
+    {
+      "fieldId": "58b7e4f7e4b0885c92cd99e2",
+      "fieldLabel": "Department",
+      "valueId": "906056",
+      "valueLabel": "Engineering"
+    },
+    {
+      "fieldId": "COUNTRY",
+      "fieldLabel": "Country/Region",
+      "valueId": "id",
+      "valueLabel": "Indonesia"
+    }
+  ],
+  "releasedDate": "2026-09-21T09:34:52.232Z",
+  "creator": {
+    "name": "",
+    "avatarUrl": ""
+  },
+  "postingUrl": "https://jobs.smartrecruiters.com/Cermaticom/744000150645669-software-engineer-intern",
+  "applyUrl": "https://jobs.smartrecruiters.com/Cermaticom/744000150645669-software-engineer-intern?oga=true",
+  "referralUrl": "https://jobs.smartrecruiters.com/external-referrals/company/Cermaticom/publication/8b1d6964-817d-4efe-ae88-68c9bf8be476?dcr_ci=Cermaticom",
+  "jobAd": {
+    "sections": {
+      "companyDescription": {
+        "title": "Company Description",
+        "text": ""
+      },
+      "jobDescription": {
+        "title": "Job Description",
+        "text": "<ul><li>Work side-by-side with a mentor(Senior Software Engineer/Lead Software Engineer / Engineering Manager) to help you accomplish team goals and grow together as a person</li><li>Carry the execution of a small-medium size project that is given by PM / Lead Software Engineer according to its product domain</li><li>Work side-by-side in a high performance team by occasionally participate in the requirement / specification phase and help to design solution of a problem or system implementation together</li><li>Contribute in building various scripts, API, enhancing functionalities, and bug-fixing required to improve our data engineering best practice and services</li><li>Working with our in-house data platform and machine learning services : BigQuery, Cloud Dataflow, DBT, and Airflow</li><li>Working with our in-house cutting-edge &amp; advance DevOps tooling (Kubernetes, Terraform, Grafana, Loki, Prometheus, on top of Google Cloud Platform)</li></ul>"
+      },
+      "qualifications": {
+        "title": "Qualifications",
+        "text": "<ul><li>Third year or Final year student or fresh graduate from Information Systems, Computer Science, Information Technology, Informatics Engineering, or other related major</li><li>Passionate about the Fintech&#xa0;Industry.</li><li>Able to communicate in Bahasa&#xa0;&amp; English language</li><li>Self-motivated, creative and collaborative;</li><li>Excellent communications skills, with the ability to synthesize, simplify and explain complex problems to different types of audience, including executives</li><li>[Nice To Have] experience on Airflow/Dagster and DBT Data Modelling</li><li>[Nice To Have] experience on Python, Java, and NodeJS Programming Language</li><li>[Nice To Have] experience on writing SQL Queries and Data Warehouse (e.g.: BigQuery, Redshift, Clickhose, Snowflake, etc), Preferably BigQuery</li><li>[Nice To Have] experience with data visualization tool (e.g.: Redash, Tableau, Looker). Preferably Redash</li><li>[Nice To Have] experience on Cloud Platform (e.g.: GCP, AWS, and so on)</li></ul>"
+      },
+      "additionalInformation": {
+        "title": "Additional Information",
+        "text": ""
+      }
+    }
+  },
+  "active": true,
+  "visibility": "PUBLIC",
+  "industry": {
+    "id": "financial_services",
+    "label": "Financial Services"
+  },
+  "function": {
+    "id": "engineering",
+    "label": "Engineering"
+  },
+  "department": {
+    "id": 906056,
+    "label": "Engineering"
+  },
+  "experienceLevel": {
+    "id": "internship",
+    "label": "Internship"
+  },
+  "typeOfEmployment": {
+    "id": "permanent",
+    "label": "Full-time"
+  },
+  "language": {
+    "code": "en",
+    "label": "English",
+    "labelNative": "English (US)"
+  }
+}

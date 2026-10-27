@@ -324,3 +324,10 @@ final result: passed
 - Browser confirms 34px rendered height, 13.006px label and /projects link target. No actionable P0/P1/P2 findings. CSS-only revision; no new tests or repeated build. Preview retained.
 
 final result: passed
+
+## Homepage Skills refinement — 2026-10-27
+
+- Updated Skills to follow the existing Home, Experience and Projects palette, typography, outline heading and content width. Five paper cards retain all original descriptions and 55 technology/service tags. Cloud has a separate AWS services panel beside its introduction on desktop; cards and the panel stack on phones.
+- Scoped presentation lives in src/app/skills.css, imported after selected-projects.css. No data or proficiency claims changed. Existing Reveal motion and reduced-motion handling remain in place. Technology groups now use semantic lists.
+- Passed npm run typecheck, npm run lint and git diff --check. Chrome checks at 320, 390, 768, 1024 and 1440px retained all five categories and 55 tags without horizontal overflow. A scoped axe WCAG A/AA check reported no violations; no uncaught page errors occurred during that check.
+- Opened and visually reviewed desktop and phone captures. Evidence is in artifacts/skills-review/ (before-desktop.png, after-desktop.png, after-mobile.png and preview-desktop.png). Browser captures include the existing fixed navigation. No production build or deployment performed. Development preview remains at http://localhost:3000/#skills.

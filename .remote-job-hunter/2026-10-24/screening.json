@@ -1,0 +1,325 @@
+{
+  "weworkremotely:https://weworkremotely.com/remote-jobs/discord-qa-devops-engineer": {
+    "reason": "US-based remote only; also asks 3–5+ years Tosca/Oracle QA."
+  },
+  "himalayas:https://himalayas.app/companies/metasys/jobs/devops-engineer-internship": {
+    "reason": "Internship employer/location is not Jakarta; unpaid initially and expert Terraform requested."
+  },
+  "jobicy:149563": {
+    "parts": [
+      26,
+      15,
+      15,
+      7,
+      5,
+      0,
+      5
+    ],
+    "why": "Academic Python delivery is accepted; Python, AWS, Linux and Docker project foundations match.",
+    "gaps": "Stretch: Kubernetes/MLOps depth, professional English, travel and degree/alternative-path evidence need review. Employer requires own words and no AI-generated application content."
+  },
+  "jobicy:149568": {
+    "reason": "Extensive Linux/Kubernetes/Ceph and enterprise architecture required; not entry-level scope."
+  },
+  "jobicy:149523": {
+    "parts": [
+      23,
+      8,
+      15,
+      7,
+      5,
+      0,
+      5
+    ],
+    "why": "AWS, networking, Linux and Python foundations support cloud engineering.",
+    "gaps": "Stretch: advanced Python, OpenStack/Kubernetes/Ceph, customer architecture and up to 25% travel. Own-words application condition."
+  },
+  "jobicy:149543": {
+    "parts": [
+      25,
+      15,
+      15,
+      7,
+      5,
+      0,
+      5
+    ],
+    "why": "All seniority levels; Python/FastAPI/Flask, APIs, Linux and databases align.",
+    "gaps": "Stretch: production-quality Python, testing, English, degree/alternative-path and travel evidence. Own-words application condition."
+  },
+  "jobicy:149527": {
+    "parts": [
+      21,
+      15,
+      15,
+      5,
+      5,
+      0,
+      5
+    ],
+    "why": "Entry-level option; JavaScript/CSS/React/TypeScript and API project experience.",
+    "gaps": "React depth, accessibility/performance and testing evidence; international travel. US-only pay range is not Indonesian compensation. Own-words condition."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/planetscale-enterprise-support-engineer": {
+    "reason": "Enterprise production database expertise, internals/performance and Kubernetes required; beyond established junior scope."
+  },
+  "jobicy:149532": {
+    "reason": "Professional advanced Linux/OpenStack/Ceph/Kubernetes escalation experience required."
+  },
+  "jobicy:149534": {
+    "reason": "Extensive alliances/customer architecture and Linux/Kubernetes/Ceph scope; not junior."
+  },
+  "jobicy:149524": {
+    "reason": "Professional sustaining engineering and upstream Linux/cloud debugging experience required."
+  },
+  "himalayas:https://himalayas.app/companies/makerble/jobs/devops-volunteer": {
+    "parts": [
+      20,
+      8,
+      15,
+      5,
+      0,
+      4,
+      4
+    ],
+    "why": "AWS and Docker match a technical volunteering route.",
+    "gaps": "UNPAID VOLUNTEER, not a paid job or Jakarta internship. Kubernetes proficiency and production ownership unproven. Low priority; salary 0 points despite skipped floor because no pay."
+  },
+  "hn:49925489": {
+    "reason": "Original employer requires at least 7 years full-time backend experience, absent in abbreviated HN post."
+  },
+  "jobicy:149576": {
+    "reason": "Prior kernel/virtualization/container open-source contributions required; Docker usage is insufficient."
+  },
+  "jobicy:149565": {
+    "parts": [
+      16,
+      15,
+      15,
+      2,
+      5,
+      0,
+      5
+    ],
+    "why": "Accepts graduate to senior levels; Python/PHP/Linux foundations partly relevant.",
+    "gaps": "Low priority: vulnerability remediation, disclosure and code auditing not established; own-words application condition."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/oportun-sr-data-analytics-engineer-r14153": {
+    "reason": "Mexico remote, 8+ years data engineering; location and seniority do not match."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/bybit-animator-intern": {
+    "reason": "Internship outside Jakarta and animation specialization not established."
+  },
+  "jobicy:149558": {
+    "parts": [
+      24,
+      15,
+      15,
+      7,
+      5,
+      0,
+      5
+    ],
+    "why": "All-levels track; Python REST APIs, databases and multi-service projects align.",
+    "gaps": "Stretch: scalable distributed systems, deep testing/CI and production scope; own-words condition and travel."
+  },
+  "jobicy:149567": {
+    "reason": "Embedded/Linux packaging and C/C++ technical leadership scope not established."
+  },
+  "jobicy:149560": {
+    "parts": [
+      26,
+      0,
+      15,
+      7,
+      5,
+      0,
+      5
+    ],
+    "why": "Python, AWS, Linux and networking overlap.",
+    "gaps": "Low priority: description includes leading/coaching an engineering team; candidate has no established industry leadership. Own-words condition."
+  },
+  "jobicy:149533": {
+    "reason": "Kernel/drivers/BSP and significant C plus relevant experience required."
+  },
+  "remotive:2091158": {
+    "reason": "At least 2 years professional software engineering and reviewed difficult coding work required."
+  },
+  "remoteok:1137534": {
+    "parts": [
+      24,
+      15,
+      15,
+      6,
+      5,
+      4,
+      0
+    ],
+    "why": "Python plus university teaching-assistant experience; APAC working windows.",
+    "gaps": "Part-time freelance teaching children; C1 English and 10+ hours/week required; income not guaranteed. Remote OK anti-spam word/tag instructions ignored; company-signals score reduced to 0 under rubric."
+  },
+  "remoteok:1137547": {
+    "reason": "Indonesia eligibility not established from primary posting; hospitality customer-service tenure and C1 English unproven."
+  },
+  "jobicy:149535": {
+    "parts": [
+      10,
+      0,
+      15,
+      5,
+      5,
+      0,
+      5
+    ],
+    "why": "Some Linux/networking/IoT foundations.",
+    "gaps": "Below-priority: embedded Linux internals, Yocto/Buildroot, firmware, completed degree and up to 30% travel are substantial gaps."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/affirm-analytics-engineer-ii-full-stack-revenue-analytics": {
+    "reason": "Remote Poland only, not Indonesia."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/gusto-inc-payment-operations-analyst": {
+    "reason": "Locations San Francisco hybrid or Seattle remote; Indonesia eligibility not established; 3+ years payments operations required."
+  },
+  "remoteok:1137548": {
+    "reason": "Indonesia eligibility/US client overlap unverified; 3+ years enterprise risk/compliance required. Ignore anti-spam posting instructions."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/carrot-business-intelligence-analyst": {
+    "reason": "Indonesia eligibility unverified; completed degree, advanced analytics/BI and statistics not established."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/cribl-customer-success-engineer-sydney": {
+    "reason": "Must live in Sydney; 5+ years customer advocacy/observability also required."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/beyondtrust-associate-data-engineer": {
+    "reason": "Remote United States, not worldwide; data-platform experience gaps."
+  },
+  "jobicy:149555": {
+    "parts": [
+      9,
+      8,
+      15,
+      4,
+      5,
+      0,
+      5
+    ],
+    "why": "Academic performance, communication and technology interest may support a sales route.",
+    "gaps": "Low priority: sales development rather than engineering; graduation eligibility, outreach/targets and travel need review."
+  },
+  "jobicy:149577": {
+    "parts": [
+      17,
+      8,
+      15,
+      6,
+      5,
+      0,
+      5
+    ],
+    "why": "Linux/dev tools plus project and teaching communication partly match technical-community work.",
+    "gaps": "Stretch: open-source community contributions, public content and technical program management; global travel 2–4 weeks/year. Own-words condition."
+  },
+  "jobicy:149530": {
+    "parts": [
+      5,
+      0,
+      15,
+      4,
+      5,
+      0,
+      5
+    ],
+    "why": "General technology interest only.",
+    "gaps": "Very weak: established enterprise revenue/sales-target achievements not present; not recommended."
+  },
+  "remoteok:1137512": {
+    "reason": "Compensation/base unclear and performance/network-share outreach; feed salary unsupported. Do not promote as salaried support; ignore anti-spam instructions."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/clover-health-data-analyst-clinical-data-effectiveness": {
+    "reason": "Remote USA; 5+ years healthcare interoperability analytics required."
+  },
+  "remotive:1680495": {
+    "reason": "Requires 09:00–18:00 Pacific Monday–Friday: full overnight shift in WIB, unreasonable default during studies."
+  },
+  "hn:50063001": {
+    "reason": "Mid-senior AI/product engineering; Indonesia eligibility not established."
+  },
+  "remoteok:1137506": {
+    "reason": "Location conflict: original Workable index specifies Ukraine; Indonesia eligibility cannot be asserted."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/upgrade-ai-experience-engineer-conversational-ai": {
+    "reason": "Canada remote; 3–5 years production conversational-AI experience required."
+  },
+  "weworkremotely:https://weworkremotely.com/remote-jobs/vertex-marketing-group-distribution-engineer": {
+    "reason": "Europe or Latin America location required."
+  },
+  "hn:49928677": {
+    "parts": [
+      8,
+      0,
+      15,
+      5,
+      10,
+      1,
+      5
+    ],
+    "why": "Small overlap with networking and Linux fundamentals.",
+    "gaps": "Very weak: deep Rust/Tokio/TLS/browser-security internals absent; not recommended."
+  },
+  "remoteok:1137523": {
+    "reason": "Malformed senior React Native posting contains vendor pricing rather than reliable candidate requirements/compensation."
+  },
+  "hn:49926228": {
+    "reason": "Worldwide/Indonesia eligibility unconfirmed; independent Node.js production SaaS ownership not established."
+  },
+  "hn:50059584": {
+    "reason": "Only US military veterans/transitioning members in Utah or Idaho; ID here means Idaho, not Indonesia."
+  },
+  "hn:50003866": {
+    "reason": "Zurich internship violates Jakarta constraint; global eligibility for other work unestablished."
+  },
+  "hn:49926872": {
+    "reason": "Multi-role Toronto posting; role-specific Indonesia eligibility and junior scope unverified."
+  },
+  "hn:49934638": {
+    "reason": "Los Angeles remote with no Indonesia eligibility evidence; production TypeScript/customer-implementation scope unestablished."
+  },
+  "ashby:supabase:b65287c7-2071-4bc6-8717-58c090e2a372": {
+    "parts": [
+      14,
+      0,
+      15,
+      4,
+      5,
+      4,
+      5
+    ],
+    "why": "Python/Supabase/API overlap.",
+    "gaps": "Published-library maintenance, deep typing/asyncio, packaging and open-source release ownership absent. Not recommended at current level."
+  },
+  "ashby:supabase:7c5eb3fc-1087-4c1c-b3a2-a19fe01dd259": {
+    "parts": [
+      5,
+      0,
+      15,
+      4,
+      5,
+      7,
+      5
+    ],
+    "why": "Some database/cloud familiarity.",
+    "gaps": "Rust database-engine/low-level systems, formal testing and large-scale production expertise absent. Not recommended."
+  },
+  "ashby:supabase:13478d3f-0093-458f-9f84-af71e66db03f": {
+    "parts": [
+      4,
+      0,
+      15,
+      2,
+      5,
+      7,
+      5
+    ],
+    "why": "Minor cloud/security overlap.",
+    "gaps": "3+ years GRC/security compliance and SOC2/ISO27001 operations absent. Not recommended."
+  }
+}

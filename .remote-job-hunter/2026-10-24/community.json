@@ -1,0 +1,12 @@
+[
+  {
+    "source": "hn", "id": "hn:49929200", "title": "Junior Fullstack Engineer", "company": "SerpApi",
+    "url": "https://news.ycombinator.com/item?id=49929200", "apply_url": "https://serpapi.com/careers/junior-fullstack-engineer",
+    "posted_at": "2026-10-02T02:10:21Z",
+    "location_raw": "FULLY REMOTE; worldwide applicants welcome; contractor outside Austin",
+    "description_text": "Junior Fullstack Engineer. Implement, troubleshoot, test, deploy and monitor APIs. Ruby/Rails, JavaScript and MongoDB, on AWS Linux. Official junior role: USD 80,000-100,000 annually plus profit sharing. Worldwide applicants welcome; typically independent contractors outside Austin. Asynchronous communications and flexible schedule. Email careers@serpapi.com. Official posting verified at https://serpapi.com/careers/junior-fullstack-engineer. HN date verified by scout via HN API. Current-month HN exception, older than 14 days.",
+    "poster": "hn:hartator",
+    "contacts": [{"type":"email","value":"careers@serpapi.com","from":"posting"},{"type":"apply_link","value":"https://serpapi.com/careers/junior-fullstack-engineer","from":"posting"}],
+    "found_by": "community scout"
+  }
+]

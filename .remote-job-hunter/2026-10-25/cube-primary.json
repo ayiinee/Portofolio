@@ -1,0 +1,43 @@
+{
+  "id": 6177245,
+  "shortcode": "19163647D5",
+  "title": "DevOps Engineer / Cloud Engineer",
+  "remote": false,
+  "location": {
+    "city": "Bangkok",
+    "country": "Thailand",
+    "countryCode": "TH",
+    "region": "Bangkok"
+  },
+  "locations": [
+    {
+      "city": "Bangkok",
+      "country": "Thailand",
+      "countryCode": "TH",
+      "hidden": false,
+      "region": "Bangkok"
+    },
+    {
+      "city": "Jakarta",
+      "country": "Indonesia",
+      "countryCode": "ID",
+      "hidden": false,
+      "region": "Jakarta"
+    }
+  ],
+  "state": "published",
+  "isInternal": false,
+  "code": "",
+  "published": "2026-10-06T00:00:00Z",
+  "type": "full",
+  "language": "en",
+  "department": [
+    "Data, Product & Technology"
+  ],
+  "accountUid": "1501bde2-9065-4cfe-af21-62b376228683",
+  "approvalStatus": "approved",
+  "workplace": "hybrid",
+  "description": "<p><strong>This role is open only to candidates currently based in Thailand or Indonesia, with a hybrid arrangement in Bangkok and a remote arrangement in Indonesia.</strong></p><p></p><p>Cube is looking for a DevOps Engineer / Cloud Engineer who is keen to learn and help us maintain and operate the cloud infrastructure and delivery pipelines behind our products.</p><p>You will work closely with the Senior Infrastructure team, Software Engineering and Data Engineering teams to support secure, reliable, and cost-efficient infrastructure while helping our engineering teams deliver software, data pipelines smoothly and improve operational practices.<br></p><p>Responsibilities</p><ul><li>Support the setup, maintenance, and operation of cloud infrastructure and services.</li><li>Support the maintenance and improvement of CI/CD pipelines for reliable software delivery.</li><li>Support the deployment and maintain containerized workloads using Docker, Kubernetes, or similar platforms.</li><li>Support cloud networking, databases, monitoring, logging, alerting, backup, and disaster recovery operations.</li><li>Monitor infrastructure and applications, investigate alerts, troubleshoot issues, and escalate incidents when needed.</li><li>Assist with routine infrastructure maintenance, upgrades, and operational tasks.</li><li>Collaborate with the Software Engineering and Data Engineering teams to support their infrastructure and deployment needs.</li><li>Assist with infrastructure and modernization projects.</li></ul>",
+  "requirements": "<ul><li>1-2 years of experience in DevOps, Cloud Engineering, System Administration, SRE, or a similar role.</li><li>Basic experience administering Linux servers and working with cloud infrastructure, preferably AWS.</li><li>Basic experience with CI/CD pipelines and Git-based development workflows.</li><li>Basic understanding of basic cloud networking concepts.</li><li>Basic experience with monitoring, logging, alerting, and observability tools.</li><li>Basic knowledge of commonly used databases, such as MySQL or PostgreSQL.</li><li>Basic knowledge to write basic Bash, Python, or similar scripts for automation and operational tasks.</li><li>Good to have hands-on experience with Infrastructure as Code (IaC)</li><li>Good troubleshooting and problem-solving skills, with a willingness to learn and work across engineering teams.</li><li>Cloud or Infrastructure certifications are a plus.</li></ul>",
+  "benefits": ""
+}
