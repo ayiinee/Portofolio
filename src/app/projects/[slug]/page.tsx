@@ -79,7 +79,8 @@ export default async function ProjectPage({ params }: Props) {
           </>
         )}
         <div className="case-study-layout">
-          <aside className="case-sidebar" aria-label="Project information">
+          <aside className="case-sidebar" aria-label="Project information" tabIndex={0} data-lenis-prevent>
+            <h2 className="case-project-name">{project.title}</h2>
             <ProjectMetadata project={project} />
             {(project.repositoryUrl || project.liveUrl) && (
               <div className="project-external-links">

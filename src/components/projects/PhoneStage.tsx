@@ -14,6 +14,7 @@ export function PhoneStage({ slide, screens, title, active, onReady, onUnavailab
   const engine = useRef<PhoneScene | null>(null);
   const pointer = useRef<{ id: number; x: number; y: number } | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "fallback">("loading");
+  const [introduced, setIntroduced] = useState(false);
   const unavailableRef = useRef(onUnavailable);
   useEffect(() => { unavailableRef.current = onUnavailable; }, [onUnavailable]);
   useEffect(() => {
@@ -29,15 +30,19 @@ export function PhoneStage({ slide, screens, title, active, onReady, onUnavailab
     import("@/lib/phone-scene").then(({ createPhoneScene }) => createPhoneScene(host.current!, screens, slide.layout, abort.signal, fail))
       .then(scene => {
         if (abort.signal.aborted || failed) { scene.dispose(); return; }
-        engine.current = scene; setState("ready"); onReady();
+        engine.current = scene;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setIntroduced(true);
+        setState("ready"); onReady();
       }).catch(() => { if (!abort.signal.aborted) fail(); });
     return () => { abort.abort(); pointer.current = null; engine.current?.dispose(); engine.current = null; setState("loading"); onDragChange(false); };
   }, [active, screens, slide.layout, onReady, onDragChange]);
   const ready = state === "ready" && active;
   return <div className={styles.deviceArea}>
-    <div className={styles.stage} data-poster={slide.poster} data-renderer={ready ? "ready" : state === "fallback" ? "fallback" : "loading"}>
+    <div className={styles.stage} data-poster={slide.poster} data-introduced={introduced} data-renderer={ready ? "ready" : state === "fallback" ? "fallback" : "loading"}>
       {state === "fallback" && <div className={styles.posterLayer}><ShowcasePoster slide={slide} screens={screens} title={title} /></div>}
-      <div ref={host} className={styles.canvasHost} aria-hidden="true" />
+      <div ref={host} className={styles.canvasHost} aria-hidden="true" onAnimationEnd={event => {
+        if (event.target === event.currentTarget) setIntroduced(true);
+      }} />
       {ready && <div
         className={styles.rotationSurface} role="group" tabIndex={0}
         aria-label="Putar ponsel: drag atau gunakan tombol panah. Home untuk reset."

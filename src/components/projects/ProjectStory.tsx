@@ -89,7 +89,7 @@ export function ProjectStory({ project }: { project: Project }) {
   });
 
   return <div className="case-study-content">
-    {sections.map((section, index) => (
+    {sections.map((section) => (
       <section
         key={section.id}
         id={section.id}
@@ -97,7 +97,6 @@ export function ProjectStory({ project }: { project: Project }) {
         aria-labelledby={`${section.id}-heading`}
       >
         <div className="case-section-heading">
-          <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
           <h2 id={`${section.id}-heading`}>{section.title}</h2>
         </div>
         <div className="case-section-content">{section.content}</div>

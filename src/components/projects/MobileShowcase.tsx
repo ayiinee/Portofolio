@@ -27,6 +27,13 @@ const subscribeVisibility = (callback: () => void) => {
 };
 const visibilitySnapshot = () => document.visibilityState === "visible";
 const visibilityServerSnapshot = () => false;
+const subscribeDesktop = (callback: () => void) => {
+  const query = window.matchMedia("(min-width: 1025px)");
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+};
+const desktopSnapshot = () => window.matchMedia("(min-width: 1025px)").matches;
+const desktopServerSnapshot = () => false;
 
 export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; title: string }) {
   const slides = useMemo(() => [showcase.hero, ...showcase.slides], [showcase]);
@@ -42,6 +49,7 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
   const [settling, setSettling] = useState(false);
   const [visible, setVisible] = useState(false);
   const pageVisible = useSyncExternalStore(subscribeVisibility, visibilitySnapshot, visibilityServerSnapshot);
+  const desktop = useSyncExternalStore(subscribeDesktop, desktopSnapshot, desktopServerSnapshot);
   const [lightbox, setLightbox] = useState<{ index: number; open: boolean } | null>(null);
   const trigger = useRef<HTMLElement | null>(null), frame = useRef<HTMLDivElement | null>(null);
   const viewportId = useId(), motion = useSyncExternalStore(subscribeMotion, motionSnapshot, motionServerSnapshot);
@@ -50,7 +58,7 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
     watchDrag: (_api, event) => !(event.target instanceof Element && event.target.closest("[data-phone-rotation]")),
     duration: motion ? 0 : 32,
   });
-  const playing = !!embla && (selected !== 0 || heroReady) && motion === false && visible && pageVisible && !paused && !hovered && !focused && !dragging && !settling && !lightbox;
+  const playing = !!embla && desktop && (selected !== 0 || heroReady) && motion === false && visible && pageVisible && !paused && !hovered && !focused && !dragging && !settling && !lightbox;
   const attachViewport = useCallback((node: HTMLDivElement | null) => {
     // Apply horizontal layout before Embla measures; SSR stays stacked without JS.
     if (node) node.dataset.carousel = "true";
@@ -91,7 +99,7 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
     onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
     <div className={styles.frame} ref={frame}>
     <div className={styles.viewport} ref={attachViewport} id={viewportId} tabIndex={embla ? 0 : undefined}
-      aria-label="Project slides. Use left and right arrow keys to browse. Space pauses or plays the slideshow."
+      aria-label={`Project slides. Use left and right arrow keys to browse.${desktop ? " Space pauses or plays the slideshow." : ""}`}
       onKeyDown={event => {
         if (event.target !== event.currentTarget) return;
         if (event.key === "ArrowLeft") { event.preventDefault(); embla?.scrollPrev(); }
@@ -121,8 +129,15 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
     </div>
     </div>
     <div className={styles.mobileInfo}>
+      <div className={styles.mobileInfoHeader}>
       <p><strong>{selected === 0 ? title : currentSlide.title.replace(/\n/g, " ")}</strong><span>{selected === 0 ? currentSlide.title : currentSlide.eyebrow.replace(/^\d+\s*\/\s*/, "")}</span></p>
       {currentScreen?.media && <button type="button" onClick={event => enlarge(currentScreen.media!, event.currentTarget)} aria-label={`View ${title} screens`}><Expand size={14} aria-hidden="true" /> View screens</button>}
+      </div>
+      <p className={styles.mobileDescription}>{currentSlide.description}</p>
+      {!!currentSlide.annotations?.length && <details key={currentSlide.id} className={styles.mobileDetails}>
+        <summary>Keterangan slide <ChevronRight size={14} aria-hidden="true" /></summary>
+        <ol>{currentSlide.annotations.map(annotation => <li key={annotation}>{annotation}</li>)}</ol>
+      </details>}
     </div>
     <p className={styles.srOnly} role="status" aria-live={playing ? "off" : "polite"}>{unavailable ? "3D unavailable · showing preview" : `Slide ${selected + 1} of ${slides.length}`}</p>
     {lightbox && <MediaLightbox media={media} index={lightbox.index} open={lightbox.open} close={() => setLightbox(value => value ? { ...value, open: false } : null)} exited={() => { setLightbox(null); trigger.current?.focus(); }} />}

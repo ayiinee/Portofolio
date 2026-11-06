@@ -14,6 +14,7 @@ export function Navbar() {
   const menuRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isProjectDetail = pathname.startsWith("/projects/");
   const activeId = isHome ? active : pathname.startsWith("/achievements") ? "education" : "projects";
   const sectionHref = (id: string) => `${isHome ? "" : "/"}#${id}`;
 
@@ -76,7 +77,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={cn("nav-shell", isHome && "home-nav", scrolled && "is-scrolled", hidden && !open && "is-hidden")}>
+    <header className={cn("nav-shell", isHome && "home-nav", scrolled && "is-scrolled", hidden && !open && !isProjectDetail && "is-hidden")}>
       <div className="nav-glass" aria-hidden="true" />
       <div className="nav-inner">
         <a

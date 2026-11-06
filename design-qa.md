@@ -367,3 +367,74 @@ geometric bands. User requested brighter cobalt and softer edge blending.
 Removed outlines, increased saturation/opacity, restored the warm base and
 feathered all geometry. Combined before/after and focused mobile inspection show
 no actionable P0/P1/P2 issues in the final requested treatment.
+
+## Audit follow-up: mobile readability — 2026-11-07
+
+Source visual truth: artifacts/clean-design-audit-2026-11-07/03-mobile-before.jpg and 04-mobile-screen-viewer.jpg, with the accepted findings in that folder's report.md. The target is the existing composition plus readable supporting text; the miniature slide artwork is intentionally retained.
+Implementation evidence: artifacts/audit-fixes-2026-11-07/mobile-details.jpg, mobile-viewer.jpg, mobile-320.jpg, tablet-768.jpg and desktop-1200.jpg. Combined comparison: artifacts/audit-fixes-2026-11-07/comparison.jpg. Final two-state preview: result.jpg in the same folder. Opened and inspected saved files and combined comparison.
+
+Viewport/density: 390 x 844 CSS px for the main mobile pass; saved page raster 375 x 811 and viewer raster 390 x 844. The full-page source mobile raster is 375 x 2472, cropped to its first 811 px for comparison; each before/after pair is shown at equal pixel width without stretching. The external readout is deliberately taller after the change. Viewer comparison uses the same original app screenshot and viewport. Additional checks at 320 x 844, 768 x 1024, and 1200 x 950. Tablet capture made immediately during viewport resize was rejected and replaced after the viewport settled (753 x 1004 saved raster).
+
+Initial P2 findings and fixes:
+- Tiny internal slide text: added the complete current slide description below the carousel at <=1024 px. Annotations appear in a native keyboard-operable Keterangan slide disclosure, closed initially. Content follows the selected slide; disclosure resets when moving to another slide. Existing miniature design remains unchanged.
+- Reading interrupted by slide rotation: autoplay now runs only at desktop widths. Mobile/tablet retain swipe and dot navigation. Keyboard instructions match the enabled behavior. Reduced-motion behavior remains in place.
+- Tiny duplicate screen links: hidden inside the scaled slide at non-desktop widths. The external View screens button provides a 44 px high target and opens the full gallery. Disclosure summary is also 44 px high.
+- Caption covering app screenshot: non-desktop lightbox reserves a separate 80 px footer plus safe-area inset, with a 16 px gap between image and caption. At 390 x 844, measured image bottom 748 and caption top 764; no intersection. Caption may scroll if longer. The image shrinks slightly to preserve the entire screenshot and close toolbar.
+- Text scaling: compact card body, metadata values and section headings now use rem sizes with effectively unchanged default dimensions. New readout uses rem and darker theme ink. No line clamp hides the slide description.
+
+Required fidelity surfaces:
+- Fonts/typography: existing families retained; compact card defaults preserved; supporting text uses 12 px equivalent, 1.65 line height, and dark ink rgb(17,50,85). Annotation numbering is explicit. No truncated description at tested widths.
+- Spacing/layout: existing 16:9 frame and card padding retained. Added readout creates intentional extra height. Optional annotations are collapsed by default; no extra white card is introduced.
+- Colors/tokens: home blue background and opaque white information cards remain intact. Readout uses existing theme ink; viewer footer is opaque dark neutral for readable captions.
+- Image quality/assets: original logos, screenshots, 3D hero, and flat mockups are unchanged. Full screenshot visible above the caption in viewer. Placeholder continuation strips remain intentional and require owner-supplied final assets.
+- Copy/content: description and annotation strings come from the existing showcase data; no product capabilities or screenshots invented. External title/category follows the selected slide.
+
+Primary interactions tested in the browser: dot navigation to slides two and three, description synchronization, Enter to open native disclosure, disclosure reset on slide change, opening View screens, advancing to the next screenshot, Escape to close, focus returning to the external trigger. Non-desktop data-playing=false verified; arrows have zero size at tablet and 44 px width on desktop; desktop supporting readout is hidden. No horizontal overflow at 320, 390, 768, or 1200 px. Browser error log empty. Typecheck, lint, production build, and diff validation passed. Final CSS ink adjustment checked in browser.
+
+Comparison history: initial audit identified unreadable miniature copy and caption overlay. First fix added readout and reserved viewer space. Inspection caught unnumbered annotations and a capture taken during tablet resize; numbering corrected and capture replaced. Final pass darkened readout ink and confirmed the revised screenshots. Full and focused before/after comparison shows the requested structure preserved and the actionable findings addressed.
+
+Remaining limits: no physical device, screen reader, text-only zoom, pinch gestures, or complete WCAG audit. Internal miniature copy remains small by design, with the same complete description/annotations now available as normal text outside it. Intentional screenshot placeholders cannot be completed without the actual assets. These are stated scope limits, not claims of full accessibility compliance.
+
+final result: passed
+
+## Compact project card typography — 2026-11-07
+
+Source visual truth: user attachments C:/Users/THINKPAD/AppData/Local/Temp/codex-clipboard-9242cdb5-ab11-4c9b-b18d-495bdaf5f700.png (1062 x 815) and codex-clipboard-86448f90-b1d3-4cf7-904a-c183d3d96055.png (1177 x 825). Targeted request: smaller project card typography with editorial hierarchy and unboxed section numbers. Reference themes, article copy, and full-page layout are not requested replacements.
+
+Implementation evidence: artifacts/card-typography-2026-11-07/desktop-cards.jpg (1531 x 900 CSS viewport; 1516 x 886 saved raster), mobile-cards.jpg (390 x 844 CSS viewport; 375 x 811 raster), cards-preview.jpg (focused crop of the desktop screenshot), and reference-comparison.jpg (both supplied sources with the rendered implementation). Saved images and combined comparison opened and reviewed. Source viewport/density is unknown, so comparison concerns hierarchy and decoration rather than pixel-perfect reproduction. The original reference images are uniformly reduced only for the comparison sheet; no UI is redrawn.
+
+Initial issues: desktop heading 26 px/body 15 px with loose vertical spacing; section numbers rendered as bordered blue badges. User explicitly requested smaller typography and removal of the number border.
+
+Fixes: desktop headings now 20 px equivalent, body 13.5 px with 1.75 line height, subheadings 13.5 px, metadata 13 px, labels 11 px, and tech tags 10.5 px. Card padding 24 px instead of 28 px, heading/content gap 14 px instead of 20 px, contribution gaps 18 px instead of 22 px. Section numbers have border:0, background:none, padding:0 and no reserved badge box. Mobile headings are 14 px and body remains 12 px to preserve readability. Removed obsolete mobile overrides that would otherwise enlarge desktop-defined typography at the tablet/mobile breakpoint.
+
+Fidelity surfaces: existing font family/weights retained with a quieter title/body ratio; compact spacing preserves white card boundaries and all copy; brand blue and page gradients retained; original image/logo/mockup assets untouched; no reference article claims copied into the project. The targeted number element is plain text, while the containing card border remains as requested by the scoped annotation.
+
+Verification: browser computed sizes match 20/13.5 px desktop and 14/12 px mobile; number border width 0, transparent background, padding 0. No horizontal overflow at 320, 390 and 1531 px. Desktop and mobile screenshots show clear section hierarchy, readable wrapping, and intact metadata/list content. git diff --check passed. No additional build/tests for this CSS-only visual adjustment.
+
+Comparison history: first scoped typography pass removes the reported badge decoration, reduces the heading/body sizes, and tightens spacing. Combined reference/render and focused crop review found no remaining actionable P0/P1/P2 issues within this request. Existing mobile disclosure/viewer behavior is preserved. Other uncommitted files belong to the preceding audit follow-up and were not reverted.
+
+final result: passed
+
+## Named sticky project information — 2026-11-07
+
+Scoped browser annotations: add project name and keep the information card visible while scrolling; remove the numbers above section headings and increase heading size slightly. No project content or contribution-list numbering was changed.
+
+Implementation: project.title rendered as a sidebar heading; sidebar position:sticky at top:112px on the two-column layout (>760px), constrained to the narrative grid. Its maximum height is 100dvh - 136px, with native overflow scrolling and data-lenis-prevent so links remain reachable on short screens. The aside can receive keyboard focus for scrolling. On the stacked mobile layout it remains static. Removed section heading number spans and obsolete number CSS. Desktop section headings 20 -> 22 px equivalent; mobile 14 -> 15 px equivalent. Existing compact body sizes remain intact.
+
+Evidence opened and inspected: artifacts/sticky-project-info-2026-11-07/sidebar-sticky.jpg at 870 x 668 CSS viewport (855 x 655 raster), mobile-project-info.jpg at 390 x 844 (375 x 811 raster). Browser measurements prove sticky top stays 112px at page scroll positions about 1151 and 1929px while the content grid moves upward. Short-screen inner scrolling reaches the repository link (inner maximum 78px; PageDown reached about 77px). Zero section-number spans remain. Mobile computed position is static, title WaspadAI is present, headings are 15px, and scroll width 375 <= viewport 390.
+
+Typecheck, lint, production build and git diff --check passed. Existing metadataBase build warning remains unrelated. This is a scoped interaction/layout verification; no claim of full accessibility or all-project visual audit.
+
+final result: passed
+
+## Hero mockup entrance — 2026-11-07
+
+Request: animate the hero mockup when entering the project detail page. Scoped changes: PhoneStage.tsx and the hero canvas styles in MobileShowcase.module.css.
+
+The 3D canvas now fades in while moving upward from a small lower/right offset, scaling from .94 to 1, and rotating from 3deg to its original CSS orientation. Duration 1.15s, cubic-bezier(.22,1,.36,1). The animation is attached only after the first successful synchronous Three render has marked the stage ready; loading still shows no 2D poster. Completion is retained in component state, so navigating between carousel slides does not replay the entrance, and later renderer recreation after scrolling retains the completed introduction. The existing 3D scene/phone poses and direct rotation handlers are unchanged. No permanent render loop or timer was introduced.
+
+Reduced-motion path: animation rule is limited to prefers-reduced-motion:no-preference; if reduce is selected when the scene becomes ready, the introduction is marked consumed. The existing reduce rule disables the opacity transition as well. OS preference switching was not exercised in the browser.
+
+Evidence inspected: artifacts/hero-entrance-2026-11-07/entrance-start.jpg and entrance-complete.jpg at 870 x 668 CSS viewport (855 x 655 rasters). Browser captured the running CSS animation at opacity .302593, duration 1.15s, and transformed matrix; completion had data-introduced=true, opacity=1, transform=none, animation=none. Moving to slide two and back retained introduced=true, animation=none, and one hero canvas. At 390 x 844 the same animation was observed in progress; mobile-complete.jpg was recaptured from scrollY=0 after rejecting an earlier offscreen/scroll-restored capture. The saved complete mobile image was opened and inspected. Browser console error log empty; mobile scroll width 375 <= viewport 390. Targeted ESLint, TypeScript and git diff --check passed. No unrelated tests/build repeated for this scoped entrance change.
+
+final result: passed

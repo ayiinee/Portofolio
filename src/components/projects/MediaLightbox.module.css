@@ -1,0 +1,17 @@
+@media (max-width: 1024px) {
+  .viewer :global(.yarl__slide) {
+    padding: 56px 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  .viewer :global(.yarl__slide_description_container) {
+    box-sizing: border-box;
+    height: calc(80px + env(safe-area-inset-bottom));
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    background: #101820;
+  }
+  .viewer :global(.yarl__slide_description) {
+    display: block;
+    font-size: .857rem;
+    line-height: 1.65;
+  }
+}

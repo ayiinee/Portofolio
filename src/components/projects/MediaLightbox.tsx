@@ -5,6 +5,7 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
 import type { ProjectMedia } from "@/types/project";
+import styles from "./MediaLightbox.module.css";
 
 export function mediaCaption(media: ProjectMedia) {
   const attribution =
@@ -31,6 +32,7 @@ export default function MediaLightbox({
 }) {
   return (
     <Lightbox
+      className={styles.viewer}
       open={open}
       close={close}
       index={index}
