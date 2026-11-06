@@ -17,10 +17,10 @@ try {
   const root = page.locator('[data-enhanced="true"]').filter({ has: page.locator("[data-slide]") });
   await root.waitFor();
   const slides = root.locator("[data-slide]");
-  const targets = await slides.evaluateAll(nodes => nodes.map(node => ({ id: node.getAttribute("data-slide"), poster: node.querySelector('img[src*="devices"]')?.getAttribute("src") })));
+  const targets = await slides.evaluateAll(nodes => nodes.map((node, index) => ({ index, id: node.getAttribute("data-slide"), poster: node.querySelector('[data-poster]')?.getAttribute("data-poster") })).filter(target => target.poster));
   for (let index = 0; index < targets.length; index++) {
-    await root.getByRole("button", { name: `Show slide ${index + 1}:`, exact: false }).click();
-    const slide = slides.nth(index);
+    await root.getByRole("button", { name: `Show slide ${targets[index].index + 1}:`, exact: false }).click();
+    const slide = slides.nth(targets[index].index);
     await slide.scrollIntoViewIfNeeded();
     const canvas = slide.locator('[data-renderer="ready"] canvas');
     await canvas.waitFor({ timeout: 30000 });

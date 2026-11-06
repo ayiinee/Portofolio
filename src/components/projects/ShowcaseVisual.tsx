@@ -17,7 +17,9 @@ export function showcaseStyle(theme: MobileShowcase["theme"]): CSSProperties {
 }
 
 export function ShowcasePoster({ slide, screens, title, preload = false }: { slide: ShowcaseSlide; screens: ShowcaseScreen[]; title: string; preload?: boolean }) {
-  if (slide.poster) return <Image className={styles.poster} src={slide.poster} alt="" fill sizes="(max-width: 760px) 90vw, 600px" preload={preload} />;
+  // Hero fallback uses the same screen selection and positions as the live scene.
+  // Older posters may represent an unrelated arrangement of the devices.
+  if (slide.poster && slide.layout !== "hero") return <Image className={styles.poster} src={slide.poster} alt="" fill sizes="(max-width: 760px) 90vw, 600px" preload={preload} />;
   return <div className={styles.fallbackDevices} aria-hidden="true">
     {screens.slice(0, 2).map(screen => <div className={styles.fallbackPhone} key={screen.id}>
       {screen.media ? <Image src={screen.media.src} alt="" fill sizes="240px" /> : <span><small>SCREENSHOT PLACEHOLDER</small><strong>{title}</strong>{screen.label}<small>Original screen coming soon</small></span>}

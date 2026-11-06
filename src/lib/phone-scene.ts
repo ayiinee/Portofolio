@@ -148,9 +148,9 @@ export async function createPhoneScene(host: HTMLElement, screens: ShowcaseScree
       device.rotation.set(index ? .09 : -.08, index ? -.32 : .33, index ? .13 : -.18);
       if (layout === "comparison") { device.rotation.z = index ? -.06 : .06; device.position.y = index ? -.12 : .12; }
       if (layout === "hero") {
-        device.position.set(index ? .75 : -.4, index ? .87 : -.85, index ? -.35 : .5);
-        device.rotation.set(index ? -.03 : -.02, index ? -.45 : .22, index ? -.08 : .15);
-        device.scale.setScalar(index ? .92 : 1);
+        device.position.set(index ? .5 : -.9, index ? -.6 : .17, index ? .25 : 0);
+        device.rotation.set(-.04, index ? -.3 : .38, -.27);
+        device.scale.setScalar(.9);
       }
     } else { device.rotation.set(-.06, -.22, -.07); device.scale.setScalar(1.1); }
     rig.add(device);
@@ -170,7 +170,7 @@ export async function createPhoneScene(host: HTMLElement, screens: ShowcaseScree
   const resize = () => {
     if (disposed || !host.clientWidth || !host.clientHeight) return;
     const aspect = host.clientWidth / host.clientHeight;
-    const extent = layout === "hero" ? Math.max(2.6, 1.6 / aspect) : Math.max(2.25, 2.15 / aspect);
+    const extent = layout === "hero" ? Math.max(2.05, 1.75 / aspect) : Math.max(2.25, 2.15 / aspect);
     camera.top = extent; camera.bottom = -extent;
     camera.left = -extent * aspect; camera.right = extent * aspect;
     camera.updateProjectionMatrix();

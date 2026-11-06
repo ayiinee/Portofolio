@@ -14,9 +14,9 @@ const poppins = localFont({
   display: "swap",
 });
 
-export function ShowcaseComposition({ showcase, slide, title, children, actions, longScreen, cover = false }: {
+export function ShowcaseComposition({ showcase, slide, title, children, actions, cover = false }: {
   showcase: MobileShowcase; slide: ShowcaseSlide; title: string; children: ReactNode;
-  actions?: ReactNode; longScreen?: ReactNode; cover?: boolean;
+  actions?: ReactNode; cover?: boolean;
 }) {
   const hero = slide.layout === "hero", composition = showcase.composition;
   const wordmark = composition?.wordmark ?? title;
@@ -26,21 +26,13 @@ export function ShowcaseComposition({ showcase, slide, title, children, actions,
   const logoStyle: CSSProperties | undefined = crop && showcase.logo ? {
     width: `${showcase.logo.width / crop.width * 100}%`, left: `${-crop.x / crop.width * 100}%`, top: `${-crop.y / crop.height * 100}%`,
   } : undefined;
-  const layerStyle = composition ? {
-    "--band-top": `${composition.band.top}%`, "--band-height": `${composition.band.height}%`,
-    "--band-bottom": `${100 - composition.band.top - composition.band.height}%`,
-    "--news-start": `${composition.band.newspaperStart}%`,
-    "--band-from": composition.band.from, "--band-to": composition.band.to,
-    "--photo-opacity": composition.photoOpacity, "--photo-wash": composition.whiteOverlay, "--news-opacity": composition.newspaperOpacity,
-  } as CSSProperties : undefined;
-  const style = { "--showcase-primary": showcase.theme.primary, "--showcase-secondary": showcase.theme.secondary, "--showcase-surface": showcase.theme.surface, "--showcase-ink": showcase.theme.ink, "--showcase-on-primary": showcase.theme.onPrimary, "--showcase-accent": showcase.theme.accent ?? "#ffce58", ...layerStyle } as CSSProperties;
-  return <div className={`${styles.canvas} ${poppins.variable} ${hero ? styles.heroCanvas : styles.featureCanvas} ${hero && composition ? styles.canvaCanvas : ""}`} style={style} data-composition={hero && composition ? "layered" : "feature"}>
-    {hero && composition && <div className={styles.backgroundLayers} aria-hidden="true">
-      <Image className={styles.cityLayer} src={composition.background.src} fill alt="" sizes="(max-width: 760px) 100vw, 1152px" />
-      <span className={styles.whiteWash} />
-      <span className={styles.colorBand} />
-      <Image className={styles.newsLayer} src={composition.background.src} fill alt="" sizes="(max-width: 760px) 100vw, 1152px" />
+  const style = { "--showcase-primary": showcase.theme.primary, "--showcase-secondary": showcase.theme.secondary, "--showcase-surface": showcase.theme.surface, "--showcase-ink": showcase.theme.ink, "--showcase-on-primary": showcase.theme.onPrimary, "--showcase-accent": showcase.theme.accent ?? "#ffce58" } as CSSProperties;
+  const photo = slide.backgroundPhoto ?? showcase.theme.backgroundPhoto ?? composition?.background.src;
+  return <div className={`${styles.canvas} ${poppins.variable} ${hero ? styles.heroCanvas : styles.featureCanvas}`} style={style} data-composition={hero ? "hero" : slide.layout}>
+    {photo && <div className={styles.backgroundLayers} data-photo-crop={photo === composition?.background.src ? "city" : undefined} aria-hidden="true">
+      <Image className={styles.cityLayer} src={photo} fill alt="" sizes="(max-width: 760px) 100vw, 1152px" />
     </div>}
+    <p className={styles.sectionLabel}>{hero ? "01. APP DESIGN" : slide.layout === "comparison" ? "02. APP DESIGN" : "03. APP DESIGN"}</p>
     {hero ? <>
       {showcase.logo && <div className={`${styles.brandSymbol} ${crop ? styles.croppedSymbol : ""}`} aria-hidden="true">
         <Image src={showcase.logo.src} width={showcase.logo.width} height={showcase.logo.height} style={logoStyle} alt="" sizes="20vw" />
@@ -53,12 +45,11 @@ export function ShowcaseComposition({ showcase, slide, title, children, actions,
       <p className={styles.eyebrow}>{slide.eyebrow}</p>
       <h2>{slide.title}</h2>
       <p className={styles.description}>{slide.description}</p>
-      {!!slide.annotations?.length && <ul className={styles.annotations}>{slide.annotations.map(note => <li key={note}>{note}</li>)}</ul>}
       {actions}
     </div>}
-    <div className={`${styles.visual} ${hero ? styles.heroVisual : ""} ${slide.layout === "scroll" ? styles.scrollVisual : ""}`}>
+    <div className={`${styles.visual} ${hero ? styles.heroVisual : ""}`}>
       <div className={styles.deviceSlot}>{children}</div>
-      {longScreen && <div className={styles.longSlot}>{longScreen}</div>}
     </div>
+    {!hero && !!slide.annotations?.length && <ul className={styles.annotations} aria-label="Screen annotations">{slide.annotations.slice(0, 2).map((note, index) => <li key={note} data-callout={index + 1}>{note}</li>)}</ul>}
   </div>;
 }

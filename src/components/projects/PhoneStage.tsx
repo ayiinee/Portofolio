@@ -13,17 +13,13 @@ export function PhoneStage({ slide, screens, title, active, onUnavailable, onDra
   const host = useRef<HTMLDivElement>(null);
   const engine = useRef<PhoneScene | null>(null);
   const pointer = useRef<{ id: number; x: number; y: number } | null>(null);
-  const [visible, setVisible] = useState(false);
   const [state, setState] = useState<"loading" | "ready" | "fallback">("loading");
   const unavailableRef = useRef(onUnavailable);
   useEffect(() => { unavailableRef.current = onUnavailable; }, [onUnavailable]);
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: .05 });
-    observer.observe(host.current!);
-    return () => observer.disconnect();
-  }, []);
-  useEffect(() => {
-    if (!active || !visible || !screens.length) return;
+    // Keep the demand-rendered hero warm while its carousel is on screen.
+    // Disposing on selection swaps the canvas for a poster mid-transition.
+    if (!active || !screens.length) return;
     const abort = new AbortController();
     let failed = false;
     const fail = () => {
@@ -36,10 +32,10 @@ export function PhoneStage({ slide, screens, title, active, onUnavailable, onDra
         engine.current = scene; setState("ready");
       }).catch(() => { if (!abort.signal.aborted) fail(); });
     return () => { abort.abort(); pointer.current = null; engine.current?.dispose(); engine.current = null; setState("loading"); onDragChange(false); };
-  }, [active, visible, screens, slide.layout, onDragChange]);
-  const ready = state === "ready" && active && visible;
+  }, [active, screens, slide.layout, onDragChange]);
+  const ready = state === "ready" && active;
   return <div className={styles.deviceArea}>
-    <div className={styles.stage} data-renderer={ready ? "ready" : state === "fallback" ? "fallback" : "loading"}>
+    <div className={styles.stage} data-poster={slide.poster} data-renderer={ready ? "ready" : state === "fallback" ? "fallback" : "loading"}>
       <div className={styles.posterLayer} hidden={ready}><ShowcasePoster slide={slide} screens={screens} title={title} preload={slide.layout === "hero"} /></div>
       <div ref={host} className={styles.canvasHost} aria-hidden="true" />
       {ready && <div
