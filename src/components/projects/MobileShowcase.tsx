@@ -34,6 +34,7 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
   const media = useMemo(() => showcase.screens.flatMap(screen => screen.media ? [screen.media] : []).filter((item, index, items) => items.findIndex(other => other.src === item.src) === index), [showcase.screens]);
   const [selected, setSelected] = useState(0);
   const [unavailable, setUnavailable] = useState(false);
+  const [heroReady, setHeroReady] = useState(false);
   const [paused, setPaused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -49,7 +50,7 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
     watchDrag: (_api, event) => !(event.target instanceof Element && event.target.closest("[data-phone-rotation]")),
     duration: motion ? 0 : 32,
   });
-  const playing = !!embla && motion === false && visible && pageVisible && !paused && !hovered && !focused && !dragging && !settling && !lightbox;
+  const playing = !!embla && (selected !== 0 || heroReady) && motion === false && visible && pageVisible && !paused && !hovered && !focused && !dragging && !settling && !lightbox;
   const attachViewport = useCallback((node: HTMLDivElement | null) => {
     // Apply horizontal layout before Embla measures; SSR stays stacked without JS.
     if (node) node.dataset.carousel = "true";
@@ -75,8 +76,11 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
     const timer = window.setTimeout(() => embla?.scrollNext(), 6500);
     return () => window.clearTimeout(timer);
   }, [playing, selected, embla]);
-  const onUnavailable = useCallback(() => { setUnavailable(true); setDragging(false); }, []);
+  const onReady = useCallback(() => setHeroReady(true), []);
+  const onUnavailable = useCallback(() => { setUnavailable(true); setHeroReady(true); setDragging(false); }, []);
   const onDragChange = useCallback((value: boolean) => setDragging(value), []);
+  const currentSlide = slides[selected];
+  const currentScreen = screenGroups[selected].find(screen => screen.media);
   function enlarge(item: ProjectMedia, button: HTMLElement) {
     trigger.current = button; setLightbox({ index: media.findIndex(other => other.src === item.src), open: true });
   }
@@ -102,7 +106,7 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
             <ShowcaseComposition showcase={showcase} slide={slide} title={title}
               actions={<>{screens.some(screen => !screen.media) && <p className={styles.placeholderNote}>App screenshots coming soon · Mockup preview</p>}{screens.some(screen => screen.media) && <div className={styles.screenLinks}>{screens.filter(screen => screen.media).map(screen => <button type="button" key={screen.id} onClick={event => enlarge(screen.media!, event.currentTarget)}><Expand size={12} /> View {screen.label}</button>)}</div>}</>}
               >
-              {hero ? <PhoneStage slide={slide} screens={screens} title={title} active={visible && pageVisible} onUnavailable={onUnavailable} onDragChange={onDragChange} /> : <FlatMockups showcase={showcase} slide={slide} />}
+              {hero ? <PhoneStage slide={slide} screens={screens} title={title} active={visible && pageVisible} onReady={onReady} onUnavailable={onUnavailable} onDragChange={onDragChange} /> : <FlatMockups showcase={showcase} slide={slide} />}
             </ShowcaseComposition>
           </article>;
         })}
@@ -115,6 +119,10 @@ export function MobileShowcase({ showcase, title }: { showcase: ShowcaseConfig; 
     <div className={styles.navigation} role="group" aria-label="Project slide navigation">
       {slides.map((slide, index) => <button className={styles.dash} type="button" key={slide.id} aria-label={`Show slide ${index + 1}: ${slide.eyebrow}`} aria-current={index === selected ? "true" : undefined} aria-controls={viewportId} disabled={!embla} onClick={() => embla?.scrollTo(index)}><m.span initial={false} animate={{ width: index === selected ? 26 : 7, opacity: index === selected ? 1 : .6 }} transition={motion ? { duration: 0 } : { type: "spring", stiffness: 430, damping: 34 }} /></button>)}
     </div>
+    </div>
+    <div className={styles.mobileInfo}>
+      <p><strong>{selected === 0 ? title : currentSlide.title.replace(/\n/g, " ")}</strong><span>{selected === 0 ? currentSlide.title : currentSlide.eyebrow.replace(/^\d+\s*\/\s*/, "")}</span></p>
+      {currentScreen?.media && <button type="button" onClick={event => enlarge(currentScreen.media!, event.currentTarget)} aria-label={`View ${title} screens`}><Expand size={14} aria-hidden="true" /> View screens</button>}
     </div>
     <p className={styles.srOnly} role="status" aria-live={playing ? "off" : "polite"}>{unavailable ? "3D unavailable · showing preview" : `Slide ${selected + 1} of ${slides.length}`}</p>
     {lightbox && <MediaLightbox media={media} index={lightbox.index} open={lightbox.open} close={() => setLightbox(value => value ? { ...value, open: false } : null)} exited={() => { setLightbox(null); trigger.current?.focus(); }} />}

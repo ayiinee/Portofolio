@@ -167,20 +167,21 @@ export async function createPhoneScene(host: HTMLElement, screens: ShowcaseScree
       try { renderer.render(scene, camera); } catch { onFailure(); }
     });
   }
+  let renderedWidth = 0, renderedHeight = 0;
   const resize = () => {
-    if (disposed || !host.clientWidth || !host.clientHeight) return;
-    const aspect = host.clientWidth / host.clientHeight;
+    const width = host.clientWidth, height = host.clientHeight;
+    if (disposed || !width || !height || (width === renderedWidth && height === renderedHeight)) return;
+    renderedWidth = width; renderedHeight = height;
+    const aspect = width / height;
     const extent = layout === "hero" ? Math.max(2.05, 1.75 / aspect) : Math.max(2.25, 2.15 / aspect);
     camera.top = extent; camera.bottom = -extent;
     camera.left = -extent * aspect; camera.right = extent * aspect;
     camera.updateProjectionMatrix();
-    renderer.setSize(host.clientWidth, host.clientHeight, false); invalidate();
+    renderer.setSize(width, height, false); invalidate();
   };
   const observer = new ResizeObserver(resize);
   const lost = (event: Event) => { event.preventDefault(); onFailure(); };
-  renderer.domElement.addEventListener("webglcontextlost", lost);
-  host.appendChild(renderer.domElement); observer.observe(host); resize();
-  return {
+  const api: PhoneScene = {
     rotate(x, y) { rig.rotation.y += x; rig.rotation.x = THREE.MathUtils.clamp(rig.rotation.x + y, -.8, .8); invalidate(); },
     reset() { rig.rotation.set(0, 0, 0); invalidate(); },
     dispose() {
@@ -199,4 +200,18 @@ export async function createPhoneScene(host: HTMLElement, screens: ShowcaseScree
       renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove();
     },
   };
+  try {
+    signal.throwIfAborted();
+    renderer.domElement.addEventListener("webglcontextlost", lost);
+    host.appendChild(renderer.domElement); observer.observe(host); resize();
+    // Resolve only after the first frame is drawn. The stage can then reveal
+    // the live canvas without an empty frame or a differently posed poster.
+    cancelAnimationFrame(frame); frame = 0;
+    renderer.render(scene, camera);
+    signal.throwIfAborted();
+    return api;
+  } catch (error) {
+    api.dispose();
+    throw error;
+  }
 }

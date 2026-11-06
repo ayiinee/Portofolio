@@ -18,3 +18,8 @@ Screenshots remain unchanged. Empty detail slots are labeled placeholders;
 no synthetic application UI is presented as an original screen.
 
 The Canva document itself has not been modified.
+
+WaspadAI wordmark lockup: owner's supplied
+Kelompok 1_Innovation Management_WaspadAI (3).png, 876 x 224 RGBA.
+Copied unchanged as brand-lockup.png; used for both hero and project thumbnails.
+SHA-256: f2091730656f6a5cb5b78c27c0117e8197f29f99e0e37692cd52ea9832a02f7d

@@ -34,11 +34,18 @@ export function ShowcaseComposition({ showcase, slide, title, children, actions,
     </div>}
     <p className={styles.sectionLabel}>{hero ? "01. APP DESIGN" : slide.layout === "comparison" ? "02. APP DESIGN" : "03. APP DESIGN"}</p>
     {hero ? <>
+      {showcase.brandLockup ? <>
+        <Heading className={styles.brandLockup} aria-label={title}>
+          <Image src={showcase.brandLockup.src} width={showcase.brandLockup.width} height={showcase.brandLockup.height} alt="" unoptimized />
+        </Heading>
+        <p className={styles.srOnly}>{slide.title}</p>
+      </> : <>
       {showcase.logo && <div className={`${styles.brandSymbol} ${crop ? styles.croppedSymbol : ""}`} aria-hidden="true">
         <Image src={showcase.logo.src} width={showcase.logo.width} height={showcase.logo.height} style={logoStyle} alt="" sizes="20vw" />
       </div>}
       <Heading className={styles.wordmark} aria-label={title}><span className={styles.srOnly}>{prefix}</span>{wordmark}</Heading>
       <p className={styles.brandTagline}>{slide.title}</p>
+      </>}
       <p className={styles.heroHeadline}>{slide.headline ? slide.headline.map((line, index) => <span className={styles.headlineLine} key={index}>{line.map((run, runIndex) => run.emphasis ? <em key={runIndex}>{run.text}</em> : <span key={runIndex}>{run.text}</span>)}</span>) : slide.description}</p>
       <div className={styles.heroActions}>{actions}</div>
     </> : <div className={styles.featureCopy}>

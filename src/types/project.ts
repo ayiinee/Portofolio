@@ -77,6 +77,8 @@ export type ShowcaseSlide = {
 
 export type MobileShowcase = {
   logo?: ProjectMedia;
+  /** Supplied transparent artwork combining the symbol, wordmark and tagline. */
+  brandLockup?: ProjectMedia;
   composition?: {
     background: ProjectMedia;
     wordmark?: string;

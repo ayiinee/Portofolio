@@ -6,9 +6,9 @@ import type { ShowcaseScreen, ShowcaseSlide } from "@/types/project";
 import { ShowcasePoster } from "./ShowcaseVisual";
 import styles from "./MobileShowcase.module.css";
 
-export function PhoneStage({ slide, screens, title, active, onUnavailable, onDragChange }: {
+export function PhoneStage({ slide, screens, title, active, onReady, onUnavailable, onDragChange }: {
   slide: ShowcaseSlide; screens: ShowcaseScreen[]; title: string; active: boolean;
-  onUnavailable: () => void; onDragChange: (dragging: boolean) => void;
+  onReady: () => void; onUnavailable: () => void; onDragChange: (dragging: boolean) => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const engine = useRef<PhoneScene | null>(null);
@@ -29,14 +29,14 @@ export function PhoneStage({ slide, screens, title, active, onUnavailable, onDra
     import("@/lib/phone-scene").then(({ createPhoneScene }) => createPhoneScene(host.current!, screens, slide.layout, abort.signal, fail))
       .then(scene => {
         if (abort.signal.aborted || failed) { scene.dispose(); return; }
-        engine.current = scene; setState("ready");
+        engine.current = scene; setState("ready"); onReady();
       }).catch(() => { if (!abort.signal.aborted) fail(); });
     return () => { abort.abort(); pointer.current = null; engine.current?.dispose(); engine.current = null; setState("loading"); onDragChange(false); };
-  }, [active, screens, slide.layout, onDragChange]);
+  }, [active, screens, slide.layout, onReady, onDragChange]);
   const ready = state === "ready" && active;
   return <div className={styles.deviceArea}>
     <div className={styles.stage} data-poster={slide.poster} data-renderer={ready ? "ready" : state === "fallback" ? "fallback" : "loading"}>
-      <div className={styles.posterLayer} hidden={ready}><ShowcasePoster slide={slide} screens={screens} title={title} preload={slide.layout === "hero"} /></div>
+      {state === "fallback" && <div className={styles.posterLayer}><ShowcasePoster slide={slide} screens={screens} title={title} /></div>}
       <div ref={host} className={styles.canvasHost} aria-hidden="true" />
       {ready && <div
         className={styles.rotationSurface} role="group" tabIndex={0}

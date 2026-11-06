@@ -48,6 +48,10 @@ export default async function ProjectPage({ params }: Props) {
   ].filter((item, index, items) => items.findIndex(({ src }) => src === item.src) === index);
   return (
     <div className="project-route project-route--detail">
+      <div className="case-page-backdrop" aria-hidden="true">
+        <span className="case-decoration case-decoration--line" />
+        <span className="case-decoration case-decoration--dots" />
+      </div>
       <main id="main-content" className="project-route-frame project-detail-page">
         <Link href="/projects" className="back-link">
           <ArrowLeft size={18} aria-hidden="true" />

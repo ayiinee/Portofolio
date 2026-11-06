@@ -12,16 +12,16 @@ export function ProjectMetadata({ project }: { project: Project }) {
         <dd>{project.year}</dd>
       </div>
       {project.timeline && (
-        <div>
+        <div className="project-metadata-wide">
           <dt>Timeline</dt>
           <dd>{project.timeline}</dd>
         </div>
       )}
-      <div>
+      <div className="project-metadata-wide">
         <dt>Project type</dt>
         <dd>{project.type}</dd>
       </div>
-      <div>
+      <div className="project-metadata-wide">
         <dt>Tech stack</dt>
         <dd>
           <ul className="case-tech-stack" aria-label="Technologies">

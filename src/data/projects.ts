@@ -124,6 +124,7 @@ export const projects: Project[] = [
     achievements: ["Contributed to a collaborative Android and backend hackathon MVP."],
     title: "WaspadAI",
     mobileShowcase: {
+      brandLockup: { src: "/images/projects/waspadai/brand-lockup.png", width: 876, height: 224, alt: "WaspadAI — Kenali Informasi, Telusuri Bukti", caption: "Original transparent WaspadAI logo, wordmark and tagline supplied by the owner.", type: "presentation", provenance: "original" },
       logo: { src: "/images/projects/waspadai/brand-logo.png", width: 647, height: 647, alt: "WaspadAI logo", caption: "Original WaspadAI brand symbol.", type: "presentation" },
       composition: {
         background: { src: "/images/projects/waspadai/composition-background.png", width: 1920, height: 1080, alt: "", caption: "Text-free background supplied from the Canva composition.", type: "presentation" },
@@ -157,10 +158,10 @@ export const projects: Project[] = [
         description: "Platform Digital-Resilience Berbasis AI untuk Pencegahan Social Engineering Scam pada Gen Z melalui Verifikasi pada Moment-of-Exposure",
         screenIds: ["overview", "verification"],
         headline: [
-          [{ text: "Platform Digital-Resilience Berbasis AI untuk" }],
-          [{ text: "Pencegahan " }, { text: "Social Engineering Scam", emphasis: true }, { text: " pada" }],
-          [{ text: "Gen Z melalui Verifikasi pada " }, { text: "Moment-of-", emphasis: true }],
-          [{ text: "Exposure", emphasis: true }],
+          [{ text: "Platform Digital-Resilience Berbasis AI " }],
+          [{ text: "untuk Pencegahan " }, { text: "Social Engineering Scam", emphasis: true }, { text: " " }],
+          [{ text: "pada Gen Z melalui Verifikasi pada " }],
+          [{ text: "Moment-of-Exposure", emphasis: true }],
         ],
         poster: "/images/projects/waspadai/hero-devices.png",
       },
