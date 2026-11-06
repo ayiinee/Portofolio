@@ -331,3 +331,77 @@ final result: passed
 - Scoped presentation lives in src/app/skills.css, imported after selected-projects.css. No data or proficiency claims changed. Existing Reveal motion and reduced-motion handling remain in place. Technology groups now use semantic lists.
 - Passed npm run typecheck, npm run lint and git diff --check. Chrome checks at 320, 390, 768, 1024 and 1440px retained all five categories and 55 tags without horizontal overflow. A scoped axe WCAG A/AA check reported no violations; no uncaught page errors occurred during that check.
 - Opened and visually reviewed desktop and phone captures. Evidence is in artifacts/skills-review/ (before-desktop.png, after-desktop.png, after-mobile.png and preview-desktop.png). Browser captures include the existing fixed navigation. No production build or deployment performed. Development preview remains at http://localhost:3000/#skills.
+
+## Achievement Motion coverflow — 2026-10-28
+
+**Findings:** No actionable P0/P1/P2 visual issue remains in the approved scope.
+
+- Source visual truth: `artifacts/achievement-references/motion-coverflow.png` (1280 × 720 pixels), selected by the owner. The approved adaptation explicitly replaces example photography with factual typography cards and adds the existing portfolio's heading, filters, caption, dialog and controls.
+- Implementation: `artifacts/achievement-qa/desktop-1440.png` (1425 × 990 raster at a 1440 × 1000 CSS viewport), `comparison-1280.png` (1265 × 712 raster at 1280 × 720 CSS), `mobile-390-start.png` and `mobile-390-details.png` (375 × 811 raster at 390 × 844 CSS), and `mobile-390-dialog.png` (390 × 843 raster). In-app capture dimensions differ slightly from CSS dimensions. Original captures were retained without resizing; no exact 1:1 pixel-match claim is made.
+- State: first All item selected, manual pause for stable comparison; Intellectual Property selected for the longest mobile title and dialog. The source and implementation are different content scenes, compared for the selected coverflow composition and the owner's explicit integration requirements, rather than copied photographs or identical surrounding chrome.
+- Full-view comparison: opened the selected Motion capture and the saved implementation comparison together in the same image input, alongside the mobile dialog. Central front-facing card, receding tilted neighbors, light background and soft elevation are retained. The 344 × 240px landscape ratio, portfolio header, text-only covers, category tints and caption are intentional approved differences.
+- Focused inspection: desktop cards, filters and controls were readable in the full-width captures. Separate mobile start, long-title caption/controls and dialog captures verify wrapping and the reachable close action; no additional crop was needed. Desktop cards were also inspected in the browser before capture.
+
+| Fidelity surface | Assessment |
+| --- | --- |
+| Typography | Existing Plus Jakarta Sans / Instrument Serif pairing retained; navy titles and blue serif distinction. Long factual titles wrap completely in captions and dialogs. |
+| Spacing and layout | Existing Skills/Projects frame and section variables retained. Center card is 344 × 240px with 18px corners; mobile card is 78vw. Filters wrap, controls retain 44px targets, and all five required widths have no horizontal overflow. |
+| Colors and tokens | Warm #fafbf7 paper, #152c49 navy, #096bf0 blue and low-opacity powder-blue wash align with adjacent sections. Active controls and focus states remain distinguishable. |
+| Image quality and assets | No documentary media was supplied. Owner-approved factual typography replaces sample images; no fabricated certificates, seals or publication covers. Optional original media uses contain in both cards and dialog. |
+| Copy and content | 24 deduplicated records, including provincial participation. Professional certification, course completion, bootcamp, language test, copyright and publication authorship stay distinct. Unconfirmed journal status/ranking/year omitted. Education block removed; #education anchor preserved. |
+
+**Verification and iteration:** Four focused browser scenarios passed after fixing two issues detected by the first test run: a reduced-motion hydration mismatch and a media hook that did not update live. Replaced that hook with a hydration-safe media-query subscription; the repeat run passed all four scenarios. Assertions cover category counts, initial featured order, modal focus trap/restoration, source-link presence/absence, scroll direction, autoplay/hover/restart/drag, live reduced motion, offscreen rotation suspension, responsive layout, no-JavaScript content, and uncaught page errors. Scoped axe WCAG A/AA checks passed for the section and open dialog. Final lint, typecheck and production build passed. Existing metadataBase warning remains unrelated to this scope. Production HTTP smoke passed against a temporary server at port 3002.
+
+**Comparison history:** Initial visual comparison found no actionable P0/P1/P2 mismatch against the approved adaptation; no visual revision was needed. Functional reduced-motion corrections above were verified before final visual review. No production deployment performed. No full cross-browser, real-device touch or measured performance claim is made.
+
+final result: passed
+
+## Achievement toolbar removal — 2026-10-28
+
+- Owner annotation selected the complete Carousel controls row for deletion. Removed the visible play icon, previous/next buttons, counter and their toolbar layout rules. Cards, caption, filters and detail dialog retain their presentation. Gesture, scroll and keyboard navigation remain available. A rotation text control remains available to screen readers and appears only on keyboard focus, without reserving toolbar space.
+- Inspected the owner's marked screenshot, the previous desktop capture and the new browser capture. Evidence: artifacts/achievement-controls-removal/after.png at the normal 1191 × 668 CSS viewport (1176 × 659 capture). The current selected credential differs from the annotation; verification concerns the deleted toolbar region. No resizing or exact pixel-match claim. Typography, card spacing/materials, palette and factual copy are retained; no new image assets. The source and saved result were viewed in the comparison input, with the final region recaptured after review. No actionable P0/P1/P2 issue remains.
+- Updated the existing regression scenarios to use current-slide semantics and keyboard navigation instead of removed buttons/counters. All four focused browser scenarios passed, including axe checks, reduced motion, autoplay, scroll direction, drag, dialogs, responsive overflow and no-JavaScript reading. Scoped ESLint, typecheck and whitespace checks passed. No repeated production build or deployment was needed for this scoped removal.
+
+final result: passed
+
+## Achievement archive — 2026-10-28
+
+**Findings:** No actionable P0/P1/P2 visual issue remains in this scope. Documentary previews remain pending original files; the owner requested proceeding now, so each missing image is explicitly identified rather than fabricated.
+
+- Source visual truth: selected first paper-card direction, revised for upright card text and honest missing-document states, at `artifacts/achievement-page-design/selected-revised-reference.png` (1487 × 1058 pixels). Rendered evidence: `artifacts/achievement-archive-qa/desktop.png` (1425 × 1013 pixels at 1440 × 1024 CSS), `mobile-start.png` and `mobile-card.png` (375 × 811 pixels at 390 × 844 CSS). Native captures retained without resizing. Source is an image mockup, not a density-calibrated browser capture; no exact pixel-clone claim is made.
+- Compared the source, desktop implementation and mobile card together in the same image input. State: /achievements, All selected, newest-first order, missing original media. The implementation uses the portfolio's existing narrower frame and compact typography, with factual summaries added for clarity. These are intentional adaptations of the chosen direction. Full cards, labels, filter states and preview copy are readable in these captures; the separate phone card capture supplies focused text/wrapping evidence without an additional crop.
+
+| Fidelity surface | Assessment |
+| --- | --- |
+| Fonts and typography | Plus Jakarta Sans and Instrument Serif retained. Italic is limited to the main heading; all archive card and dialog distinctions use upright text. Long titles wrap. |
+| Spacing and layout | Three-column paper grid, 18px radii, subtle elevation and established Projects frame. Two columns at tablet widths and one on phones; filter pills wrap and retain usable targets. |
+| Colors and tokens | Existing warm #fafbf7 base, #152c49 navy, #096bf0 blue and powder-blue washes. Active filter is distinct; existing navigation is preserved. |
+| Images and assets | Explicit missing-preview state matches the revised target. No certificate/HKI/publication artwork was invented. Optional real media uses contain; actual documentary image quality cannot be assessed until supplied. |
+| Copy and content | All 24 existing factual records retained, sorted by known year with unknown years last. Category counts are 11 awards, 8 credentials, 2 intellectual-property records and 3 publications. Homepage now exposes six selected records and an Explore All 24 Achievements link. |
+
+**Verification:** Six focused scenarios passed across the homepage and archive runs. Archive checks cover category counts, ordering, full-record dialogs, source links, focus restoration, upright card/dialog text, responsive columns and overflow at 320/390/768/1024/1440px, scoped axe WCAG A/AA checks and no uncaught page errors. Existing four homepage scenarios passed with the six-item selection. Initial archive no-JavaScript verification detected that the noscript fallback did not expose complete source text; replaced it with server-rendered native details, hidden only after enhancement. Both archive scenarios passed on rerun. This was a functional correction, not a visual-QA iteration; the first visual comparison found no actionable P0/P1/P2 difference.
+
+Final lint, typecheck and production build passed. Production HTTP smoke passed for 14 pages, static assets, metadata, navigation and SEO routes. Browser back-to-home and Explore All navigation verified. Existing metadataBase warning remains when no production site origin is configured. No deployment performed. Real documentary media, cross-browser and real-device touch testing remain outside this verification. Viewport overrides reset and the archive preview retained.
+
+final result: passed
+
+## Achievement annotations and pagination — 2026-10-28
+
+**Findings:** No actionable P0/P1/P2 visual issue remains in this scoped revision. Source truth is the owner's annotated archive and homepage screenshots: remove archive summaries/detail buttons, enlarge previews, remove the complete homepage caption, make the archive invitation more engaging, and add pagination.
+
+- Baseline evidence: `artifacts/achievement-archive-qa/desktop.png` (1425 × 1013 pixels, 1440 × 1024 CSS viewport) and `artifacts/achievement-controls-removal/after.png` (1176 × 659 pixels, 1191 × 668 CSS). Final evidence: `artifacts/achievement-refinement/archive-desktop.png` (1424 × 1521 pixels, full-page capture at 1440 × 1000 CSS), `home-desktop.png` (1465 × 661 pixels, 1480 × 668 CSS), `archive-mobile.png` and `home-mobile.png` (both 375 × 811 pixels at 390 × 844 CSS).
+- Opened both baseline and final desktop captures together in the same comparison input. Archive state is All / first page / newest first. Homepage selections and scroll positions differ; comparison concerns the expressly removed caption and revised invitation, not an identical slide. Mobile captures were also opened and inspected. Native rasters were retained without resizing; density/browser-size differences are explicitly acknowledged and no pixel-clone claim is made. Full-page archive evidence exposes both rows and the pagination. The normal homepage capture clearly shows the complete invitation and carousel; the phone view supplies focused wrapping evidence. No additional crop was necessary.
+
+| Fidelity surface | Assessment |
+| --- | --- |
+| Typography | Existing font families, archive upright card text, serif page-heading accent and homepage card styles retained. Added invitation uses upright sans-serif text. |
+| Spacing/layout | Archive previews enlarged from 2.4:1 to 1.4:1. Removed summary paragraphs and separate detail buttons. Six cards form two desktop rows, with wrapping pagination below; phone pagination uses labelled arrow controls and numbered buttons. Homepage caption and its reserved height removed; invitation stacks on phones. |
+| Colors/tokens | Existing navy, slate, warm paper and blue accents retained. Invitation uses a restrained paper-to-powder gradient, count badge and circular arrow. Hover movement respects reduced motion. |
+| Images/assets | Existing explicit missing-document state retained; genuine media still uses contain. No documentary artwork or source links invented. |
+| Copy/content | All 24 records preserved across four All pages. Category changes return to page one; displayed ranges update. Full details remain reachable through archive previews and active homepage cards. Manual carousel selection retains a visually hidden live announcement. |
+
+**Verification:** All six focused homepage/archive scenarios passed. Coverage includes each of the 24 unique record IDs exactly once across pagination, previous/next boundaries, numbered navigation, page reset after filtering, focus on new results, details and source links, native dialog focus restoration, unchanged carousel rotation/scroll/drag/reduced-motion behavior, responsive layout/overflow at 320/390/768/1024/1440px, scoped axe checks, and all records readable without JavaScript. The first archive run exposed a test assumption that display titles were unique; two genuine records share a display title, so the assertion now checks unique record IDs. No product content was altered to satisfy that test. No uncaught page errors were reported in the focused checks.
+
+Lint, typecheck, production build, whitespace check and production HTTP smoke passed. Homepage invitation navigation to /achievements was verified in the in-app browser. The existing metadataBase warning remains when no production origin is configured. No deployment or real-device/cross-browser claim. Viewport overrides reset; previews retained. First visual comparison found no actionable P0/P1/P2 issue, so no visual-QA repair iteration was needed.
+
+final result: passed

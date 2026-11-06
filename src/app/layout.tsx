@@ -13,6 +13,7 @@ import "./hero-about.css";
 import "./experience.css";
 import "./selected-projects.css";
 import "./skills.css";
+import "./achievements.css";
 
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],

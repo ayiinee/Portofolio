@@ -22,13 +22,19 @@ npm run build
 npm start
 ```
 
-The homepage includes About, Experience, six selected projects, Skills, Education & Achievements, and Contact. `/projects` contains all 11 projects with category filters and Load More. Every project has a statically generated `/projects/[slug]` case study.
+The homepage includes About, Experience, four selected projects, Skills, Achievements, and Contact. `/projects` contains all 11 projects with category filters and Load More. Every project has a statically generated `/projects/[slug]` case study.
+
+The Achievement carousel shows six selected records and links to `/achievements`,
+the complete 24-record collection with category filters, six records per page and
+detail dialogs opened through enlarged previews. Archive cards use upright text
+without summary paragraphs or separate detail buttons. Missing previews are
+explicitly labelled until genuine media is added to `src/data/achievements.ts`.
 
 ## Edit content
 
 - `src/data/profile.ts`: identity, hero copy, confirmed email, social links, portrait configuration, and optional résumé path.
 - `src/data/projects.ts`: ordered project records. The `Project` and `ProjectMedia` interfaces live in `src/types/project.ts`. Set `featured` and `featuredOrder` to choose homepage projects. Maintain neighboring slugs when changing the collection order.
-- `src/data/experience.ts`, `skills.ts`, and `achievements.ts`: employment, skills, education, awards, and training. Homepage biography copy lives in the About component.
+- `src/data/experience.ts`, `skills.ts`, and `achievements.ts`: employment, skills, awards, credentials, copyrights, and publications. Homepage biography copy lives in the About component.
 - `src/app/globals.css`: shared colors, typography, spacing, responsive layouts, focus indicators, and reduced-motion styles.
 - `src/app/redesign.css`: existing section styling and lanyard placement. Navbar dimensions remain independent of the compact content scale.
 - `src/app/archive.css`: current hero layout, palette, typography, folder layers, social icons, and responsive adjustments.

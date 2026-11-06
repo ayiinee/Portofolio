@@ -1,0 +1,14 @@
+Hero and project cover: the owner's supplied Gambar Porto.jpg, 1920 x 1080.
+Canva reference: https://www.canva.com/design/DAHZmO6v6-0/XqUEd5AVLqwOSMmENePvog/edit
+The JPEG is copied unchanged as canva-hero.jpg and displayed without cropping,
+filters, a new overlay, re-encoding, or changes to the composition.
+SHA-256: a58291fe523a451ff3097d6a6d5ef7807513cc3eef406c94dfef23fee1135c58
+
+Feature screenshots: original WaspadAI presentation PDF, pages 12 and 14.
+Overview: page 12, X5 image resource (360 x 800).
+Verification preview: page 14, X16 image resource (360 x 800).
+Community: page 12, X75 image resource (360 x 800).
+Screenshots were extracted unchanged, then placed as textures on the reusable
+3D device scene. No synthetic application UI is used in these screens.
+
+The Canva document itself has not been modified.

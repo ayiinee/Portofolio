@@ -8,6 +8,7 @@ import { ProjectGallery } from "@/components/projects/ProjectGallery";
 import { ProjectMetadata } from "@/components/projects/ProjectMetadata";
 import { ProjectNavigation } from "@/components/projects/ProjectNavigation";
 import { ProjectStory } from "@/components/projects/ProjectStory";
+import { MobileShowcase } from "@/components/projects/MobileShowcase";
 import "../projects.css";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -52,19 +53,27 @@ export default async function ProjectPage({ params }: Props) {
           <ArrowLeft size={18} aria-hidden="true" />
           Back to Projects
         </Link>
-        <header className="page-header case-header">
-          <p className="eyebrow">
-            {project.category} / {project.year}
-          </p>
-          <h1>{project.title}</h1>
-          {project.subtitle && (
-            <p className="case-subtitle">{project.subtitle}</p>
-          )}
-          <p className="page-intro">{project.shortDescription}</p>
-        </header>
-        <div className="case-media" id="gallery">
-          <ProjectGallery key={project.slug} title={project.title} category={project.category} media={media} variant="hero" />
-        </div>
+        {project.mobileShowcase ? (
+          <div id="gallery" className="case-mobile-showcase">
+            <MobileShowcase showcase={project.mobileShowcase} title={project.title} />
+          </div>
+        ) : (
+          <>
+            <header className="page-header case-header">
+              <p className="eyebrow">
+                {project.category} / {project.year}
+              </p>
+              <h1>{project.title}</h1>
+              {project.subtitle && (
+                <p className="case-subtitle">{project.subtitle}</p>
+              )}
+              <p className="page-intro">{project.shortDescription}</p>
+            </header>
+            <div className="case-media" id="gallery">
+              <ProjectGallery key={project.slug} title={project.title} category={project.category} media={media} variant="hero" />
+            </div>
+          </>
+        )}
         <div className="case-study-layout">
           <aside className="case-sidebar" aria-label="Project information">
             <ProjectMetadata project={project} />

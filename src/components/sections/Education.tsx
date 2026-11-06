@@ -1,51 +1,38 @@
-import { GraduationCap } from "lucide-react";
 import { Reveal } from "@/components/animations/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { achievements, education, training } from "@/data/achievements";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { AchievementCarousel } from "@/components/achievements/AchievementCarousel";
+import { achievementRecords } from "@/data/achievements";
 
 export function Education() {
   return (
     <section
       id="education"
-      className="section"
-      aria-labelledby="education-heading"
+      className="achievement-section"
+      aria-labelledby="achievement-heading"
     >
-      <Reveal>
-        <SectionHeading
-          number="05"
-          label="EDUCATION & ACHIEVEMENTS"
-          title="A few milestones"
-          accent="along the way."
-          id="education-heading"
-        />
-      </Reveal>
-      <div className="education-grid">
-        <Reveal className="education-card">
-          <GraduationCap size={32} strokeWidth={1.3} aria-hidden="true" />
-          <h3>{education.institution}</h3>
-          <p>{education.program}</p>
-          <p className="education-date">{education.period}</p>
+      <div className="achievement-frame">
+        <Reveal className="achievement-introduction">
+          <div className="achievement-title">
+            <span className="achievement-outline" aria-hidden="true">ACHIEVEMENTS</span>
+            <h2 id="achievement-heading">Milestones <em>&amp; recognition.</em></h2>
+          </div>
+          <p>Selected awards, credentials, and ideas shared along the way.</p>
         </Reveal>
-        <Reveal className="milestones">
-          <h3>Selected achievements</h3>
-          <ul>
-            {achievements.map((item) => (
-              <li key={item.title}>
-                <span>{item.title}</span>
-                <time dateTime={String(item.year)}>{item.year}</time>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        <AchievementCarousel items={achievementRecords.filter((item) => item.featuredOrder)} showFilters={false} />
+        <div className="achievement-archive-action">
+          <div className="achievement-archive-invitation">
+            <p className="achievement-archive-kicker">Beyond the highlights</p>
+            <h3>Discover the full collection.</h3>
+            <p>Awards, credentials, and published ideas — each with a story to tell.</p>
+          </div>
+          <Link href="/achievements" className="achievement-all" aria-label={`Explore All ${achievementRecords.length} Achievements`}>
+            <span className="achievement-all-count" aria-hidden="true">{achievementRecords.length}</span>
+            <span>Explore all achievements</span>
+            <span className="achievement-all-arrow"><ArrowUpRight size={19} aria-hidden="true" /></span>
+          </Link>
+        </div>
       </div>
-      <Reveal className="training">
-        <h3>Certifications & training</h3>
-        <ul>
-          {training.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </Reveal>
     </section>
   );
 }

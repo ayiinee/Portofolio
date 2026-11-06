@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/types/project";
 import { MediaPlaceholder } from "./MediaPlaceholder";
+import { ShowcaseCover } from "./ShowcaseVisual";
 
 export function ProjectCard({
   project,
@@ -28,7 +29,9 @@ export function ProjectCard({
         aria-labelledby={`title-${project.slug}`}
       >
         <div className="project-visual">
-          {project.coverImage ? (
+          {project.mobileShowcase ? (
+            <ShowcaseCover showcase={project.mobileShowcase} title={project.title} />
+          ) : project.coverImage ? (
             <Image
               src={project.coverImage.src}
               alt={project.coverImage.alt}

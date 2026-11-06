@@ -14,7 +14,7 @@ export function Navbar() {
   const menuRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const activeId = isHome ? active : "projects";
+  const activeId = isHome ? active : pathname.startsWith("/achievements") ? "education" : "projects";
   const sectionHref = (id: string) => `${isHome ? "" : "/"}#${id}`;
 
   useEffect(() => {

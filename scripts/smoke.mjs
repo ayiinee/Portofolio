@@ -64,6 +64,7 @@ try {
 for (const route of [
   "/",
   "/projects",
+  "/achievements",
   ...records.map((project) => `/projects/${project.slug}`),
 ]) {
   const response = await fetch(new URL(route, base));
@@ -112,7 +113,7 @@ for (const route of [
     );
     assert(html.includes('name="description"'));
     assert(html.includes('aria-label="Adjacent projects"'));
-    assert(html.includes("Project image coming soon"));
+    assert(html.includes(project.mobileShowcase?.composition ? project.mobileShowcase.composition.background.src : project.mobileShowcase ? "App screenshots coming soon" : "Project image coming soon"));
     assert(!html.includes("TODO"));
   }
 }
@@ -133,5 +134,5 @@ for (const asset of [
     assert(response.headers.get("content-type")?.startsWith("image/png"));
 }
 console.log(
-  "PASS: 13 pages, 11 unique projects, four homepage selections in order, section anchors, metadata, media placeholders, navigation, static assets, SEO routes, and unknown-project 404.",
+  "PASS: 14 pages, 11 unique projects, four homepage selections in order, section anchors, metadata, media placeholders, navigation, static assets, SEO routes, and unknown-project 404.",
 );

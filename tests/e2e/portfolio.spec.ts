@@ -119,9 +119,13 @@ test("every case study has unique metadata, context, and valid navigation", asyn
         .getByRole("navigation", { name: "Adjacent projects" })
         .getByRole("link"),
     ).toHaveCount(2);
-    await expect(page.locator(".gallery-empty")).toContainText(
-      "Project image coming soon",
-    );
+    if (project.mobileShowcase) {
+      const showcase = page.getByRole("region", { name: `${project.title} app showcase` });
+      if (project.mobileShowcase.composition) await expect(showcase.locator('[data-composition="layered"]')).toBeVisible();
+      else await expect(showcase).toContainText("App screenshots coming soon");
+    } else {
+      await expect(page.locator(".gallery-empty")).toContainText("Project image coming soon");
+    }
     await expect(page.locator("main")).not.toContainText("TODO");
     const outcomes = page.getByRole("region", { name: "Impact & achievements", exact: true });
     await expect(outcomes).toContainText(project.impact![0]);
